@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>LA Contracts Bot (Prototype)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Chicago", system-ui, sans-serif;
+      background: #c7d5e0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .window {
+      width: 90%;
+      max-width: 750px;
+      background: #d6d7d9;
+      border-radius: 6px;
+      border: 2px solid #808086;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+      overflow: hidden;
+    }
+
+    .title-bar {
+      height: 26px;
+      display: flex;
+      align-items: center;
+      padding: 0 8px;
+      background: linear-gradient(to bottom, #e8e8eb, #c3c3c6);
+      border-bottom: 2px solid #b3b3b7;
+      font-size: 13px;
+      justify-content: space-between;
+    }
+
+    .left {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .window-buttons {
+      display: flex;
+      gap: 4px;
+      margin-right: 4px;
+    }
+
+    .btn {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 1px solid #7c7c7c;
+      background: #fdfdfd;
+    }
+
+    .btn.red {
+      background: #ff5f57;
+    }
+    .btn.yellow {
+      background: #ffbd2e;
+    }
+    .btn.green {
+      background: #28c840;
+    }
+
+    .title-text {
+      font-weight: 600;
+    }
+
+    .back-link {
+      font-size: 12px;
+    }
+
+    .back-link a {
+      text-decoration: none;
+      color: #003399;
+    }
+
+    .content {
+      padding: 16px 18px 20px 18px;
+      background: #e4e5e8;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    h1 {
+      font-size: 18px;
+      margin: 0 0 8px 0;
+    }
+
+    h2 {
+      font-size: 14px;
+      margin: 14px 0 6px 0;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    p {
+      margin: 0 0 8px 0;
+    }
+
+    .meta {
+      font-size: 12px;
+      color: #444;
+      margin-bottom: 12px;
+    }
+
+    .list {
+      padding-left: 18px;
+    }
+
+    .list li {
+      margin-bottom: 6px;
+    }
+
+    .code-block {
+      font-family: "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 12px;
+      background: #cfd0d3;
+      border-radius: 4px;
+      padding: 8px 10px;
+      border: 1px solid #a5a6aa;
+      margin-bottom: 10px;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <div class="window">
+    <div class="title-bar">
+      <div class="left">
+        <div class="window-buttons">
+          <div class="btn red"></div>
+          <div class="btn yellow"></div>
+          <div class="btn green"></div>
+        </div>
+        <div class="title-text">LA Contracts Bot (Prototype)</div>
+      </div>
+      <div class="back-link">
+        <a href="index.html">← Back to Museum</a>
+      </div>
+    </div>
+    <div class="content">
+      <div class="meta">
+        Status: stalled prototype  
+        Location: somewhere between GitHub and city hall
+      </div>
+
+      <h1>LA Contracts Bot (Prototype)</h1>
+
+      <h2>What it was supposed to be</h2>
+      <p>
+        A small bot that would scan public contract data from Los Angeles and flag anything that looked strange. Not a full investigation. Just an extra pair of eyes. I imagined graphs, alerts, maybe even a tiny dashboard that would make patterns in the spending a little harder to ignore.
+      </p>
+
+      <h2>What exists instead</h2>
+      <p>
+        A half built repository, one sample
