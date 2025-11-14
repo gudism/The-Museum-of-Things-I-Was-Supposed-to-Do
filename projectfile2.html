@@ -2,27 +2,36 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>5th Street Field Recording (Draft)</title>
+  <title>Bukowskis Car (Audio Draft)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
       margin: 0;
       padding: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Chicago", system-ui, sans-serif;
-      background: #c7d5e0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
+      background: radial-gradient(circle at top left, #fefefe, #c3cada);
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .desktop {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      padding: 20px;
     }
 
     .window {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -52%);
       width: 90%;
       max-width: 750px;
       background: #d6d7d9;
       border-radius: 6px;
       border: 2px solid #808086;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
       overflow: hidden;
     }
 
@@ -48,6 +57,7 @@
       gap: 4px;
       margin-right: 4px;
     }
+
     .btn {
       width: 12px;
       height: 12px;
@@ -55,28 +65,15 @@
       border: 1px solid #7c7c7c;
       background: #fdfdfd;
     }
-    .btn.red {
-      background: #ff5f57;
-    }
-    .btn.yellow {
-      background: #ffbd2e;
-    }
-    .btn.green {
-      background: #28c840;
-    }
 
-    .title-text {
-      font-weight: 600;
-    }
+    .btn.red { background: #ff5f57; }
+    .btn.yellow { background: #ffbd2e; }
+    .btn.green { background: #28c840; }
 
-    .back-link {
-      font-size: 12px;
-    }
+    .title-text { font-weight: 600; }
 
-    .back-link a {
-      text-decoration: none;
-      color: #003399;
-    }
+    .back-link { font-size: 12px; }
+    .back-link a { text-decoration: none; color: #003399; }
 
     .content {
       padding: 16px 18px 20px 18px;
@@ -85,77 +82,140 @@
       line-height: 1.6;
     }
 
-    h1 {
-      font-size: 18px;
-      margin: 0 0 8px 0;
+    h1 { font-size: 18px; margin: 0 0 8px 0; }
+    h2 { font-size: 14px; margin: 14px 0 6px 0; text-transform: uppercase; letter-spacing: 0.06em; }
+    p { margin: 0 0 8px 0; }
+    .meta { font-size: 12px; color: #444; margin-bottom: 12px; }
+
+    .list { padding-left: 18px; }
+    .list li { margin-bottom: 8px; }
+
+    audio {
+      width: 100%;
+      margin-top: 4px;
     }
 
-    h2 {
-      font-size: 14px;
-      margin: 14px 0 6px 0;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
+    .dream-note {
+      position: absolute;
+      left: 26px;
+      bottom: 30px;
+      width: 190px;
+      padding: 10px;
+      background: #f3e2ff;
+      border-radius: 5px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+      font-size: 11px;
+      transform: rotate(-3deg);
+    }
+    .dream-note strong {
+      display: block;
+      margin-bottom: 4px;
     }
 
-    p {
-      margin: 0 0 8px 0;
+    .popup {
+      position: absolute;
+      top: 24px;
+      right: 26px;
+      width: 220px;
+      background: #f6f6f8;
+      border-radius: 6px;
+      border: 2px solid #808086;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+      font-size: 11px;
+      overflow: hidden;
     }
-
-    .meta {
-      font-size: 12px;
-      color: #444;
-      margin-bottom: 12px;
+    .popup-header {
+      padding: 4px 8px;
+      background: linear-gradient(to bottom, #e8e8eb, #c3c3c6);
+      border-bottom: 1px solid #b3b3b7;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
-
-    .list {
-      padding-left: 18px;
+    .popup-body {
+      padding: 8px 10px;
+      line-height: 1.4;
     }
   </style>
 </head>
 <body>
-  <div class="window">
-    <div class="title-bar">
-      <div class="left">
-        <div class="window-buttons">
-          <div class="btn red"></div>
-          <div class="btn yellow"></div>
-          <div class="btn green"></div>
+  <div class="desktop">
+    <div class="window">
+      <div class="title-bar">
+        <div class="left">
+          <div class="window-buttons">
+            <div class="btn red"></div>
+            <div class="btn yellow"></div>
+            <div class="btn green"></div>
+          </div>
+          <div class="title-text">Bukowskis Car</div>
         </div>
-        <div class="title-text">5th Street Field Recording</div>
+        <div class="back-link">
+          <a href="index.html">← Back to Museum</a>
+        </div>
       </div>
-      <div class="back-link">
-        <a href="index.html">← Back to Museum</a>
+
+      <div class="content">
+        <div class="meta">
+          Status: audio draft only  
+          Location: Glendale, in my head
+        </div>
+
+        <h1>Bukowskis Car (Audio Draft)</h1>
+
+        <h2>What it was supposed to be</h2>
+        <p>
+          A full installation built around a recurring dream. In the dream Charles Bukowski’s face and consciousness are grafted onto one of those inflatable dancing men that flop around in the wind outside of car dealerships. For some reason he is always stationed at a skeevy BMW reseller in Glendale. The detail feels stupid and also very important.
+        </p>
+        <p>
+          The plan was to turn this into a real scene. Actual air dancers in a parking lot. Silicone masks with sagging skin and cigarette burn textures. A sound piece that layered spoken word with mechanical fan noise and freeway air. The audio here, Bukowskis Car, was supposed to be the first draft of a much bigger thing.
+        </p>
+
+        <h2>What exists instead</h2>
+        <p>
+          One composition. A spoken word track sitting on top of a rough sound bed. It describes the dream as it kept repeating. Bukowski as a tube of vinyl and air, thrashing in front of a used car lot. The piece never grew past this version. There are no masks. No live air dancers. Just this recording and a folder of notes that read more like a stress log than a production plan.
+        </p>
+
+        <h2>Why it stalled</h2>
+        <ul class="list">
+          <li>The stress that was feeding the dream caught up with me.</li>
+          <li>The line between research and delusion started to blur.</li>
+          <li>Every step forward required more time, more money, and more emotional distance than I had.</li>
+        </ul>
+
+        <h2>What this fragment reveals</h2>
+        <p>
+          That sometimes the body is already doing the performance and the project just records it. That a dream can feel like found footage. That it is possible to plan silicone masks and rented air dancers and still only have a single audio file at the end. The museum keeps this draft because it shows the point where an idea peaks and then collapses under the weight of the life that produced it.
+        </p>
+
+        <h2>Listening</h2>
+        <p>
+          This track is the first and only pass. Spoken word over a composition built while the dream was still repeating. Think of it as a test signal from a project that never reached the stage.
+        </p>
+
+        <audio controls>
+          <source src="biannnoo.mp3" type="audio/mpeg" />
+          Your browser does not support audio playback.
+        </audio>
       </div>
     </div>
-    <div class="content">
-      <div class="meta">
-        Status: partial draft  
-        Route: Hill Street to San Pedro Street
+
+    <div class="popup">
+      <div class="popup-header">
+        <span>Background process</span>
+        <span>⏱</span>
       </div>
+      <div class="popup-body">
+        Recurring dream detected.  
+        Project load may exceed system capacity.
+      </div>
+    </div>
 
-      <h1>5th Street Field Recording (Draft)</h1>
-
-      <h2>What it was supposed to be</h2>
-      <p>
-        A sound piece built from a straight walk down 5th Street. Hill Street to San Pedro Street. No cuts. No smoothing. Just the real mix of traffic, people, footsteps, storefronts, idling buses, and all the small moments you only notice when you listen instead of look.
-      </p>
-
-      <h2>What exists instead</h2>
-      <p>
-        A handful of voice memos recorded on my phone, now residing on an unlabeled thumbdrive. Some are blown out. Some are too quiet. There is one clip where the mic caught a man yelling jokes at passing cars and another where someone is dragging a shopping cart for an entire block. The folder is messy but the textures are honest.
-      </p>
-
-      <h2>Why it stalled</h2>
-      <ul class="list">
-        <li>I kept trying to make the street sound cleaner than it is.</li>
-        <li>The recordings felt too heavy to treat as simple audio material.</li>
-        <li>Every attempt to mix it turned into a different project.</li>
-      </ul>
-
-      <h2>What this fragment reveals</h2>
-      <p>
-        That the city resists being reduced to a neat narrative. That field recording is also a form of witnessing. That maybe the draft is closer to the truth than any polished version would have been.
-      </p>
+    <div class="dream-note">
+      <strong>dream log</strong>
+      bukowski tube man again  
+      always that same glendale lot  
+      figure out why or accept it
     </div>
   </div>
 </body>
