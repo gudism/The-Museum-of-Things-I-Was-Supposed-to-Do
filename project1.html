@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>The USB Archive</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Chicago", system-ui, sans-serif;
+      background: #c7d5e0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .window {
+      width: 90%;
+      max-width: 750px;
+      background: #d6d7d9;
+      border-radius: 6px;
+      border: 2px solid #808086;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+      overflow: hidden;
+    }
+
+    .title-bar {
+      height: 26px;
+      display: flex;
+      align-items: center;
+      padding: 0 8px;
+      background: linear-gradient(to bottom, #e8e8eb, #c3c3c6);
+      border-bottom: 2px solid #b3b3b7;
+      font-size: 13px;
+      justify-content: space-between;
+    }
+
+    .left {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .window-buttons {
+      display: flex;
+      gap: 4px;
+      margin-right: 4px;
+    }
+    .btn {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 1px solid #7c7c7c;
+      background: #fdfdfd;
+    }
+    .btn.red {
+      background: #ff5f57;
+    }
+    .btn.yellow {
+      background: #ffbd2e;
+    }
+    .btn.green {
+      background: #28c840;
+    }
+
+    .title-text {
+      font-weight: 600;
+    }
+
+    .back-link {
+      font-size: 12px;
+    }
+
+    .back-link a {
+      text-decoration: none;
+      color: #003399;
+    }
+
+    .content {
+      padding: 16px 18px 20px 18px;
+      background: #e4e5e8;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    h1 {
+      font-size: 18px;
+      margin: 0 0 8px 0;
+    }
+
+    h2 {
+      font-size: 14px;
+      margin: 14px 0 6px 0;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    p {
+      margin: 0 0 8px 0;
+    }
+
+    .meta {
+      font-size: 12px;
+      color: #444;
+      margin-bottom: 12px;
+    }
+
+    .list {
+      padding-left: 18px;
+    }
+  </style>
+</head>
+<body>
+  <div class="window">
+    <div class="title-bar">
+      <div class="left">
+        <div class="window-buttons">
+          <div class="btn red"></div>
+          <div class="btn yellow"></div>
+          <div class="btn green"></div>
+        </div>
+        <div class="title-text">The USB Archive</div>
+      </div>
+      <div class="back-link">
+        <a href="index.html">← Back to Museum</a>
+      </div>
+    </div>
+    <div class="content">
+      <div class="meta">
+        Status: ongoing and unresolved  
+        Years active: 2010 to present
+      </div>
+
+      <h1>The USB Archive</h1>
+
+      <h2>What it was supposed to be</h2>
+      <p>
+        A full catalog of every USB drive I have collected over the years. A record of forgotten files, abandoned school projects, corrupted Ableton sessions, and photos that no longer make sense. I wanted to map how a person becomes scattered across cheap storage.
+      </p>
+
+      <h2>What exists instead</h2>
+      <p>
+        A plastic box filled with identical drives. Some are labeled with sharpie but the handwriting has faded. A few contain entire lives from past semesters. Others refuse to open. There is a spreadsheet that I started and then immediately stopped halfway through because one file derailed the whole thing.
+      </p>
+
+      <h2>Why it stalled</h2>
+      <ul class="list">
+        <li>The archive grew faster than the project.</li>
+        <li>Every drive asked for more emotional labor than I expected.</li>
+        <li>Sorting memory feels impossible when the memories are already scattered.</li>
+      </ul>
+
+      <h2>What this fragment reveals</h2>
+      <p>
+        That digital clutter has weight. That an archive does not need to be complete to be real. That unfinished work still records intention. The museum keeps this here as proof that sometimes the box is the artwork.
+      </p>
+    </div>
+  </div>
+</body>
+</html>
+
