@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Mina Desktop – Projects</title>
+  <title>Museum of Things I Was Supposed To Do</title>
   <style>
     * {
       box-sizing: border-box;
@@ -13,12 +13,12 @@
     html, body {
       width: 100%;
       height: 100%;
-      overflow: hidden;
+      overflow: hidden; /* desktop does not scroll */
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
       background: #070710;
     }
 
-    /* wallpaper at the very back */
+    /* wallpaper stack in the far back */
     #wallpaper-screenshots {
       position: fixed;
       inset: 0;
@@ -41,7 +41,7 @@
       backdrop-filter: blur(1px);
     }
 
-    /* glitch overlay – visual only */
+    /* glitch overlay – purely visual */
     .glitch-overlay {
       position: fixed;
       inset: 0;
@@ -76,7 +76,7 @@
       100% { transform: translate(0,0); opacity: 0.2; }
     }
 
-    /* clutter icons – behind everything interactive */
+    /* clutter icons – behind everything clickable */
     #clutter-container {
       position: fixed;
       inset: 0;
@@ -165,7 +165,7 @@
       font-size: 11px;
     }
 
-    /* desktop icons for extra folders */
+    /* desktop icons */
     .desktop-icon {
       position: absolute;
       width: 90px;
@@ -206,11 +206,11 @@
       box-shadow: 0 0 2px rgba(0,0,0,0.8);
     }
 
-    /* generic folder window */
+    /* folder windows */
     .folder-window {
       position: absolute;
-      width: 420px;
-      height: 360px;
+      width: 520px;
+      height: 380px;
       background: #f0f0f5;
       border: 2px solid #000;
       z-index: 80;
@@ -288,15 +288,32 @@
       gap: 10px;
     }
 
-    /* SCROLLING FIX: this is the scrolling area inside a window */
+    /* inner content with scroll and side description */
     .folder-content {
       flex: 1;
+      background: #ffffff;
+      display: grid;
+      grid-template-columns: 1.7fr 1fr;
+      border-top: 1px solid #000;
+      min-height: 0;
+    }
+
+    .folder-main {
       padding: 10px;
       overflow-y: auto;
       overflow-x: hidden;
-      background: #ffffff;
-      font-size: 11px;
       -webkit-overflow-scrolling: touch;
+      border-right: 1px solid #ddd;
+      font-size: 11px;
+    }
+
+    .folder-side {
+      padding: 10px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      font-size: 11px;
+      background: #faf8ff;
     }
 
     .folder-section-title {
@@ -366,6 +383,17 @@
       width: 100%;
     }
 
+    .side-title {
+      font-weight: bold;
+      margin-bottom: 6px;
+      font-size: 12px;
+    }
+
+    .side-text {
+      line-height: 1.4;
+      margin-bottom: 6px;
+    }
+
     .system-popup {
       position: fixed;
       right: 18px;
@@ -409,7 +437,7 @@
   <div class="glitch-overlay"></div>
 
   <div class="menu-bar">
-    <span class="menu-title">minaBook HD</span>
+    <span class="menu-title">Museum of Things I Was Supposed To Do</span>
     <span>File</span>
     <span>Edit</span>
     <span>View</span>
@@ -418,27 +446,32 @@
     <div class="menu-right">Thu 3:17 am  •  Battery 5%</div>
   </div>
 
-  <!-- desktop icons for extra folders -->
-  <div class="desktop-icon" id="icon-misc" style="top: 80px; left: 40px;">
+  <!-- desktop icons -->
+  <div class="desktop-icon" id="icon-usb" style="top: 80px; left: 40px;">
     <div class="icon-image">📁</div>
-    <div class="icon-label">misc files</div>
+    <div class="icon-label">USB archive</div>
   </div>
 
-  <div class="desktop-icon" id="icon-trash" style="top: 170px; left: 40px;">
-    <div class="icon-image">🗑️</div>
-    <div class="icon-label">emotional trash</div>
+  <div class="desktop-icon" id="icon-bukowski" style="top: 170px; left: 40px;">
+    <div class="icon-image">📁</div>
+    <div class="icon-label">Bukowski’s Car...</div>
   </div>
 
-  <!-- foreground PROJECTS folder window, already open -->
-  <div class="folder-window" id="projects-folder" style="top: 70px; left: 180px; z-index: 120;">
+  <div class="desktop-icon" id="icon-misc" style="top: 260px; left: 40px;">
+    <div class="icon-image">📁</div>
+    <div class="icon-label">misc admin</div>
+  </div>
+
+  <!-- MAIN MUSEUM FOLDER – foreground -->
+  <div class="folder-window" id="museum-folder" style="top: 70px; left: 180px; z-index: 200;">
     <div class="folder-header">
       <div class="folder-header-left">
         <div class="folder-buttons">
-          <div class="folder-button close" id="projects-close"></div>
+          <div class="folder-button close" id="museum-close"></div>
           <div class="folder-button min"></div>
           <div class="folder-button max"></div>
         </div>
-        <span>Projects – HTML files</span>
+        <span>Museum of Things I Was Supposed To Do</span>
       </div>
       <span>4 items</span>
     </div>
@@ -448,74 +481,79 @@
       <span>Info</span>
     </div>
     <div class="folder-content">
-      <div class="folder-section-title">Projects (click to open full page)</div>
-      <div class="file-grid">
-        <div class="file-item">
-          <a class="file-link" href="project1.html">
-            <div class="file-icon">📄</div>
-            <div class="file-text">
-              <div class="file-label-main">Project 1 – [your Project 1 title]</div>
-              <div class="file-label-sub">project1.html</div>
-            </div>
-          </a>
-        </div>
+      <div class="folder-main">
+        <div class="folder-section-title">Exhibits (click to open full project page)</div>
+        <div class="file-grid">
+          <div class="file-item">
+            <a class="file-link" href="project1.html">
+              <div class="file-icon">📄</div>
+              <div class="file-text">
+                <div class="file-label-main">USB Archive – [Project 1 title]</div>
+                <div class="file-label-sub">project1.html</div>
+              </div>
+            </a>
+          </div>
 
-        <div class="file-item">
-          <a class="file-link" href="project2.html">
-            <div class="file-icon">📄</div>
-            <div class="file-text">
-              <div class="file-label-main">Project 2 – Bukowski’s Car</div>
-              <div class="file-label-sub">project2.html</div>
-            </div>
-          </a>
-        </div>
+          <div class="file-item">
+            <a class="file-link" href="project2.html">
+              <div class="file-icon">📄</div>
+              <div class="file-text">
+                <div class="file-label-main">Bukowski’s Car – recurring dream audio piece</div>
+                <div class="file-label-sub">project2.html</div>
+              </div>
+            </a>
+          </div>
 
-        <div class="file-item">
-          <a class="file-link" href="project3.html">
-            <div class="file-icon">📄</div>
-            <div class="file-text">
-              <div class="file-label-main">Project 3 – [your Project 3 title]</div>
-              <div class="file-label-sub">project3.html</div>
-            </div>
-          </a>
-        </div>
+          <div class="file-item">
+            <a class="file-link" href="project3.html">
+              <div class="file-icon">📄</div>
+              <div class="file-text">
+                <div class="file-label-main">[Project 3 name] – supposed to be done by now</div>
+                <div class="file-label-sub">project3.html</div>
+              </div>
+            </a>
+          </div>
 
-        <div class="file-item">
-          <a class="file-link" href="project4.html">
-            <div class="file-icon">📄</div>
-            <div class="file-text">
-              <div class="file-label-main">Project 4 – [your Project 4 title]</div>
-              <div class="file-label-sub">project4.html</div>
-            </div>
-          </a>
+          <div class="file-item">
+            <a class="file-link" href="project4.html">
+              <div class="file-icon">📄</div>
+              <div class="file-text">
+                <div class="file-label-main">[Project 4 name] – pending, forever</div>
+                <div class="file-label-sub">project4.html</div>
+              </div>
+            </a>
+          </div>
         </div>
       </div>
 
-      <!-- filler content so you can see that scrolling works -->
-      <div class="folder-section-title">Notes</div>
-      <p>
-        If this text scrolls inside the window, the scrolling fix is working.  
-        The project files above are direct links to project1.html, project2.html, etc,
-        so when you click them you leave the desktop and see the full project page with its own scrolling.
-      </p>
-      <p>
-        You can delete this paragraph later, it is just here to force extra height.
-      </p>
+      <div class="folder-side">
+        <div class="side-title">about this folder</div>
+        <div class="side-text">
+          An informal museum of assignments, performances, and installations
+          that were fully storyboarded in my brain and partially started in real life,
+          then quietly exiled to their own little HTML universes.
+        </div>
+        <div class="side-text">
+          Each file to the left is a door to a project that was supposed to be finished
+          on time, in a calm and organized way. Instead, they live here, curated by
+          anxiety, sleep deprivation, and a sense of humor.
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- misc folder window (behind projects) -->
-  <div class="folder-window hidden" id="misc-folder" style="top: 260px; left: 260px;">
+  <!-- USB ARCHIVE FOLDER -->
+  <div class="folder-window hidden" id="usb-folder" style="top: 120px; left: 240px;">
     <div class="folder-header">
       <div class="folder-header-left">
         <div class="folder-buttons">
-          <div class="folder-button close" id="misc-close"></div>
+          <div class="folder-button close" id="usb-close"></div>
           <div class="folder-button min"></div>
           <div class="folder-button max"></div>
         </div>
-        <span>misc files</span>
+        <span>USB archive</span>
       </div>
-      <span>37 items</span>
+      <span>too many drives</span>
     </div>
     <div class="folder-toolbar">
       <span>View</span>
@@ -523,39 +561,164 @@
       <span>Info</span>
     </div>
     <div class="folder-content">
-      genuinely random files you keep telling yourself you will organize one day.
-      <br><br>
-      scrolling also works in here because this is inside .folder-content.
+      <div class="folder-main">
+        <div class="folder-section-title">contents</div>
+        <div class="file-grid">
+          <div class="file-item">
+            <div class="file-icon">💾</div>
+            <div class="file-text">
+              <div class="file-label-main">usb_dump_01</div>
+              <div class="file-label-sub">mysterious .zip, 2017</div>
+            </div>
+          </div>
+          <div class="file-item">
+            <div class="file-icon">💾</div>
+            <div class="file-text">
+              <div class="file-label-main">thesis_idea_old</div>
+              <div class="file-label-sub">forgotten.docx</div>
+            </div>
+          </div>
+          <div class="file-item">
+            <div class="file-icon">💾</div>
+            <div class="file-text">
+              <div class="file-label-main">backup_of_backup</div>
+              <div class="file-label-sub">safety net or hoard</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="folder-side">
+        <div class="side-title">USB archive</div>
+        <div class="side-text">
+          An attempt to catalog all the rogue flash drives in my life,  
+          each one full of half started songs, scans of readings,
+          and screenshots that felt important at 3 am.
+        </div>
+        <div class="side-text">
+          This was going to be an installation of USBs as relics,
+          each one labeled with what I thought I was going to do with my life that semester.
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- emotional trash folder window (behind projects) -->
-  <div class="folder-window hidden" id="trash-folder" style="top: 320px; left: 360px;">
+  <!-- BUKOWSKI FOLDER -->
+  <div class="folder-window hidden" id="bukowski-folder" style="top: 150px; left: 220px;">
     <div class="folder-header">
       <div class="folder-header-left">
         <div class="folder-buttons">
-          <div class="folder-button close" id="trash-close"></div>
+          <div class="folder-button close" id="bukowski-close"></div>
           <div class="folder-button min"></div>
           <div class="folder-button max"></div>
         </div>
-        <span>emotional trash</span>
+        <span>Bukowski’s Car...</span>
       </div>
-      <span>overflow</span>
+      <span>audio + masks</span>
     </div>
     <div class="folder-toolbar">
-      <span>Recently Deleted</span>
-      <span>Forever</span>
+      <span>Audio</span>
+      <span>Text</span>
+      <span>References</span>
     </div>
     <div class="folder-content">
-      text_draft_unsent_3am.txt, playlist_idea_too_honest.m3u, and other things you almost dragged to oblivion.
+      <div class="folder-main">
+        <div class="folder-section-title">files</div>
+        <div class="file-grid">
+          <div class="file-item">
+            <a class="file-link" href="project2.html">
+              <div class="file-icon">🎵</div>
+              <div class="file-text">
+                <div class="file-label-main">biannnoo.mp3 – Bukowski’s Car</div>
+                <div class="file-label-sub">project2.html</div>
+              </div>
+            </a>
+          </div>
+          <div class="file-item">
+            <div class="file-icon">📄</div>
+            <div class="file-text">
+              <div class="file-label-main">dream_log_glendale.txt</div>
+              <div class="file-label-sub">why is he at the BMW reseller</div>
+            </div>
+          </div>
+          <div class="file-item">
+            <div class="file-icon">🎭</div>
+            <div class="file-text">
+              <div class="file-label-main">silicone_mask_notes.rtf</div>
+              <div class="file-label-sub">air dancer face experiments</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="folder-side">
+        <div class="side-title">Bukowski’s Car...</div>
+        <div class="side-text">
+          “I have been having a recurring dream where Charles Bukowski’s face and consciousness
+          are put onto one of those inflatable dancing men outside car dealerships.
+          He is always posted at a skeevy BMW reseller in Glendale.”
+        </div>
+        <div class="side-text">
+          This project was going to be a whole scene: real air dancers, silicone masks,
+          and this audio playing in a parking lot of my brain.  
+          Instead it lives here as an open tab in the museum of almosts.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MISC ADMIN FOLDER -->
+  <div class="folder-window hidden" id="misc-folder" style="top: 220px; left: 300px;">
+    <div class="folder-header">
+      <div class="folder-header-left">
+        <div class="folder-buttons">
+          <div class="folder-button close" id="misc-close"></div>
+          <div class="folder-button min"></div>
+          <div class="folder-button max"></div>
+        </div>
+        <span>misc admin</span>
+      </div>
+      <span>unresolved tasks</span>
+    </div>
+    <div class="folder-toolbar">
+      <span>View</span>
+      <span>Sort</span>
+      <span>Info</span>
+    </div>
+    <div class="folder-content">
+      <div class="folder-main">
+        <div class="folder-section-title">loose ends</div>
+        <div class="file-grid">
+          <div class="file-item">
+            <div class="file-icon">📄</div>
+            <div class="file-text">
+              <div class="file-label-main">email_drafts_unsent.txt</div>
+              <div class="file-label-sub">apologies, extensions, explanations</div>
+            </div>
+          </div>
+          <div class="file-item">
+            <div class="file-icon">📄</div>
+            <div class="file-text">
+              <div class="file-label-main">to_do_museum.csv</div>
+              <div class="file-label-sub">display plans that never made it</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="folder-side">
+        <div class="side-title">misc admin</div>
+        <div class="side-text">
+          The paperwork section of the museum.  
+          Reminders, rubrics, and notes I was supposed to act on immediately,
+          filed lovingly under “later.”
+        </div>
+      </div>
     </div>
   </div>
 
   <div class="system-popup">
     <div class="system-popup-title">System message</div>
     <div class="system-popup-body">
-      Project files in this window are the real ones. Clicking them opens project1.html, project2.html, etc
-      as full pages, where you can scroll normally.
+      The museum is open. Project files in the main folder are the real HTML pages.
+      Background clutter is purely decorative and vaguely judgmental.
     </div>
   </div>
   <script>
@@ -631,7 +794,7 @@
       createClutterIcon();
     }
 
-    // window z-index control for extra folders (projects stays in front via inline z-index)
+    // window z index control – museum stays in front unless dragged above
     let topZ = 80;
 
     function bringToFront(win) {
@@ -639,7 +802,7 @@
       win.style.zIndex = topZ;
     }
 
-    function setupFolder(iconId, folderId, closeId) {
+    function setupFolderIcon(iconId, folderId, closeId) {
       const icon = document.getElementById(iconId);
       const folder = document.getElementById(folderId);
       const closeBtn = document.getElementById(closeId);
@@ -659,15 +822,16 @@
       });
     }
 
-    setupFolder("icon-misc", "misc-folder", "misc-close");
-    setupFolder("icon-trash", "trash-folder", "trash-close");
+    setupFolderIcon("icon-usb", "usb-folder", "usb-close");
+    setupFolderIcon("icon-bukowski", "bukowski-folder", "bukowski-close");
+    setupFolderIcon("icon-misc", "misc-folder", "misc-close");
 
-    // bring projects folder to front once on load
-    const projectsFolder = document.getElementById("projects-folder");
-    projectsFolder.addEventListener("mousedown", () => {
-      projectsFolder.style.zIndex = 200;
+    // museum folder: already visible, but still bringable to front
+    const museumFolder = document.getElementById("museum-folder");
+    museumFolder.addEventListener("mousedown", () => {
+      bringToFront(museumFolder);
     });
-    projectsFolder.style.zIndex = 200;
+    museumFolder.style.zIndex = 200;
   </script>
 </body>
 </html>
