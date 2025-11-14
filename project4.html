@@ -57,24 +57,15 @@
       background: #fdfdfd;
     }
 
-    .btn.red {
-      background: #ff5f57;
-    }
-    .btn.yellow {
-      background: #ffbd2e;
-    }
-    .btn.green {
-      background: #28c840;
-    }
+    .btn.red { background: #ff5f57; }
+    .btn.yellow { background: #ffbd2e; }
+    .btn.green { background: #28c840; }
 
-    .title-text {
-      font-weight: 600;
-    }
+    .title-text { font-weight: 600; }
 
     .back-link {
       font-size: 12px;
     }
-
     .back-link a {
       text-decoration: none;
       color: #003399;
@@ -154,9 +145,39 @@
 
       <h2>What it was supposed to be</h2>
       <p>
-        A small bot that would scan public contract data from Los Angeles and flag anything that looked strange. Not a full investigation. Just an extra pair of eyes. I imagined graphs, alerts, maybe even a tiny dashboard that would make patterns in the spending a little harder to ignore.
+        A small bot that could scan public contract data from Los Angeles and flag anything that looked unusual. Not a full investigation, just a quiet background process that noticed patterns the city preferred to ignore. Los Angeles has a long record of treating corruption as a civic rhythm. The council has an equally long record of participating in scandals with city contractors. The Huizar case was only one example. The goal was to make a system that could watch the details without getting pulled into the noise.
       </p>
 
       <h2>What exists instead</h2>
       <p>
-        A half built repository, one sample
+        One official document. A collection of fifty public records requests sent to the City Council and to the Office of the City Controller. A paper trail of unanswered emails, broken portals, and delayed responses. A set of scripts that almost run. A folder called
+        <span class="code-block">data_raw</span>
+        that never filled the way it was supposed to. A five year crashout that became part of the project whether I wanted it or not.
+      </p>
+
+      <div class="code-block">
+python run_anomaly_detector.py \
+  --input data_raw/contracts_sample.csv \
+  --output reports/anomalies.csv
+      </div>
+
+      <p>
+        The command looks convincing. The data does not exist yet.
+      </p>
+
+      <h2>Why it stalled</h2>
+      <ul class="list">
+        <li>The city transparency infrastructure is built to slow you down.</li>
+        <li>Public records requests took more energy than the actual code.</li>
+        <li>The bureaucracy had more stamina than I did.</li>
+        <li>The story kept expanding and the data never arrived at the pace the project needed.</li>
+      </ul>
+
+      <h2>What this fragment reveals</h2>
+      <p>
+        That corruption in Los Angeles is not a secret or an exception. It is a structural habit that shapes how information moves. That building a bot to track anomalies requires the very data the city makes difficult to access. That sometimes a project exposes its subject by failing. The museum keeps this prototype because the failure is part of the truth. It documents an attempt to follow the money in a place where the pathways are designed to blur. It also shows the limits of one person trying to build clarity inside a system that is not interested in being seen.
+      </p>
+    </div>
+  </div>
+</body>
+</html>
