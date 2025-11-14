@@ -18,7 +18,7 @@
       background: #070710;
     }
 
-    /* wallpaper graveyard of screenshots - very back */
+    /* wallpaper in the very back */
     #wallpaper-screenshots {
       position: fixed;
       inset: 0;
@@ -41,7 +41,7 @@
       backdrop-filter: blur(1px);
     }
 
-    /* scanline glitch overlay - visual only */
+    /* glitch overlay, but cannot block clicks */
     .glitch-overlay {
       position: fixed;
       inset: 0;
@@ -76,7 +76,7 @@
       100% { transform: translate(0,0); opacity: 0.2; }
     }
 
-    /* clutter icons - behind everything interactive */
+    /* clutter icons behind everything interactive */
     #clutter-container {
       position: fixed;
       inset: 0;
@@ -130,7 +130,7 @@
       100% { filter:none; opacity:0.9; }
     }
 
-    /* menu bar */
+    /* menu bar high but below windows */
     .menu-bar {
       position: fixed;
       top: 0;
@@ -139,7 +139,7 @@
       height: 24px;
       background: linear-gradient(to bottom, rgba(24,24,32,0.96), rgba(8,8,16,0.98));
       border-bottom: 1px solid #000;
-      z-index: 60;
+      z-index: 900;
       display: flex;
       align-items: center;
       padding: 0 10px;
@@ -165,12 +165,12 @@
       font-size: 11px;
     }
 
-    /* desktop icons - foreground */
+    /* desktop icons - foreground but below windows */
     .desktop-icon {
       position: absolute;
       width: 80px;
       text-align: center;
-      z-index: 70;
+      z-index: 950;
       font-family: "Geneva", system-ui, sans-serif;
       cursor: pointer;
       user-select: none;
@@ -205,14 +205,14 @@
       box-shadow: 0 0 2px rgba(0,0,0,0.8);
     }
 
-    /* folder windows - always on top of clutter and wallpaper */
+    /* folder windows – absolute top interactive layer */
     .folder-window {
       position: absolute;
       width: 460px;
       height: 420px;
       background: #f0f0f5;
       border: 2px solid #000;
-      z-index: 100;
+      z-index: 1000; /* starting above everything */
       display: flex;
       flex-direction: column;
       font-family: "Chicago", "Geneva", system-ui, sans-serif;
@@ -292,7 +292,6 @@
       gap: 10px;
     }
 
-    /* scrolling fix */
     .folder-content {
       flex: 1;
       padding: 10px;
@@ -389,7 +388,6 @@
       opacity: 0.6;
     }
 
-    /* little popup */
     .system-popup {
       position: fixed;
       right: 18px;
@@ -402,7 +400,7 @@
       font-family: "Geneva", system-ui, sans-serif;
       font-size: 11px;
       padding: 8px 10px;
-      z-index: 200;
+      z-index: 1500;
       animation: popupPulse 2.6s infinite ease-in-out;
     }
 
@@ -463,8 +461,8 @@
     <div class="icon-label">emotional trash</div>
   </div>
 
-  <!-- Bukowski folder - visible on load -->
-  <div class="folder-window" id="bukowski-folder" style="top: 80px; left: 140px;">
+  <!-- Bukowski folder -->
+  <div class="folder-window" id="bukowski-folder" style="top: 70px; left: 150px;">
     <div class="folder-header">
       <div class="folder-header-left">
         <div class="folder-buttons">
@@ -545,8 +543,8 @@
     </div>
   </div>
 
-  <!-- Masks WIP folder - visible on load -->
-  <div class="folder-window" id="masks-folder" style="top: 120px; left: 260px;">
+  <!-- Masks WIP folder -->
+  <div class="folder-window" id="masks-folder" style="top: 100px; left: 330px;">
     <div class="folder-header">
       <div class="folder-header-left">
         <div class="folder-buttons">
@@ -602,8 +600,8 @@
     </div>
   </div>
 
-  <!-- School Desktop folder - visible on load -->
-  <div class="folder-window" id="school-folder" style="top: 200px; left: 200px;">
+  <!-- School Desktop folder -->
+  <div class="folder-window" id="school-folder" style="top: 200px; left: 220px;">
     <div class="folder-header">
       <div class="folder-header-left">
         <div class="folder-buttons">
@@ -660,8 +658,8 @@
     </div>
   </div>
 
-  <!-- emotional trash folder - visible on load -->
-  <div class="folder-window small" id="trash-folder" style="top: 260px; left: 360px;">
+  <!-- emotional trash folder -->
+  <div class="folder-window small" id="trash-folder" style="top: 260px; left: 420px;">
     <div class="folder-header">
       <div class="folder-header-left">
         <div class="folder-buttons">
@@ -766,13 +764,13 @@
       clutterContainer.appendChild(label);
     }
 
-    const clutterAmount = 110; // real chaos
+    const clutterAmount = 110;
     for (let i = 0; i < clutterAmount; i++) {
       createClutterIcon();
     }
 
-    // window z-index management
-    let topZ = 100;
+    // window z index control
+    let topZ = 1000;
 
     function bringToFront(win) {
       topZ += 1;
@@ -785,14 +783,13 @@
       const closeBtn = document.getElementById(closeId);
       const header = folder.querySelector(".folder-header");
 
-      // single click on icon toggles visibility
       icon.addEventListener("click", () => {
         if (folder.classList.contains("hidden")) {
           folder.classList.remove("hidden");
-          bringToFront(folder);
         } else {
           folder.classList.add("hidden");
         }
+        bringToFront(folder);
       });
 
       closeBtn.addEventListener("click", () => {
