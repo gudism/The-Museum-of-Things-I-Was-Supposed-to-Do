@@ -1,44 +1,174 @@
-<h2>Video archive</h2>
-<p>
-  These clips come from different sessions. Each one was built to react to audio and instead ended up reacting to nothing in particular. They still move. They just do it on their own terms.
-</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Audio Reactive Visuals (No Audio)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Chicago", system-ui, sans-serif;
+      background: #c7d5e0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
 
-<div class="video-block">
-  <strong>roadblobTD</strong>
-  <video controls>
-    <source src="roadblobTD.0.mov" type="video/quicktime">
-    Your browser does not support video playback.
-  </video>
-</div>
+    .window {
+      width: 90%;
+      max-width: 750px;
+      background: #d6d7d9;
+      border-radius: 6px;
+      border: 2px solid #808086;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+      overflow: hidden;
+    }
 
-<div class="video-block">
-  <strong>trainTD</strong>
-  <video controls>
-    <source src="trainTD.0.mov" type="video/quicktime">
-    Your browser does not support video playback.
-  </video>
-</div>
+    .title-bar {
+      height: 26px;
+      display: flex;
+      align-items: center;
+      padding: 0 8px;
+      background: linear-gradient(to bottom, #e8e8eb, #c3c3c6);
+      border-bottom: 2px solid #b3b3b7;
+      font-size: 13px;
+      justify-content: space-between;
+    }
 
-<div class="video-block">
-  <strong>mahfaceTD</strong>
-  <video controls>
-    <source src="mahfaceTD.0.mov" type="video/quicktime">
-    Your browser does not support video playback.
-  </video>
-</div>
+    .left {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
 
-<div class="video-block">
-  <strong>deerTD</strong>
-  <video controls>
-    <source src="deerTD.0.mov" type="video/quicktime">
-    Your browser does not support video playback.
-  </video>
-</div>
+    .window-buttons {
+      display: flex;
+      gap: 4px;
+      margin-right: 4px;
+    }
 
-<div class="video-block">
-  <strong>circlereactTD</strong>
-  <video controls>
-    <source src="circlereactTD.0.mov" type="video/quicktime">
-    Your browser does not support video playback.
-  </video>
-</div>
+    .btn {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 1px solid #7c7c7c;
+      background: #fdfdfd;
+    }
+
+    .btn.red { background: #ff5f57; }
+    .btn.yellow { background: #ffbd2e; }
+    .btn.green { background: #28c840; }
+
+    .title-text { font-weight: 600; }
+
+    .back-link { font-size: 12px; }
+    .back-link a { text-decoration: none; color: #003399; }
+
+    .content {
+      padding: 16px 18px 20px 18px;
+      background: #e4e5e8;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    h1 { font-size: 18px; margin: 0 0 8px 0; }
+    h2 { font-size: 14px; margin: 14px 0 6px 0; text-transform: uppercase; letter-spacing: 0.06em; }
+    p { margin: 0 0 8px 0; }
+
+    .meta { font-size: 12px; color: #444; margin-bottom: 12px; }
+
+    .video-block {
+      background: #cfd0d3;
+      border: 1px solid #a5a6aa;
+      padding: 10px;
+      border-radius: 4px;
+      margin-bottom: 14px;
+    }
+
+    video {
+      width: 100%;
+      border-radius: 4px;
+      display: block;
+      margin-top: 6px;
+    }
+  </style>
+</head>
+<body>
+  <div class="window">
+    <div class="title-bar">
+      <div class="left">
+        <div class="window-buttons">
+          <div class="btn red"></div>
+          <div class="btn yellow"></div>
+          <div class="btn green"></div>
+        </div>
+        <div class="title-text">Audio Reactive Visuals</div>
+      </div>
+      <div class="back-link">
+        <a href="index.html">← Back to Museum</a>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="meta">
+        Status: orphaned experiments  
+        Location: various TouchDesigner networks
+      </div>
+
+      <h1>Audio Reactive Visuals (No Audio)</h1>
+
+      <h2>What it was supposed to be</h2>
+      <p>
+        A growing collection of audio reactive TouchDesigner visuals that would eventually respond to original sound. I wanted each piece to move in a way that felt like it was listening. Shapes that tremble with bass. Lines that shiver with higher frequencies. A small universe of motion tied to something you could hear.
+      </p>
+
+      <h2>What exists instead</h2>
+      <p>
+        Visuals that are in motion but not actually reacting to anything outside themselves. They pulse and distort as if music is present, but the input is internal. They are reacting to nothing and still moving anyway.
+      </p>
+
+      <h2>Why it stalled</h2>
+      <p>
+        The sound never caught up to the visuals. Each network was waiting for a track that did not exist. The patches moved on their own and stayed that way.
+      </p>
+
+      <h2>What this fragment reveals</h2>
+      <p>
+        That motion can be a habit. That a system can pretend to be reactive even when it is alone. That the gap between sound and image is its own kind of space.
+      </p>
+
+      <h2>Video archive</h2>
+      <p>
+        These clips come from different sessions. Each one was built to react to audio and instead ended up reacting to nothing in particular.
+      </p>
+
+      <div class="video-block">
+        <strong>mahfaceTD</strong>
+        <video controls>
+          <source src="mahfaceTD.0.mp4" type="video/mp4">
+          Your browser does not support video playback.
+        </video>
+      </div>
+
+      <div class="video-block">
+        <strong>roadblobTD</strong>
+        <video controls>
+          <source src="roadblobTD.0.mp4" type="video/mp4">
+          Your browser does not support video playback.
+        </video>
+      </div>
+
+      <div class="video-block">
+        <strong>trainTD</strong>
+        <video controls>
+          <source src="trainTD.0.mp4" type="video/mp4">
+          Your browser does not support video playback.
+        </video>
+      </div>
+
+    </div>
+  </div>
+</body>
+</html>
