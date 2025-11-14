@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Mina Desktop - Bukowski’s Car</title>
+  <title>Mina Desktop – Bukowski’s Car</title>
   <style>
     * {
       box-sizing: border-box;
@@ -18,7 +18,7 @@
       background: #070710;
     }
 
-    /* wallpaper in the very back */
+    /* wallpaper graveyard at the very back */
     #wallpaper-screenshots {
       position: fixed;
       inset: 0;
@@ -37,11 +37,11 @@
       box-shadow:
         0 0 14px rgba(0,0,0,0.8),
         0 0 0 1px rgba(0,0,0,0.9);
-      opacity: 0.35;
+      opacity: 0.32;
       backdrop-filter: blur(1px);
     }
 
-    /* glitch overlay, but cannot block clicks */
+    /* scanline glitch overlay (visual only) */
     .glitch-overlay {
       position: fixed;
       inset: 0;
@@ -130,7 +130,7 @@
       100% { filter:none; opacity:0.9; }
     }
 
-    /* menu bar high but below windows */
+    /* menu bar (foreground-ish) */
     .menu-bar {
       position: fixed;
       top: 0;
@@ -139,7 +139,7 @@
       height: 24px;
       background: linear-gradient(to bottom, rgba(24,24,32,0.96), rgba(8,8,16,0.98));
       border-bottom: 1px solid #000;
-      z-index: 900;
+      z-index: 50;
       display: flex;
       align-items: center;
       padding: 0 10px;
@@ -165,12 +165,12 @@
       font-size: 11px;
     }
 
-    /* desktop icons - foreground but below windows */
+    /* desktop icons in front of background, below windows */
     .desktop-icon {
       position: absolute;
       width: 80px;
       text-align: center;
-      z-index: 950;
+      z-index: 60;
       font-family: "Geneva", system-ui, sans-serif;
       cursor: pointer;
       user-select: none;
@@ -205,14 +205,14 @@
       box-shadow: 0 0 2px rgba(0,0,0,0.8);
     }
 
-    /* folder windows – absolute top interactive layer */
+    /* folder windows – foreground */
     .folder-window {
       position: absolute;
       width: 460px;
       height: 420px;
       background: #f0f0f5;
       border: 2px solid #000;
-      z-index: 1000; /* starting above everything */
+      z-index: 100;
       display: flex;
       flex-direction: column;
       font-family: "Chicago", "Geneva", system-ui, sans-serif;
@@ -400,7 +400,7 @@
       font-family: "Geneva", system-ui, sans-serif;
       font-size: 11px;
       padding: 8px 10px;
-      z-index: 1500;
+      z-index: 150;
       animation: popupPulse 2.6s infinite ease-in-out;
     }
 
@@ -461,7 +461,7 @@
     <div class="icon-label">emotional trash</div>
   </div>
 
-  <!-- Bukowski folder -->
+  <!-- Bukowski folder (visible on load) -->
   <div class="folder-window" id="bukowski-folder" style="top: 70px; left: 150px;">
     <div class="folder-header">
       <div class="folder-header-left">
@@ -470,7 +470,7 @@
           <div class="folder-button min"></div>
           <div class="folder-button max"></div>
         </div>
-        <span>Bukowski’s Car - Project Files</span>
+        <span>Bukowski’s Car – Project Files</span>
       </div>
       <span>biannnoo.mp3</span>
     </div>
@@ -544,7 +544,7 @@
   </div>
 
   <!-- Masks WIP folder -->
-  <div class="folder-window" id="masks-folder" style="top: 100px; left: 330px;">
+  <div class="folder-window" id="masks-folder" style="top: 110px; left: 340px;">
     <div class="folder-header">
       <div class="folder-header-left">
         <div class="folder-buttons">
@@ -552,7 +552,7 @@
           <div class="folder-button min"></div>
           <div class="folder-button max"></div>
         </div>
-        <span>Masks WIP - Sculpt and Latex</span>
+        <span>Masks WIP – Sculpt and Latex</span>
       </div>
       <span>active</span>
     </div>
@@ -601,7 +601,7 @@
   </div>
 
   <!-- School Desktop folder -->
-  <div class="folder-window" id="school-folder" style="top: 200px; left: 220px;">
+  <div class="folder-window" id="school-folder" style="top: 200px; left: 230px;">
     <div class="folder-header">
       <div class="folder-header-left">
         <div class="folder-buttons">
@@ -609,7 +609,7 @@
           <div class="folder-button min"></div>
           <div class="folder-button max"></div>
         </div>
-        <span>School Desktop - chaos</span>
+        <span>School Desktop – chaos</span>
       </div>
       <span>78 items</span>
     </div>
@@ -659,7 +659,7 @@
   </div>
 
   <!-- emotional trash folder -->
-  <div class="folder-window small" id="trash-folder" style="top: 260px; left: 420px;">
+  <div class="folder-window small" id="trash-folder" style="top: 260px; left: 430px;">
     <div class="folder-header">
       <div class="folder-header-left">
         <div class="folder-buttons">
@@ -694,7 +694,6 @@
       Consider closing at least one tab in your brain.
     </div>
   </div>
-
   <script>
     // wallpaper rectangles
     const wallpaperContainer = document.getElementById("wallpaper-screenshots");
@@ -710,7 +709,6 @@
 
         let x = Math.random() * window.innerWidth;
         let y = Math.random() * window.innerHeight;
-
         if (y < 80) y += 80;
 
         shot.style.width = width + "px";
@@ -764,13 +762,13 @@
       clutterContainer.appendChild(label);
     }
 
-    const clutterAmount = 110;
+    const clutterAmount = 100;
     for (let i = 0; i < clutterAmount; i++) {
       createClutterIcon();
     }
 
-    // window z index control
-    let topZ = 1000;
+    // window z index control – keep folders on top
+    let topZ = 100;
 
     function bringToFront(win) {
       topZ += 1;
@@ -783,6 +781,7 @@
       const closeBtn = document.getElementById(closeId);
       const header = folder.querySelector(".folder-header");
 
+      // click icon toggles that folder and brings it to front
       icon.addEventListener("click", () => {
         if (folder.classList.contains("hidden")) {
           folder.classList.remove("hidden");
@@ -792,13 +791,18 @@
         bringToFront(folder);
       });
 
+      // close button hides folder
       closeBtn.addEventListener("click", () => {
         folder.classList.add("hidden");
       });
 
+      // clicking header just brings it to the front
       header.addEventListener("mousedown", () => {
         bringToFront(folder);
       });
+
+      // make sure it starts on top at page load
+      bringToFront(folder);
     }
 
     setupWindow("bukowski-folder", "icon-bukowski", "bukowski-close");
