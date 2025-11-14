@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Mina Desktop – Bukowski’s Car</title>
+  <title>Mina Desktop – Projects</title>
   <style>
     * {
       box-sizing: border-box;
@@ -18,7 +18,7 @@
       background: #070710;
     }
 
-    /* wallpaper graveyard at the very back */
+    /* wallpaper at the very back */
     #wallpaper-screenshots {
       position: fixed;
       inset: 0;
@@ -41,7 +41,7 @@
       backdrop-filter: blur(1px);
     }
 
-    /* scanline glitch overlay (visual only) */
+    /* scanline glitch overlay – visual only */
     .glitch-overlay {
       position: fixed;
       inset: 0;
@@ -76,7 +76,7 @@
       100% { transform: translate(0,0); opacity: 0.2; }
     }
 
-    /* clutter icons behind everything interactive */
+    /* clutter icons – behind everything interactive */
     #clutter-container {
       position: fixed;
       inset: 0;
@@ -130,7 +130,7 @@
       100% { filter:none; opacity:0.9; }
     }
 
-    /* menu bar (foreground-ish) */
+    /* menu bar */
     .menu-bar {
       position: fixed;
       top: 0;
@@ -165,12 +165,12 @@
       font-size: 11px;
     }
 
-    /* desktop icons in front of background, below windows */
+    /* REAL project icons – foreground, clickable, navigate to project1.html etc */
     .desktop-icon {
       position: absolute;
-      width: 80px;
+      width: 110px;
       text-align: center;
-      z-index: 60;
+      z-index: 100; /* above clutter + wallpaper + glitch */
       font-family: "Geneva", system-ui, sans-serif;
       cursor: pointer;
       user-select: none;
@@ -179,8 +179,8 @@
     }
 
     .desktop-icon .icon-image {
-      width: 52px;
-      height: 44px;
+      width: 64px;
+      height: 54px;
       margin: 0 auto 4px;
       border-radius: 8px;
       border: 2px solid #000;
@@ -192,200 +192,18 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 18px;
+      font-size: 20px;
     }
 
     .desktop-icon .icon-label {
       font-size: 11px;
       margin-top: 2px;
+      padding: 0 4px;
     }
 
     .desktop-icon:active .icon-image {
       transform: translateY(1px);
       box-shadow: 0 0 2px rgba(0,0,0,0.8);
-    }
-
-    /* folder windows – foreground */
-    .folder-window {
-      position: absolute;
-      width: 460px;
-      height: 420px;
-      background: #f0f0f5;
-      border: 2px solid #000;
-      z-index: 100;
-      display: flex;
-      flex-direction: column;
-      font-family: "Chicago", "Geneva", system-ui, sans-serif;
-      box-shadow:
-        0 0 14px rgba(0,0,0,0.9),
-        0 0 0 1px rgba(255,255,255,0.15);
-      transform-origin: center;
-      transition: box-shadow 0.15s ease, transform 0.15s ease;
-    }
-
-    .folder-window.small {
-      width: 320px;
-      height: 260px;
-    }
-
-    .folder-window:hover {
-      animation: windowShake 0.26s infinite;
-    }
-
-    @keyframes windowShake {
-      0% { transform: translate(0,0) rotate(0deg); }
-      25% { transform: translate(-1px,0.5px) rotate(-0.3deg); }
-      50% { transform: translate(1px,-0.5px) rotate(0.4deg); }
-      75% { transform: translate(-1px,0px) rotate(-0.2deg); }
-      100% { transform: translate(0,0) rotate(0deg); }
-    }
-
-    .folder-header {
-      background: linear-gradient(to bottom, #ffffff, #dcdcdc);
-      padding: 6px 10px;
-      font-weight: bold;
-      border-bottom: 2px solid #000;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 13px;
-      cursor: pointer;
-    }
-
-    .folder-header-left {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .folder-buttons {
-      display: flex;
-      gap: 4px;
-    }
-
-    .folder-button {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      border: 1px solid #000;
-      background: #fff;
-    }
-
-    .folder-button.close {
-      background: #ff5f57;
-    }
-
-    .folder-button.min {
-      background: #ffbd2e;
-    }
-
-    .folder-button.max {
-      background: #28c840;
-    }
-
-    .folder-toolbar {
-      background: #e2e2e2;
-      border-bottom: 1px solid #000;
-      padding: 4px 8px;
-      font-size: 11px;
-      display: flex;
-      gap: 10px;
-    }
-
-    .folder-content {
-      flex: 1;
-      padding: 10px;
-      overflow-y: auto;
-      overflow-x: hidden;
-      background: #ffffff;
-      font-size: 11px;
-      -webkit-overflow-scrolling: touch;
-    }
-
-    .folder-section-title {
-      font-size: 11px;
-      font-weight: bold;
-      margin-bottom: 6px;
-    }
-
-    .file-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-bottom: 10px;
-    }
-
-    .file-item {
-      width: 90px;
-      text-align: center;
-      font-size: 11px;
-      cursor: default;
-    }
-
-    .file-icon {
-      width: 48px;
-      height: 56px;
-      margin: 0 auto 4px;
-      border-radius: 4px;
-      border: 1px solid #000;
-      background: linear-gradient(to bottom, #fff, #e5e5ff);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-    }
-
-    .file-label {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .audio-block {
-      margin-top: 10px;
-      padding: 8px;
-      background: #f5f5ff;
-      border: 1px solid #000;
-      border-radius: 4px;
-      font-size: 11px;
-    }
-
-    .audio-block-title {
-      font-weight: bold;
-      margin-bottom: 4px;
-    }
-
-    .audio-block-desc {
-      font-size: 11px;
-      margin-bottom: 6px;
-    }
-
-    audio {
-      width: 100%;
-    }
-
-    .note-list {
-      margin-top: 6px;
-      padding-left: 14px;
-    }
-
-    .note-list li {
-      margin-bottom: 2px;
-    }
-
-    .trash-list {
-      list-style: none;
-      margin-top: 4px;
-      padding-left: 0;
-      font-size: 11px;
-    }
-
-    .trash-list li {
-      margin-bottom: 4px;
-    }
-
-    .trash-list span {
-      opacity: 0.6;
     }
 
     .system-popup {
@@ -400,7 +218,7 @@
       font-family: "Geneva", system-ui, sans-serif;
       font-size: 11px;
       padding: 8px 10px;
-      z-index: 150;
+      z-index: 120;
       animation: popupPulse 2.6s infinite ease-in-out;
     }
 
@@ -417,10 +235,6 @@
       0% { transform: translateY(0); box-shadow:0 0 10px rgba(255,155,222,0.6); }
       50% { transform: translateY(-2px); box-shadow:0 0 16px rgba(255,186,239,0.9); }
       100% { transform: translateY(0); box-shadow:0 0 10px rgba(255,155,222,0.6); }
-    }
-
-    .hidden {
-      display: none;
     }
   </style>
 </head>
@@ -440,258 +254,31 @@
     <div class="menu-right">Thu 3:17 am  •  Battery 5%</div>
   </div>
 
-  <!-- desktop icons -->
-  <div class="desktop-icon" id="icon-bukowski" style="top: 80px; left: 32px;">
+  <!-- FOREGROUND PROJECT ICONS THAT GO TO project1.html etc -->
+  <div class="desktop-icon" id="icon-project1" style="top: 80px; left: 40px;">
     <div class="icon-image">📁</div>
-    <div class="icon-label">Bukowski’s Car</div>
+    <div class="icon-label">Project 1</div>
   </div>
 
-  <div class="desktop-icon" id="icon-masks" style="top: 170px; left: 32px;">
+  <div class="desktop-icon" id="icon-project2" style="top: 180px; left: 40px;">
     <div class="icon-image">📁</div>
-    <div class="icon-label">Masks WIP</div>
+    <div class="icon-label">Project 2 – Bukowski’s Car</div>
   </div>
 
-  <div class="desktop-icon" id="icon-school" style="top: 260px; left: 32px;">
+  <div class="desktop-icon" id="icon-project3" style="top: 280px; left: 40px;">
     <div class="icon-image">📁</div>
-    <div class="icon-label">School Desktop</div>
+    <div class="icon-label">Project 3</div>
   </div>
 
-  <div class="desktop-icon" id="icon-trash" style="top: 350px; left: 32px;">
-    <div class="icon-image">🗑️</div>
-    <div class="icon-label">emotional trash</div>
-  </div>
-
-  <!-- Bukowski folder (visible on load) -->
-  <div class="folder-window" id="bukowski-folder" style="top: 70px; left: 150px;">
-    <div class="folder-header">
-      <div class="folder-header-left">
-        <div class="folder-buttons">
-          <div class="folder-button close" id="bukowski-close"></div>
-          <div class="folder-button min"></div>
-          <div class="folder-button max"></div>
-        </div>
-        <span>Bukowski’s Car – Project Files</span>
-      </div>
-      <span>biannnoo.mp3</span>
-    </div>
-    <div class="folder-toolbar">
-      <span>View</span>
-      <span>Sort</span>
-      <span>Share</span>
-      <span>Info</span>
-    </div>
-    <div class="folder-content">
-      <div class="folder-section-title">Files</div>
-      <div class="file-grid">
-        <div class="file-item">
-          <div class="file-icon">🎵</div>
-          <div class="file-label">biannnoo.mp3</div>
-        </div>
-        <div class="file-item">
-          <div class="file-icon">📄</div>
-          <div class="file-label">bukowski_car_text.docx</div>
-        </div>
-        <div class="file-item">
-          <div class="file-icon">📄</div>
-          <div class="file-label">dream_log_glendale.txt</div>
-        </div>
-        <div class="file-item">
-          <div class="file-icon">📷</div>
-          <div class="file-label">bmw_lot_ref.png</div>
-        </div>
-        <div class="file-item">
-          <div class="file-icon">📷</div>
-          <div class="file-label">air_dancer_refs.png</div>
-        </div>
-        <div class="file-item">
-          <div class="file-icon">📄</div>
-          <div class="file-label">mask_fabrication_notes.txt</div>
-        </div>
-        <div class="file-item">
-          <div class="file-icon">📄</div>
-          <div class="file-label">glendale_weather_research.docx</div>
-        </div>
-        <div class="file-item">
-          <div class="file-icon">🎞️</div>
-          <div class="file-label">parking_lot_loops.mov</div>
-        </div>
-        <div class="file-item">
-          <div class="file-icon">🎞️</div>
-          <div class="file-label">air_dancer_tests.mp4</div>
-        </div>
-        <div class="file-item">
-          <div class="file-icon">📄</div>
-          <div class="file-label">stress_dreams_journal.rtf</div>
-        </div>
-        <div class="file-item">
-          <div class="file-icon">📄</div>
-          <div class="file-label">silicone_mask_budget.xlsx</div>
-        </div>
-      </div>
-
-      <div class="audio-block">
-        <div class="audio-block-title">Bukowski’s Car audio</div>
-        <div class="audio-block-desc">
-          Spoken word about recurring Bukowski air dancer dream parked at the skeevy BMW reseller in Glendale.
-          Originally planned with real air dancers and silicone masks before the stress wave hit.
-        </div>
-        <audio controls>
-          <source src="biannnoo.mp3" type="audio/mpeg">
-          Your browser does not support the audio element.
-        </audio>
-      </div>
-    </div>
-  </div>
-
-  <!-- Masks WIP folder -->
-  <div class="folder-window" id="masks-folder" style="top: 110px; left: 340px;">
-    <div class="folder-header">
-      <div class="folder-header-left">
-        <div class="folder-buttons">
-          <div class="folder-button close" id="masks-close"></div>
-          <div class="folder-button min"></div>
-          <div class="folder-button max"></div>
-        </div>
-        <span>Masks WIP – Sculpt and Latex</span>
-      </div>
-      <span>active</span>
-    </div>
-    <div class="folder-toolbar">
-      <span>View</span>
-      <span>Ref</span>
-      <span>Materials</span>
-      <span>Export</span>
-    </div>
-    <div class="folder-content">
-      <div class="folder-section-title">Current experiments</div>
-      <div class="file-grid">
-        <div class="file-item">
-          <div class="file-icon">🎭</div>
-          <div class="file-label">bukowski_mask_base.obj</div>
-        </div>
-        <div class="file-item">
-          <div class="file-icon">🎭</div>
-          <div class="file-label">air_dancer_body_lowpoly.fbx</div>
-        </div>
-        <div class="file-item">
-          <div class="file-icon">🧪</div>
-          <div class="file-label">silicone_mix_ratios.txt</div>
-        </div>
-        <div class="file-item">
-          <div class="file-icon">📷</div>
-          <div class="file-label">wrinkle_detail_reference.png</div>
-        </div>
-        <div class="file-item">
-          <div class="file-icon">📷</div>
-          <div class="file-label">teeth_decay_texture_01.jpg</div>
-        </div>
-        <div class="file-item">
-          <div class="file-icon">📷</div>
-          <div class="file-label">gum_inflamed_reference.png</div>
-        </div>
-      </div>
-
-      <div class="folder-section-title">Notes</div>
-      <ul class="note-list">
-        <li>More visible pores and stress wrinkles around eyes.</li>
-        <li>Combine air dancer floppiness with compressed tired face.</li>
-        <li>Test latex under harsh gallery lighting.</li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- School Desktop folder -->
-  <div class="folder-window" id="school-folder" style="top: 200px; left: 230px;">
-    <div class="folder-header">
-      <div class="folder-header-left">
-        <div class="folder-buttons">
-          <div class="folder-button close" id="school-close"></div>
-          <div class="folder-button min"></div>
-          <div class="folder-button max"></div>
-        </div>
-        <span>School Desktop – chaos</span>
-      </div>
-      <span>78 items</span>
-    </div>
-    <div class="folder-toolbar">
-      <span>Assignments</span>
-      <span>Readings</span>
-      <span>Audio</span>
-      <span>Images</span>
-    </div>
-    <div class="folder-content">
-      <div class="folder-section-title">Too many things at once</div>
-      <div class="file-grid">
-        <div class="file-item">
-          <div class="file-icon">📄</div>
-          <div class="file-label">reading_response_10_final_really.docx</div>
-        </div>
-        <div class="file-item">
-          <div class="file-icon">📄</div>
-          <div class="file-label">thesis_outline_mess.pages</div>
-        </div>
-        <div class="file-item">
-          <div class="file-icon">🎵</div>
-          <div class="file-label">laiko_machinegirl_mix_3.wav</div>
-        </div>
-        <div class="file-item">
-          <div class="file-icon">🎵</div>
-          <div class="file-label">touchdesigner_test_audio.aif</div>
-        </div>
-        <div class="file-item">
-          <div class="file-icon">📷</div>
-          <div class="file-label">gallery_reference_lumberroom.jpg</div>
-        </div>
-        <div class="file-item">
-          <div class="file-icon">📄</div>
-          <div class="file-label">curatorial_notes_midterm.txt</div>
-        </div>
-        <div class="file-item">
-          <div class="file-icon">📄</div>
-          <div class="file-label">panic_todo_list.numbers</div>
-        </div>
-        <div class="file-item">
-          <div class="file-icon">📄</div>
-          <div class="file-label">food_drive_timeline.docx</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- emotional trash folder -->
-  <div class="folder-window small" id="trash-folder" style="top: 260px; left: 430px;">
-    <div class="folder-header">
-      <div class="folder-header-left">
-        <div class="folder-buttons">
-          <div class="folder-button close" id="trash-close"></div>
-          <div class="folder-button min"></div>
-          <div class="folder-button max"></div>
-        </div>
-        <span>emotional trash</span>
-      </div>
-      <span>overflow</span>
-    </div>
-    <div class="folder-toolbar">
-      <span>Recently Deleted</span>
-      <span>Forever</span>
-    </div>
-    <div class="folder-content">
-      <div class="folder-section-title">items scheduled for deletion</div>
-      <ul class="trash-list">
-        <li>text_draft_unsent_3am.txt <span>(19 times edited)</span></li>
-        <li>playlist_idea_too_honest.m3u <span>(dragged here then pulled back)</span></li>
-        <li>self_critique_essay.rtf <span>(maybe keep)</span></li>
-        <li>idea_bukowski_live_performance.pages <span>(archived, not gone)</span></li>
-        <li>old_artist_statement.docx <span>(haunts everything)</span></li>
-      </ul>
-    </div>
+  <div class="desktop-icon" id="icon-project4" style="top: 380px; left: 40px;">
+    <div class="icon-image">📁</div>
+    <div class="icon-label">Project 4</div>
   </div>
 
   <div class="system-popup">
     <div class="system-popup-title">System message</div>
     <div class="system-popup-body">
-      Memory usage high. Projects, dreams, and half finished ideas may behave unpredictably.
-      Consider closing at least one tab in your brain.
+      To open a project, double click a folder icon. May contain stress dreams, chaos, and unfinished genius.
     </div>
   </div>
   <script>
@@ -725,7 +312,7 @@
 
     createWallpaperShots();
 
-    // clutter icons
+    // clutter icons behind everything
     const clutterContainer = document.getElementById("clutter-container");
     const clutterIcons = [
       "🗎","🗏","🗐","💾","📁","📄","📠","🖨️",
@@ -767,48 +354,27 @@
       createClutterIcon();
     }
 
-    // window z index control – keep folders on top
-    let topZ = 100;
-
-    function bringToFront(win) {
-      topZ += 1;
-      win.style.zIndex = topZ;
+    // helper – open a project html file
+    function openProject(path) {
+      window.location.href = path; // same tab
     }
 
-    function setupWindow(folderId, iconId, closeId) {
-      const folder = document.getElementById(folderId);
-      const icon = document.getElementById(iconId);
-      const closeBtn = document.getElementById(closeId);
-      const header = folder.querySelector(".folder-header");
+    // double click project icons to go to project1.html etc
+    document.getElementById("icon-project1").addEventListener("dblclick", () => {
+      openProject("project1.html");
+    });
 
-      // click icon toggles that folder and brings it to front
-      icon.addEventListener("click", () => {
-        if (folder.classList.contains("hidden")) {
-          folder.classList.remove("hidden");
-        } else {
-          folder.classList.add("hidden");
-        }
-        bringToFront(folder);
-      });
+    document.getElementById("icon-project2").addEventListener("dblclick", () => {
+      openProject("project2.html");
+    });
 
-      // close button hides folder
-      closeBtn.addEventListener("click", () => {
-        folder.classList.add("hidden");
-      });
+    document.getElementById("icon-project3").addEventListener("dblclick", () => {
+      openProject("project3.html");
+    });
 
-      // clicking header just brings it to the front
-      header.addEventListener("mousedown", () => {
-        bringToFront(folder);
-      });
-
-      // make sure it starts on top at page load
-      bringToFront(folder);
-    }
-
-    setupWindow("bukowski-folder", "icon-bukowski", "bukowski-close");
-    setupWindow("masks-folder", "icon-masks", "masks-close");
-    setupWindow("school-folder", "icon-school", "school-close");
-    setupWindow("trash-folder", "icon-trash", "trash-close");
+    document.getElementById("icon-project4").addEventListener("dblclick", () => {
+      openProject("project4.html");
+    });
   </script>
 </body>
 </html>
