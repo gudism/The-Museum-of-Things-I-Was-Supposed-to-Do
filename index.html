@@ -139,7 +139,7 @@
       height: 24px;
       background: linear-gradient(to bottom, rgba(24,24,32,0.96), rgba(8,8,16,0.98));
       border-bottom: 1px solid #000;
-      z-index: 50;
+      z-index: 40;
       display: flex;
       align-items: center;
       padding: 0 10px;
@@ -165,12 +165,12 @@
       font-size: 11px;
     }
 
-    /* REAL project icons – foreground, clickable, navigate to project1.html etc */
+    /* desktop icons for other files (behind project window but in front of clutter) */
     .desktop-icon {
       position: absolute;
-      width: 110px;
+      width: 90px;
       text-align: center;
-      z-index: 100; /* above clutter + wallpaper + glitch */
+      z-index: 60;
       font-family: "Geneva", system-ui, sans-serif;
       cursor: pointer;
       user-select: none;
@@ -179,8 +179,8 @@
     }
 
     .desktop-icon .icon-image {
-      width: 64px;
-      height: 54px;
+      width: 52px;
+      height: 44px;
       margin: 0 auto 4px;
       border-radius: 8px;
       border: 2px solid #000;
@@ -192,7 +192,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 20px;
+      font-size: 18px;
     }
 
     .desktop-icon .icon-label {
@@ -204,6 +204,171 @@
     .desktop-icon:active .icon-image {
       transform: translateY(1px);
       box-shadow: 0 0 2px rgba(0,0,0,0.8);
+    }
+
+    /* generic secondary folder window (other openable files) */
+    .folder-window {
+      position: absolute;
+      width: 320px;
+      height: 260px;
+      background: #f0f0f5;
+      border: 2px solid #000;
+      z-index: 80; /* below project window */
+      display: flex;
+      flex-direction: column;
+      font-family: "Chicago", "Geneva", system-ui, sans-serif;
+      box-shadow:
+        0 0 14px rgba(0,0,0,0.9),
+        0 0 0 1px rgba(255,255,255,0.15);
+      transform-origin: center;
+      transition: box-shadow 0.15s ease, transform 0.15s ease;
+    }
+
+    .folder-window:hover {
+      animation: windowShake 0.26s infinite;
+    }
+
+    @keyframes windowShake {
+      0% { transform: translate(0,0) rotate(0deg); }
+      25% { transform: translate(-1px,0.5px) rotate(-0.3deg); }
+      50% { transform: translate(1px,-0.5px) rotate(0.4deg); }
+      75% { transform: translate(-1px,0px) rotate(-0.2deg); }
+      100% { transform: translate(0,0) rotate(0deg); }
+    }
+
+    .folder-header {
+      background: linear-gradient(to bottom, #ffffff, #dcdcdc);
+      padding: 6px 10px;
+      font-weight: bold;
+      border-bottom: 2px solid #000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .folder-header-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .folder-buttons {
+      display: flex;
+      gap: 4px;
+    }
+
+    .folder-button {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 1px solid #000;
+      background: #fff;
+    }
+
+    .folder-button.close {
+      background: #ff5f57;
+    }
+
+    .folder-button.min {
+      background: #ffbd2e;
+    }
+
+    .folder-button.max {
+      background: #28c840;
+    }
+
+    .folder-toolbar {
+      background: #e2e2e2;
+      border-bottom: 1px solid #000;
+      padding: 4px 8px;
+      font-size: 11px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .folder-content {
+      flex: 1;
+      padding: 10px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      background: #ffffff;
+      font-size: 11px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* BIG PROJECT WINDOW – foreground tabbed browser */
+    .project-window {
+      position: absolute;
+      top: 60px;
+      left: 160px;
+      width: 70vw;
+      height: 70vh;
+      min-width: 640px;
+      min-height: 420px;
+      background: #f2f2f7;
+      border: 2px solid #000;
+      z-index: 200; /* always above other openable files */
+      display: flex;
+      flex-direction: column;
+      font-family: "Chicago", "Geneva", system-ui, sans-serif;
+      box-shadow:
+        0 0 18px rgba(0,0,0,0.95),
+        0 0 0 1px rgba(255,255,255,0.15);
+    }
+
+    .project-header {
+      background: linear-gradient(to bottom, #ffffff, #dcdcdc);
+      padding: 6px 10px;
+      border-bottom: 2px solid #000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .project-tabs {
+      display: flex;
+      align-items: flex-end;
+      background: #d0cfe6;
+      padding: 4px 4px 0;
+      border-bottom: 1px solid #000;
+      gap: 4px;
+    }
+
+    .project-tab {
+      padding: 4px 10px;
+      font-size: 11px;
+      background: #e7e6ff;
+      border: 1px solid #000;
+      border-bottom: none;
+      border-top-left-radius: 6px;
+      border-top-right-radius: 6px;
+      cursor: pointer;
+      white-space: nowrap;
+      max-width: 160px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .project-tab.active {
+      background: #ffffff;
+      font-weight: bold;
+    }
+
+    .project-body {
+      flex: 1;
+      background: #ffffff;
+      border-top: 1px solid #000;
+    }
+
+    .project-body iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: #fff;
     }
 
     .system-popup {
@@ -218,7 +383,7 @@
       font-family: "Geneva", system-ui, sans-serif;
       font-size: 11px;
       padding: 8px 10px;
-      z-index: 120;
+      z-index: 150;
       animation: popupPulse 2.6s infinite ease-in-out;
     }
 
@@ -235,6 +400,10 @@
       0% { transform: translateY(0); box-shadow:0 0 10px rgba(255,155,222,0.6); }
       50% { transform: translateY(-2px); box-shadow:0 0 16px rgba(255,186,239,0.9); }
       100% { transform: translateY(0); box-shadow:0 0 10px rgba(255,155,222,0.6); }
+    }
+
+    .hidden {
+      display: none;
     }
   </style>
 </head>
@@ -254,31 +423,85 @@
     <div class="menu-right">Thu 3:17 am  •  Battery 5%</div>
   </div>
 
-  <!-- FOREGROUND PROJECT ICONS THAT GO TO project1.html etc -->
-  <div class="desktop-icon" id="icon-project1" style="top: 80px; left: 40px;">
+  <!-- random desktop icon for some extra folder -->
+  <div class="desktop-icon" id="icon-misc" style="top: 100px; left: 40px;">
     <div class="icon-image">📁</div>
-    <div class="icon-label">Project 1</div>
+    <div class="icon-label">misc files</div>
   </div>
 
-  <div class="desktop-icon" id="icon-project2" style="top: 180px; left: 40px;">
-    <div class="icon-image">📁</div>
-    <div class="icon-label">Project 2 – Bukowski’s Car</div>
+  <!-- another desktop icon for emotional trash -->
+  <div class="desktop-icon" id="icon-trash" style="top: 200px; left: 40px;">
+    <div class="icon-image">🗑️</div>
+    <div class="icon-label">emotional trash</div>
   </div>
 
-  <div class="desktop-icon" id="icon-project3" style="top: 280px; left: 40px;">
-    <div class="icon-image">📁</div>
-    <div class="icon-label">Project 3</div>
+  <!-- example extra folder window (sits BEHIND the project tab window) -->
+  <div class="folder-window hidden" id="misc-folder" style="top: 220px; left: 260px;">
+    <div class="folder-header">
+      <div class="folder-header-left">
+        <div class="folder-buttons">
+          <div class="folder-button close" id="misc-close"></div>
+          <div class="folder-button min"></div>
+          <div class="folder-button max"></div>
+        </div>
+        <span>misc files</span>
+      </div>
+      <span>37 items</span>
+    </div>
+    <div class="folder-toolbar">
+      <span>View</span>
+      <span>Sort</span>
+      <span>Info</span>
+    </div>
+    <div class="folder-content">
+      genuinely random files you keep telling yourself you will organize one day.
+    </div>
   </div>
 
-  <div class="desktop-icon" id="icon-project4" style="top: 380px; left: 40px;">
-    <div class="icon-image">📁</div>
-    <div class="icon-label">Project 4</div>
+  <!-- emotional trash folder -->
+  <div class="folder-window hidden" id="trash-folder" style="top: 280px; left: 360px;">
+    <div class="folder-header">
+      <div class="folder-header-left">
+        <div class="folder-buttons">
+          <div class="folder-button close" id="trash-close"></div>
+          <div class="folder-button min"></div>
+          <div class="folder-button max"></div>
+        </div>
+        <span>emotional trash</span>
+      </div>
+      <span>overflow</span>
+    </div>
+    <div class="folder-toolbar">
+      <span>Recently Deleted</span>
+      <span>Forever</span>
+    </div>
+    <div class="folder-content">
+      text_draft_unsent_3am.txt, playlist_idea_too_honest.m3u, and other things you almost dragged to oblivion.
+    </div>
+  </div>
+
+  <!-- BIG FOREGROUND PROJECT WINDOW WITH TABS -->
+  <div class="project-window" id="project-window">
+    <div class="project-header">
+      <span>Projects – browser of my brain</span>
+      <span>minaBook</span>
+    </div>
+    <div class="project-tabs">
+      <div class="project-tab active" data-src="project1.html">Project 1</div>
+      <div class="project-tab" data-src="project2.html">Project 2 – Bukowski’s Car</div>
+      <div class="project-tab" data-src="project3.html">Project 3</div>
+      <div class="project-tab" data-src="project4.html">Project 4</div>
+    </div>
+    <div class="project-body">
+      <!-- default src will be set by JS -->
+      <iframe id="project-frame" src=""></iframe>
+    </div>
   </div>
 
   <div class="system-popup">
     <div class="system-popup-title">System message</div>
     <div class="system-popup-body">
-      To open a project, double click a folder icon. May contain stress dreams, chaos, and unfinished genius.
+      Projects are open in the foreground tab window. Other folders may be cluttered, unhelpful, or emotionally unstable.
     </div>
   </div>
   <script>
@@ -312,7 +535,7 @@
 
     createWallpaperShots();
 
-    // clutter icons behind everything
+    // clutter icons
     const clutterContainer = document.getElementById("clutter-container");
     const clutterIcons = [
       "🗎","🗏","🗐","💾","📁","📄","📠","🖨️",
@@ -349,31 +572,69 @@
       clutterContainer.appendChild(label);
     }
 
-    const clutterAmount = 100;
+    const clutterAmount = 110;
     for (let i = 0; i < clutterAmount; i++) {
       createClutterIcon();
     }
 
-    // helper – open a project html file
-    function openProject(path) {
-      window.location.href = path; // same tab
+    // simple z-index bump for other folder windows (they stay below project window anyway)
+    let topZ = 80;
+
+    function bringToFront(win) {
+      topZ += 1;
+      win.style.zIndex = topZ;
     }
 
-    // double click project icons to go to project1.html etc
-    document.getElementById("icon-project1").addEventListener("dblclick", () => {
-      openProject("project1.html");
+    function setupFolder(iconId, folderId, closeId) {
+      const icon = document.getElementById(iconId);
+      const folder = document.getElementById(folderId);
+      const closeBtn = document.getElementById(closeId);
+      const header = folder.querySelector(".folder-header");
+
+      icon.addEventListener("dblclick", () => {
+        folder.classList.remove("hidden");
+        bringToFront(folder);
+      });
+
+      closeBtn.addEventListener("click", () => {
+        folder.classList.add("hidden");
+      });
+
+      header.addEventListener("mousedown", () => {
+        bringToFront(folder);
+      });
+    }
+
+    setupFolder("icon-misc", "misc-folder", "misc-close");
+    setupFolder("icon-trash", "trash-folder", "trash-close");
+
+    // PROJECT TAB WINDOW LOGIC – always in front
+    const projectWindow = document.getElementById("project-window");
+    const projectFrame = document.getElementById("project-frame");
+    const tabs = Array.from(document.querySelectorAll(".project-tab"));
+
+    function setActiveTab(tab) {
+      tabs.forEach(t => t.classList.remove("active"));
+      tab.classList.add("active");
+      const src = tab.getAttribute("data-src");
+      projectFrame.src = src;
+    }
+
+    // default: open Project 2 (Bukowski) because of course
+    const defaultTab = tabs[1] || tabs[0];
+    if (defaultTab) {
+      setActiveTab(defaultTab);
+    }
+
+    tabs.forEach(tab => {
+      tab.addEventListener("click", () => {
+        setActiveTab(tab);
+      });
     });
 
-    document.getElementById("icon-project2").addEventListener("dblclick", () => {
-      openProject("project2.html");
-    });
-
-    document.getElementById("icon-project3").addEventListener("dblclick", () => {
-      openProject("project3.html");
-    });
-
-    document.getElementById("icon-project4").addEventListener("dblclick", () => {
-      openProject("project4.html");
+    // make sure project window sits above other folders if clicked
+    projectWindow.addEventListener("mousedown", () => {
+      projectWindow.style.zIndex = 200; // fixed high foreground
     });
   </script>
 </body>
