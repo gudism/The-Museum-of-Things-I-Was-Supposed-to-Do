@@ -41,7 +41,7 @@
       backdrop-filter: blur(1px);
     }
 
-    /* scanline glitch overlay – visual only */
+    /* glitch overlay – visual only */
     .glitch-overlay {
       position: fixed;
       inset: 0;
@@ -165,7 +165,7 @@
       font-size: 11px;
     }
 
-    /* desktop icons for other files (behind project window but in front of clutter) */
+    /* desktop icons for extra folders */
     .desktop-icon {
       position: absolute;
       width: 90px;
@@ -206,14 +206,14 @@
       box-shadow: 0 0 2px rgba(0,0,0,0.8);
     }
 
-    /* generic secondary folder window (other openable files) */
+    /* generic folder window */
     .folder-window {
       position: absolute;
-      width: 320px;
-      height: 260px;
+      width: 420px;
+      height: 360px;
       background: #f0f0f5;
       border: 2px solid #000;
-      z-index: 80; /* below project window */
+      z-index: 80;
       display: flex;
       flex-direction: column;
       font-family: "Chicago", "Geneva", system-ui, sans-serif;
@@ -288,6 +288,7 @@
       gap: 10px;
     }
 
+    /* SCROLLING FIX: this is the scrolling area inside a window */
     .folder-content {
       flex: 1;
       padding: 10px;
@@ -298,77 +299,71 @@
       -webkit-overflow-scrolling: touch;
     }
 
-    /* BIG PROJECT WINDOW – foreground tabbed browser */
-    .project-window {
-      position: absolute;
-      top: 60px;
-      left: 160px;
-      width: 70vw;
-      height: 70vh;
-      min-width: 640px;
-      min-height: 420px;
-      background: #f2f2f7;
-      border: 2px solid #000;
-      z-index: 200; /* always above other openable files */
+    .folder-section-title {
+      font-size: 11px;
+      font-weight: bold;
+      margin-bottom: 6px;
+    }
+
+    .file-grid {
       display: flex;
       flex-direction: column;
-      font-family: "Chicago", "Geneva", system-ui, sans-serif;
-      box-shadow:
-        0 0 18px rgba(0,0,0,0.95),
-        0 0 0 1px rgba(255,255,255,0.15);
+      gap: 8px;
+      margin-bottom: 10px;
     }
 
-    .project-header {
-      background: linear-gradient(to bottom, #ffffff, #dcdcdc);
-      padding: 6px 10px;
-      border-bottom: 2px solid #000;
+    .file-item {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      font-size: 13px;
-      font-weight: bold;
+      gap: 8px;
+      padding: 4px 2px;
+      border-radius: 4px;
     }
 
-    .project-tabs {
-      display: flex;
-      align-items: flex-end;
-      background: #d0cfe6;
-      padding: 4px 4px 0;
-      border-bottom: 1px solid #000;
-      gap: 4px;
+    .file-item:hover {
+      background: #eef0ff;
     }
 
-    .project-tab {
-      padding: 4px 10px;
-      font-size: 11px;
-      background: #e7e6ff;
+    .file-icon {
+      width: 32px;
+      height: 40px;
+      border-radius: 4px;
       border: 1px solid #000;
-      border-bottom: none;
-      border-top-left-radius: 6px;
-      border-top-right-radius: 6px;
-      cursor: pointer;
+      background: linear-gradient(to bottom, #fff, #e5e5ff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .file-text {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .file-label-main {
+      font-size: 11px;
+      font-weight: bold;
       white-space: nowrap;
-      max-width: 160px;
       overflow: hidden;
       text-overflow: ellipsis;
+      max-width: 320px;
     }
 
-    .project-tab.active {
-      background: #ffffff;
-      font-weight: bold;
+    .file-label-sub {
+      font-size: 10px;
+      opacity: 0.7;
     }
 
-    .project-body {
-      flex: 1;
-      background: #ffffff;
-      border-top: 1px solid #000;
-    }
-
-    .project-body iframe {
+    .file-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: inherit;
       width: 100%;
-      height: 100%;
-      border: none;
-      background: #fff;
     }
 
     .system-popup {
@@ -423,20 +418,94 @@
     <div class="menu-right">Thu 3:17 am  •  Battery 5%</div>
   </div>
 
-  <!-- random desktop icon for some extra folder -->
-  <div class="desktop-icon" id="icon-misc" style="top: 100px; left: 40px;">
+  <!-- desktop icons for extra folders -->
+  <div class="desktop-icon" id="icon-misc" style="top: 80px; left: 40px;">
     <div class="icon-image">📁</div>
     <div class="icon-label">misc files</div>
   </div>
 
-  <!-- another desktop icon for emotional trash -->
-  <div class="desktop-icon" id="icon-trash" style="top: 200px; left: 40px;">
+  <div class="desktop-icon" id="icon-trash" style="top: 170px; left: 40px;">
     <div class="icon-image">🗑️</div>
     <div class="icon-label">emotional trash</div>
   </div>
 
-  <!-- example extra folder window (sits BEHIND the project tab window) -->
-  <div class="folder-window hidden" id="misc-folder" style="top: 220px; left: 260px;">
+  <!-- foreground PROJECTS folder window, already open -->
+  <div class="folder-window" id="projects-folder" style="top: 70px; left: 180px; z-index: 120;">
+    <div class="folder-header">
+      <div class="folder-header-left">
+        <div class="folder-buttons">
+          <div class="folder-button close" id="projects-close"></div>
+          <div class="folder-button min"></div>
+          <div class="folder-button max"></div>
+        </div>
+        <span>Projects – HTML files</span>
+      </div>
+      <span>4 items</span>
+    </div>
+    <div class="folder-toolbar">
+      <span>View</span>
+      <span>Sort</span>
+      <span>Info</span>
+    </div>
+    <div class="folder-content">
+      <div class="folder-section-title">Projects (click to open full page)</div>
+      <div class="file-grid">
+        <div class="file-item">
+          <a class="file-link" href="project1.html">
+            <div class="file-icon">📄</div>
+            <div class="file-text">
+              <div class="file-label-main">Project 1 – [your Project 1 title]</div>
+              <div class="file-label-sub">project1.html</div>
+            </div>
+          </a>
+        </div>
+
+        <div class="file-item">
+          <a class="file-link" href="project2.html">
+            <div class="file-icon">📄</div>
+            <div class="file-text">
+              <div class="file-label-main">Project 2 – Bukowski’s Car</div>
+              <div class="file-label-sub">project2.html</div>
+            </div>
+          </a>
+        </div>
+
+        <div class="file-item">
+          <a class="file-link" href="project3.html">
+            <div class="file-icon">📄</div>
+            <div class="file-text">
+              <div class="file-label-main">Project 3 – [your Project 3 title]</div>
+              <div class="file-label-sub">project3.html</div>
+            </div>
+          </a>
+        </div>
+
+        <div class="file-item">
+          <a class="file-link" href="project4.html">
+            <div class="file-icon">📄</div>
+            <div class="file-text">
+              <div class="file-label-main">Project 4 – [your Project 4 title]</div>
+              <div class="file-label-sub">project4.html</div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- filler content so you can see that scrolling works -->
+      <div class="folder-section-title">Notes</div>
+      <p>
+        If this text scrolls inside the window, the scrolling fix is working.  
+        The project files above are direct links to project1.html, project2.html, etc,
+        so when you click them you leave the desktop and see the full project page with its own scrolling.
+      </p>
+      <p>
+        You can delete this paragraph later, it is just here to force extra height.
+      </p>
+    </div>
+  </div>
+
+  <!-- misc folder window (behind projects) -->
+  <div class="folder-window hidden" id="misc-folder" style="top: 260px; left: 260px;">
     <div class="folder-header">
       <div class="folder-header-left">
         <div class="folder-buttons">
@@ -455,11 +524,13 @@
     </div>
     <div class="folder-content">
       genuinely random files you keep telling yourself you will organize one day.
+      <br><br>
+      scrolling also works in here because this is inside .folder-content.
     </div>
   </div>
 
-  <!-- emotional trash folder -->
-  <div class="folder-window hidden" id="trash-folder" style="top: 280px; left: 360px;">
+  <!-- emotional trash folder window (behind projects) -->
+  <div class="folder-window hidden" id="trash-folder" style="top: 320px; left: 360px;">
     <div class="folder-header">
       <div class="folder-header-left">
         <div class="folder-buttons">
@@ -480,28 +551,11 @@
     </div>
   </div>
 
-  <!-- BIG FOREGROUND PROJECT WINDOW WITH TABS -->
-  <div class="project-window" id="project-window">
-    <div class="project-header">
-      <span>Projects – browser of my brain</span>
-      <span>minaBook</span>
-    </div>
-    <div class="project-tabs">
-      <div class="project-tab active" data-src="project1.html">Project 1</div>
-      <div class="project-tab" data-src="project2.html">Project 2 – Bukowski’s Car</div>
-      <div class="project-tab" data-src="project3.html">Project 3</div>
-      <div class="project-tab" data-src="project4.html">Project 4</div>
-    </div>
-    <div class="project-body">
-      <!-- default src will be set by JS -->
-      <iframe id="project-frame" src=""></iframe>
-    </div>
-  </div>
-
   <div class="system-popup">
     <div class="system-popup-title">System message</div>
     <div class="system-popup-body">
-      Projects are open in the foreground tab window. Other folders may be cluttered, unhelpful, or emotionally unstable.
+      Project files in this window are the real ones. Clicking them opens project1.html, project2.html, etc
+      as full pages, where you can scroll normally.
     </div>
   </div>
   <script>
@@ -577,7 +631,7 @@
       createClutterIcon();
     }
 
-    // simple z-index bump for other folder windows (they stay below project window anyway)
+    // window z-index control for extra folders (projects stays in front via inline z-index)
     let topZ = 80;
 
     function bringToFront(win) {
@@ -608,34 +662,12 @@
     setupFolder("icon-misc", "misc-folder", "misc-close");
     setupFolder("icon-trash", "trash-folder", "trash-close");
 
-    // PROJECT TAB WINDOW LOGIC – always in front
-    const projectWindow = document.getElementById("project-window");
-    const projectFrame = document.getElementById("project-frame");
-    const tabs = Array.from(document.querySelectorAll(".project-tab"));
-
-    function setActiveTab(tab) {
-      tabs.forEach(t => t.classList.remove("active"));
-      tab.classList.add("active");
-      const src = tab.getAttribute("data-src");
-      projectFrame.src = src;
-    }
-
-    // default: open Project 2 (Bukowski) because of course
-    const defaultTab = tabs[1] || tabs[0];
-    if (defaultTab) {
-      setActiveTab(defaultTab);
-    }
-
-    tabs.forEach(tab => {
-      tab.addEventListener("click", () => {
-        setActiveTab(tab);
-      });
+    // bring projects folder to front once on load
+    const projectsFolder = document.getElementById("projects-folder");
+    projectsFolder.addEventListener("mousedown", () => {
+      projectsFolder.style.zIndex = 200;
     });
-
-    // make sure project window sits above other folders if clicked
-    projectWindow.addEventListener("mousedown", () => {
-      projectWindow.style.zIndex = 200; // fixed high foreground
-    });
+    projectsFolder.style.zIndex = 200;
   </script>
 </body>
 </html>
