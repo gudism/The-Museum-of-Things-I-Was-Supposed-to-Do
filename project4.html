@@ -9,20 +9,29 @@
       margin: 0;
       padding: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Chicago", system-ui, sans-serif;
-      background: #c7d5e0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
+      background: radial-gradient(circle at top left, #fefefe, #c3cada);
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .desktop {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      padding: 20px;
     }
 
     .window {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -52%);
       width: 90%;
       max-width: 750px;
       background: #d6d7d9;
       border-radius: 6px;
       border: 2px solid #808086;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
       overflow: hidden;
     }
 
@@ -63,13 +72,8 @@
 
     .title-text { font-weight: 600; }
 
-    .back-link {
-      font-size: 12px;
-    }
-    .back-link a {
-      text-decoration: none;
-      color: #003399;
-    }
+    .back-link { font-size: 12px; }
+    .back-link a { text-decoration: none; color: #003399; }
 
     .content {
       padding: 16px 18px 20px 18px;
@@ -78,21 +82,9 @@
       line-height: 1.6;
     }
 
-    h1 {
-      font-size: 18px;
-      margin: 0 0 8px 0;
-    }
-
-    h2 {
-      font-size: 14px;
-      margin: 14px 0 6px 0;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-
-    p {
-      margin: 0 0 8px 0;
-    }
+    h1 { font-size: 18px; margin: 0 0 8px 0; }
+    h2 { font-size: 14px; margin: 14px 0 6px 0; text-transform: uppercase; letter-spacing: 0.06em; }
+    p { margin: 0 0 8px 0; }
 
     .meta {
       font-size: 12px;
@@ -118,65 +110,121 @@
       margin-bottom: 10px;
       white-space: pre-wrap;
     }
+
+    /* error popup */
+
+    .error-popup {
+      position: absolute;
+      right: 30px;
+      top: 50px;
+      width: 260px;
+      background: #f7e6e6;
+      border-radius: 6px;
+      border: 2px solid #8a3b3b;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.45);
+      font-size: 12px;
+      overflow: hidden;
+    }
+    .error-header {
+      padding: 4px 8px;
+      background: linear-gradient(to bottom, #f3c6c6, #da8e8e);
+      border-bottom: 1px solid #8a3b3b;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #3b0909;
+    }
+    .error-body {
+      padding: 9px 10px;
+      line-height: 1.4;
+      color: #3b0909;
+    }
+    .error-body button {
+      margin-top: 8px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      border: 1px solid #8a3b3b;
+      background: #f3c6c6;
+      font-size: 11px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
-  <div class="window">
-    <div class="title-bar">
-      <div class="left">
-        <div class="window-buttons">
-          <div class="btn red"></div>
-          <div class="btn yellow"></div>
-          <div class="btn green"></div>
+  <div class="desktop">
+    <div class="window">
+      <div class="title-bar">
+        <div class="left">
+          <div class="window-buttons">
+            <div class="btn red"></div>
+            <div class="btn yellow"></div>
+            <div class="btn green"></div>
+          </div>
+          <div class="title-text">LA Contracts Bot (Prototype)</div>
         </div>
-        <div class="title-text">LA Contracts Bot (Prototype)</div>
+        <div class="back-link">
+          <a href="index.html">← Back to Museum</a>
+        </div>
       </div>
-      <div class="back-link">
-        <a href="index.html">← Back to Museum</a>
-      </div>
-    </div>
-    <div class="content">
-      <div class="meta">
-        Status: stalled prototype  
-        Location: somewhere between GitHub and city hall
-      </div>
+      <div class="content">
+        <div class="meta">
+          Status: stalled prototype  
+          Location: somewhere between GitHub and city hall
+        </div>
 
-      <h1>LA Contracts Bot (Prototype)</h1>
+        <h1>LA Contracts Bot (Prototype)</h1>
 
-      <h2>What it was supposed to be</h2>
-      <p>
-        A small bot that could scan public contract data from Los Angeles and flag anything that looked unusual. Not a full investigation, just a quiet background process that noticed patterns the city preferred to ignore. Los Angeles has a long record of treating corruption as a civic rhythm. The council has an equally long record of participating in scandals with city contractors. The Huizar case was only one example. The goal was to make a system that could watch the details without getting pulled into the noise.
-      </p>
+        <h2>What it was supposed to be</h2>
+        <p>
+          A small bot that could scan public contract data from Los Angeles and flag anything that looked unusual. Not a full investigation, just a quiet background process that noticed patterns the city preferred to ignore. Los Angeles has a long record of treating corruption as a civic rhythm. The council has an equally long record of participating in scandals with city contractors. The Huizar case was only one example. The goal was to make a system that could watch the details without getting pulled into the noise.
+        </p>
 
-      <h2>What exists instead</h2>
-      <p>
-        One official document. A collection of fifty public records requests sent to the City Council and to the Office of the City Controller. A paper trail of unanswered emails, broken portals, and delayed responses. A set of scripts that almost run. A folder called
-        <span class="code-block">data_raw</span>
-        that never filled the way it was supposed to. A five year crashout that became part of the project whether I wanted it or not.
-      </p>
+        <h2>What exists instead</h2>
+        <p>
+          One official document. A collection of fifty public records requests sent to the City Council and to the Office of the City Controller. A paper trail of unanswered emails, broken portals, and delayed responses. A set of scripts that almost run. A folder called
+          <span class="code-block">data_raw</span>
+          that never filled the way it was supposed to. A five year crashout that became part of the project whether I wanted it or not.
+        </p>
 
-      <div class="code-block">
+        <div class="code-block">
 python run_anomaly_detector.py \
   --input data_raw/contracts_sample.csv \
   --output reports/anomalies.csv
+        </div>
+
+        <p>
+          The command looks convincing. The data does not exist yet.
+        </p>
+
+        <h2>Why it stalled</h2>
+        <ul class="list">
+          <li>The city transparency infrastructure is built to slow you down.</li>
+          <li>Public records requests took more energy than the actual code.</li>
+          <li>The bureaucracy had more stamina than I did.</li>
+          <li>The story kept expanding and the data never arrived at the pace the project needed.</li>
+        </ul>
+
+        <h2>What this fragment reveals</h2>
+        <p>
+          That corruption in Los Angeles is not a secret or an exception. It is a structural habit that shapes how information moves. That building a bot to track anomalies requires the very data the city makes difficult to access. That sometimes a project exposes its subject by failing. The museum keeps this prototype because the failure is part of the truth. It documents an attempt to follow the money in a place where the pathways are designed to blur. It also shows the limits of one person trying to build clarity inside a system that is not interested in being seen.
+        </p>
       </div>
+    </div>
 
-      <p>
-        The command looks convincing. The data does not exist yet.
-      </p>
-
-      <h2>Why it stalled</h2>
-      <ul class="list">
-        <li>The city transparency infrastructure is built to slow you down.</li>
-        <li>Public records requests took more energy than the actual code.</li>
-        <li>The bureaucracy had more stamina than I did.</li>
-        <li>The story kept expanding and the data never arrived at the pace the project needed.</li>
-      </ul>
-
-      <h2>What this fragment reveals</h2>
-      <p>
-        That corruption in Los Angeles is not a secret or an exception. It is a structural habit that shapes how information moves. That building a bot to track anomalies requires the very data the city makes difficult to access. That sometimes a project exposes its subject by failing. The museum keeps this prototype because the failure is part of the truth. It documents an attempt to follow the money in a place where the pathways are designed to blur. It also shows the limits of one person trying to build clarity inside a system that is not interested in being seen.
-      </p>
+    <div class="error-popup">
+      <div class="error-header">
+        <span>Runtime Error</span>
+        <span>⨉</span>
+      </div>
+      <div class="error-body">
+        Contract data request timed out.  
+        Possible causes:  
+        • missing records  
+        • broken portal  
+        • structural corruption
+        <br />
+        <button>Ignore and continue</button>
+      </div>
     </div>
   </div>
 </body>
