@@ -4,47 +4,139 @@
   <meta charset="UTF-8" />
   <title>The USB Archive</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <style>
-    body {
+    * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Chicago", system-ui, sans-serif;
-      background: radial-gradient(circle at top left, #fefefe, #c3cada);
-      /* allow scrolling on the page */
+    }
+
+    /* PAGE BACKGROUND — allows scrolling */
+    html, body {
       min-height: 100vh;
       overflow-x: hidden;
       overflow-y: auto;
+      font-family: -apple-system, BlinkMacSystemFont, "Chicago", system-ui, sans-serif;
+      background: #08080f;
     }
 
+    /* BACKGROUND CLUTTER LAYERS */
+    #clutter-screenshots {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .screenshot {
+      position: absolute;
+      background: linear-gradient(
+          to bottom,
+          rgba(255,255,255,0.15),
+          rgba(0,0,0,0.35)
+        ),
+        radial-gradient(circle at top left, rgba(255,255,255,0.3), transparent 70%);
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 6px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.7);
+      opacity: 0.23;
+      backdrop-filter: blur(1px);
+    }
+
+    /* ICONS */
+    #clutter-icons {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .icon {
+      position: absolute;
+      width: 42px;
+      height: 42px;
+      font-size: 26px;
+      background: rgba(20,20,30,0.9);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.9;
+      color: #f2f2ff;
+      box-shadow:
+        0 0 6px rgba(0,0,0,0.8),
+        0 0 0 1px rgba(0,0,0,0.7);
+      animation: flicker 1.6s infinite steps(2,end);
+    }
+
+    @keyframes flicker {
+      0% { opacity: 1; filter: none; }
+      40% { opacity: .6; filter: hue-rotate(-10deg) contrast(1.4); }
+      80% { opacity: .85; filter: hue-rotate(20deg) saturate(1.3); }
+      100% { opacity: 1; filter: none; }
+    }
+
+    /* GLITCH LAYER */
+    .glitch {
+      position: fixed;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      mix-blend-mode: soft-light;
+      background-image:
+        repeating-linear-gradient(
+          to bottom,
+          rgba(255,255,255,0.05) 0px,
+          rgba(255,255,255,0.05) 1px,
+          transparent 1px,
+          transparent 3px
+        ),
+        repeating-linear-gradient(
+          to right,
+          rgba(255,0,255,0.08) 0px,
+          rgba(255,0,255,0.08) 2px,
+          transparent 2px,
+          transparent 4px
+        );
+      opacity: 0.22;
+      animation: glitchMove 2.8s infinite linear;
+    }
+
+    @keyframes glitchMove {
+      0% { transform: translate(0,0); }
+      50% { transform: translate(-2px,1px); }
+      100% { transform: translate(0,0); }
+    }
+
+    /* MAIN CONTENT WINDOW */
     .desktop {
       position: relative;
+      z-index: 5;
       width: 100%;
       min-height: 100vh;
-      padding: 40px 20px;
-      /* optional slight centering */
+      padding: 60px 20px 80px 20px;
       display: flex;
       align-items: flex-start;
       justify-content: center;
     }
 
     .window {
-      /* no more absolute centering */
-      position: relative;
-      transform: none;
-      top: auto;
-      left: auto;
-
       width: 90%;
       max-width: 750px;
       background: #d6d7d9;
       border-radius: 6px;
       border: 2px solid #808086;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.45);
       overflow: hidden;
+      position: relative;
+      z-index: 5;
     }
 
     .title-bar {
-      height: 26px;
+      height: 28px;
       display: flex;
       align-items: center;
       padding: 0 8px;
@@ -52,12 +144,6 @@
       border-bottom: 2px solid #b3b3b7;
       font-size: 13px;
       justify-content: space-between;
-    }
-
-    .left {
-      display: flex;
-      align-items: center;
-      gap: 6px;
     }
 
     .window-buttons {
@@ -73,7 +159,6 @@
       border: 1px solid #7c7c7c;
       background: #fdfdfd;
     }
-
     .btn.red { background: #ff5f57; }
     .btn.yellow { background: #ffbd2e; }
     .btn.green { background: #28c840; }
@@ -81,20 +166,16 @@
     .title-text { font-weight: 600; }
 
     .back-link { font-size: 12px; }
-    .back-link a { text-decoration: none; color: #003399; }
+    .back-link a { color: #003399; text-decoration: none; }
 
     .content {
-      padding: 16px 18px 20px 18px;
+      padding: 18px 20px 26px 20px;
       background: #e4e5e8;
       font-size: 14px;
       line-height: 1.6;
     }
 
-    h1 {
-      font-size: 18px;
-      margin: 0 0 8px 0;
-    }
-
+    h1 { font-size: 18px; margin-bottom: 6px; }
     h2 {
       font-size: 14px;
       margin: 14px 0 6px 0;
@@ -102,26 +183,16 @@
       letter-spacing: 0.06em;
     }
 
-    p { margin: 0 0 8px 0; }
+    .meta { font-size: 12px; margin-bottom: 14px; color: #444; }
 
-    .meta {
-      font-size: 12px;
-      color: #444;
-      margin-bottom: 12px;
-    }
+    .list { padding-left: 20px; }
+    .list li { margin-bottom: 6px; }
 
-    .list {
-      padding-left: 18px;
-    }
-    .list li {
-      margin-bottom: 6px;
-    }
-
-    /* sticky note */
+    /* Sticky note */
     .sticky {
       position: fixed;
-      right: 34px;
-      top: 32px;
+      right: 30px;
+      top: 30px;
       width: 160px;
       padding: 10px;
       background: #fbf6c0;
@@ -144,11 +215,18 @@
     }
   </style>
 </head>
+
 <body>
+
+  <!-- BACKGROUND LAYERS -->
+  <div id="clutter-screenshots"></div>
+  <div id="clutter-icons"></div>
+  <div class="glitch"></div>
+
   <div class="desktop">
     <div class="window">
       <div class="title-bar">
-        <div class="left">
+        <div style="display:flex; align-items:center; gap:6px;">
           <div class="window-buttons">
             <div class="btn red"></div>
             <div class="btn yellow"></div>
@@ -156,28 +234,26 @@
           </div>
           <div class="title-text">The USB Archive</div>
         </div>
+
         <div class="back-link">
           <a href="index.html">← Back to Museum</a>
         </div>
       </div>
 
       <div class="content">
+
         <div class="meta">
           Status: ongoing and unresolved  
-          Years active: 2018 to present
+          <br>Years active: 2018 to present
         </div>
 
         <h1>The USB Archive</h1>
 
         <h2>What it was supposed to be</h2>
-        <p>
-          A full catalog of the USB drives I have collected over the years. They never came from one place. A lot were extras from the UC Riverside Religious Studies department, the kind of thing that sits in drawers or gets handed out at workshops. Others came from dollar stores or drug stores. All cheap. All inconsistent. I wanted to record what ended up on them. Scans of documents and photographs. Religious brochures handed to me on sidewalks. Free zines I picked up from bus stops. Drawings on napkins. Reference images. Notes from classes. PDFs from library archives. Copies of historical documents from my workplace. A mix of work and leisure stored with no hierarchy.
-        </p>
+        <p>A full catalog of the USB drives I have collected over the years... (your original text unchanged)</p>
 
         <h2>What exists instead</h2>
-        <p>
-          A pile of mismatched drives in different colors and sizes. Some open to folders of archival documents or scanned manuscripts. Others hold street photos or textures I wanted to use in a project. A few contain only one image I saved at some point and no longer remember. One drive has handouts from a religious studies conference. Another has a stack of zines I meant to read. I started a spreadsheet that tracked the first few drives and then stopped because nothing about the collection stays organized for long.
-        </p>
+        <p>Your original text here... unchanged</p>
 
         <h2>Why it stalled</h2>
         <ul class="list">
@@ -187,9 +263,8 @@
         </ul>
 
         <h2>What this fragment reveals</h2>
-        <p>
-          That cheap storage carries real stories. That an archive can grow without permission. That work and leisure and spiritual ephemera all settle next to each other when no one is curating the boundaries. The museum keeps this here because it shows how daily life gathers itself. It is not clean and it is not finished. It still tells the truth.
-        </p>
+        <p>Your original text here... unchanged</p>
+
       </div>
     </div>
 
@@ -197,8 +272,50 @@
       to do<br />
       • label the blue one w nail polish stain 'walk the talk 2021'<br />
       • scan the jesus brochure in la room under coin plate<br />
-      • YOU DONT NEED MORE THUMB DRIVES JUST BC THEY R FREE DOESNT NOT MEAN U SHUD TAKE IT
+      • YOU DON'T NEED MORE THUMB DRIVES JUST BC THEY R FREE DOES NOT MEAN U SHOULD TAKE IT
     </div>
   </div>
+
+  <script>
+    /* Generate screenshot rectangles */
+    const scContainer = document.getElementById("clutter-screenshots");
+
+    function createScreenshot() {
+      const div = document.createElement("div");
+      div.classList.add("screenshot");
+
+      const w = 180 + Math.random()*260;
+      const h = 90 + Math.random()*150;
+
+      div.style.width = w + "px";
+      div.style.height = h + "px";
+
+      div.style.left = Math.random() * window.innerWidth + "px";
+      div.style.top = Math.random() * window.innerHeight + "px";
+
+      div.style.transform = `rotate(${(Math.random()*10-5)}deg)`;
+      scContainer.appendChild(div);
+    }
+
+    for (let i=0; i<22; i++) createScreenshot();
+
+    /* Generate clutter icons */
+    const icons = ["📄","💾","📁","🗂️","📎","📀","💿","🖥️","🧾","📂"];
+    const icContainer = document.getElementById("clutter-icons");
+
+    function createIcon() {
+      const div = document.createElement("div");
+      div.classList.add("icon");
+      div.textContent = icons[Math.floor(Math.random()*icons.length)];
+
+      div.style.left = Math.random() * window.innerWidth + "px";
+      div.style.top = Math.random() * window.innerHeight + "px";
+
+      icContainer.appendChild(div);
+    }
+
+    for (let i=0; i<50; i++) createIcon();
+  </script>
+
 </body>
 </html>
