@@ -4,35 +4,130 @@
   <meta charset="UTF-8" />
   <title>Bukowskis Car (Audio Draft)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <style>
-    body {
+    * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
+    }
+
+    /* PAGE BACKGROUND (matches USB page) */
+    html, body {
+      min-height: 100vh;
+      overflow-x: hidden;
+      overflow-y: auto;
       font-family: -apple-system, BlinkMacSystemFont, "Chicago", system-ui, sans-serif;
-      background: radial-gradient(circle at top left, #fefefe, #c3cada);
-      height: 100vh;
+      background: #08080f;
+    }
+
+    /* BACKGROUND CLUTTER LAYERS */
+    #clutter-screenshots {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
       overflow: hidden;
     }
 
-    .desktop {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      padding: 20px;
+    .screenshot {
+      position: absolute;
+      background: linear-gradient(
+          to bottom,
+          rgba(255,255,255,0.15),
+          rgba(0,0,0,0.35)
+        ),
+        radial-gradient(circle at top left, rgba(255,255,255,0.3), transparent 70%);
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 6px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.7);
+      opacity: 0.23;
+      backdrop-filter: blur(1px);
     }
 
-    .window {
+    #clutter-icons {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .icon {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -52%);
-      width: 90%;
-      max-width: 750px;
+      width: 42px;
+      height: 42px;
+      font-size: 26px;
+      background: rgba(20,20,30,0.9);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #f2f2ff;
+      box-shadow:
+        0 0 6px rgba(0,0,0,0.8),
+        0 0 0 1px rgba(0,0,0,0.7);
+    }
+
+    /* GLITCH LAYER */
+    .glitch {
+      position: fixed;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      mix-blend-mode: soft-light;
+      background-image:
+        repeating-linear-gradient(
+          to bottom,
+          rgba(255,255,255,0.05) 0px,
+          rgba(255,255,255,0.05) 1px,
+          transparent 1px,
+          transparent 3px
+        ),
+        repeating-linear-gradient(
+          to right,
+          rgba(255,0,255,0.08) 0px,
+          rgba(255,0,255,0.08) 2px,
+          transparent 2px,
+          transparent 4px
+        );
+      opacity: 0.22;
+      animation: glitchMove 2.8s infinite linear;
+    }
+
+    @keyframes glitchMove {
+      0% { transform: translate(0,0); }
+      50% { transform: translate(-2px,1px); }
+      100% { transform: translate(0,0); }
+    }
+
+    /* MAIN DESKTOP */
+    .desktop {
+      position: relative;
+      z-index: 5;
+      width: 100%;
+      min-height: 100vh;
+      padding: 60px 20px 80px 20px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+    }
+
+    /* GENERIC WINDOW STYLE */
+    .window {
       background: #d6d7d9;
       border-radius: 6px;
       border: 2px solid #808086;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.45);
       overflow: hidden;
+    }
+
+    /* MAIN PROJECT WINDOW */
+    .main-window {
+      position: relative;
+      width: 90%;
+      max-width: 750px;
+      z-index: 7;
     }
 
     .title-bar {
@@ -91,7 +186,11 @@
     }
     p { margin: 0 0 8px 0; }
 
-    .meta { font-size: 12px; color: #444; margin-bottom: 12px; }
+    .meta {
+      font-size: 12px;
+      color: #444;
+      margin-bottom: 12px;
+    }
 
     .list { padding-left: 18px; }
     .list li { margin-bottom: 8px; }
@@ -101,8 +200,9 @@
       margin-top: 4px;
     }
 
+    /* Sticky dream note */
     .dream-note {
-      position: absolute;
+      position: fixed;
       left: 26px;
       bottom: 30px;
       width: 190px;
@@ -112,44 +212,54 @@
       box-shadow: 0 4px 14px rgba(0,0,0,0.35);
       font-size: 11px;
       transform: rotate(-3deg);
+      z-index: 8;
     }
-
     .dream-note strong {
       display: block;
       margin-bottom: 4px;
     }
 
-    .popup {
+    /* IMAGE POPUP WINDOWS BEHIND MAIN */
+    .img-popup {
       position: absolute;
-      top: 24px;
-      right: 26px;
-      width: 220px;
-      background: #f6f6f8;
-      border-radius: 6px;
-      border: 2px solid #808086;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.4);
-      font-size: 11px;
-      overflow: hidden;
+      width: 260px;
+      max-width: 40vw;
+      z-index: 6;
+      display: flex;
+      flex-direction: column;
     }
 
-    .popup-header {
-      padding: 4px 8px;
-      background: linear-gradient(to bottom, #e8e8eb, #c3c3c6);
-      border-bottom: 1px solid #b3b3b7;
+    .img-popup .title-bar {
+      height: 22px;
+      font-size: 11px;
+      padding: 0 6px;
+    }
+
+    .img-popup-content {
+      background: #000;
+      padding: 4px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
     }
 
-    .popup-body {
-      padding: 8px 10px;
-      line-height: 1.4;
+    .img-popup-content img {
+      max-width: 100%;
+      max-height: 40vh;
+      display: block;
     }
   </style>
 </head>
 <body>
+
+  <!-- BACKGROUND LAYERS -->
+  <div id="clutter-screenshots"></div>
+  <div id="clutter-icons"></div>
+  <div class="glitch"></div>
+
   <div class="desktop">
-    <div class="window">
+    <!-- MAIN WINDOW -->
+    <div class="main-window window">
       <div class="title-bar">
         <div class="left">
           <div class="window-buttons">
@@ -208,24 +318,131 @@
         </audio>
       </div>
     </div>
-
-    <div class="popup">
-      <div class="popup-header">
-        <span>Background process</span>
-        <span>⏱</span>
-      </div>
-      <div class="popup-body">
-        Recurring dream detected.  
-        Project load may exceed system capacity.
-      </div>
-    </div>
-
-    <div class="dream-note">
-      <strong>dream log</strong>
-      bukowski tube man again  
-      always that same glendale lot  
-      figure out why or accept it
-    </div>
   </div>
+
+  <!-- DREAM NOTE -->
+  <div class="dream-note">
+    <strong>dream log</strong>
+    bukowski tube man again<br>
+    always that same glendale lot<br>
+    figure out why or accept it
+  </div>
+
+  <script>
+    /* Generate screenshot rectangles */
+    const scContainer = document.getElementById("clutter-screenshots");
+
+    function createScreenshot() {
+      const div = document.createElement("div");
+      div.classList.add("screenshot");
+
+      const w = 180 + Math.random() * 260;
+      const h = 90 + Math.random() * 150;
+
+      div.style.width = w + "px";
+      div.style.height = h + "px";
+
+      div.style.left = Math.random() * window.innerWidth + "px";
+      div.style.top = Math.random() * window.innerHeight + "px";
+
+      div.style.transform = `rotate(${(Math.random() * 10 - 5)}deg)`;
+      scContainer.appendChild(div);
+    }
+
+    for (let i = 0; i < 22; i++) createScreenshot();
+
+    /* Generate clutter icons */
+    const icons = ["📄","💾","📁","🗂️","📎","📀","💿","🖥️","🧾","📂"];
+    const icContainer = document.getElementById("clutter-icons");
+
+    function createIcon() {
+      const div = document.createElement("div");
+      div.classList.add("icon");
+      div.textContent = icons[Math.floor(Math.random() * icons.length)];
+
+      div.style.left = Math.random() * window.innerWidth + "px";
+      div.style.top = Math.random() * window.innerHeight + "px";
+
+      icContainer.appendChild(div);
+    }
+
+    for (let i = 0; i < 50; i++) createIcon();
+
+    /* IMAGE POPUPS BEHIND MAIN WINDOW */
+    const desktop = document.querySelector(".desktop");
+    const popupImages = [
+      {
+        src: "Screen Shot 2025-11-16 at 5.58.23 PM.png",
+        title: "Screen Shot 2025-11-16 at 5.58.23 PM"
+      },
+      {
+        src: "Buk in Touch Designer.png",
+        title: "Buk in Touch Designer"
+      }
+    ];
+
+    function createImgPopup(imgData) {
+      const wrap = document.createElement("div");
+      wrap.classList.add("window", "img-popup");
+
+      // title bar
+      const titleBar = document.createElement("div");
+      titleBar.className = "title-bar";
+
+      const left = document.createElement("div");
+      left.className = "left";
+
+      const buttons = document.createElement("div");
+      buttons.className = "window-buttons";
+      ["red","yellow","green"].forEach(c => {
+        const b = document.createElement("div");
+        b.className = "btn " + c;
+        buttons.appendChild(b);
+      });
+
+      const titleText = document.createElement("div");
+      titleText.className = "title-text";
+      titleText.textContent = imgData.title;
+
+      left.appendChild(buttons);
+      left.appendChild(titleText);
+
+      const spacer = document.createElement("div");
+      spacer.style.fontSize = "11px";
+      spacer.textContent = ""; // no right-side controls
+
+      titleBar.appendChild(left);
+      titleBar.appendChild(spacer);
+
+      // content
+      const content = document.createElement("div");
+      content.className = "img-popup-content";
+
+      const img = document.createElement("img");
+      img.src = imgData.src;
+      img.alt = imgData.title;
+
+      content.appendChild(img);
+
+      wrap.appendChild(titleBar);
+      wrap.appendChild(content);
+
+      // random position behind main window
+      const margin = 40;
+      const maxX = Math.max(0, window.innerWidth - 260 - margin);
+      const maxY = Math.max(80, window.innerHeight - 260 - margin);
+
+      const leftPos = margin + Math.random() * (maxX - margin);
+      const topPos = margin + Math.random() * (maxY - margin);
+
+      wrap.style.left = leftPos + "px";
+      wrap.style.top = topPos + "px";
+
+      desktop.appendChild(wrap);
+    }
+
+    popupImages.forEach(createImgPopup);
+  </script>
+
 </body>
 </html>
