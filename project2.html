@@ -25,14 +25,14 @@
         no-repeat fixed;
     }
 
-    /* TOP MENU BAR (File, Edit, battery, etc.) */
+    /* TOP MENU BAR */
     .menu-bar {
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
       height: 24px;
-      background: rgba(15, 15, 20, 0.95);
+      background: rgba(15, 15, 20, 0.94);
       color: #f5f5f7;
       font-size: 12px;
       display: flex;
@@ -70,7 +70,7 @@
       z-index: 5;
       width: 100%;
       min-height: 100vh;
-      padding: 60px 20px 80px 20px; /* leaves space for menu bar */
+      padding: 70px 20px 80px 20px; /* space for menu bar */
       display: flex;
       align-items: flex-start;
       justify-content: center;
@@ -90,7 +90,7 @@
       position: relative;
       width: 90%;
       max-width: 750px;
-      z-index: 7;
+      z-index: 7; /* top */
     }
 
     .title-bar {
@@ -104,12 +104,6 @@
       justify-content: space-between;
     }
 
-    .left {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
     .window-buttons {
       display: flex;
       gap: 4px;
@@ -121,49 +115,28 @@
       height: 12px;
       border-radius: 50%;
       border: 1px solid #7c7c7c;
-      background: #fdfdfd;
     }
-
     .btn.red { background: #ff5f57; }
     .btn.yellow { background: #ffbd2e; }
     .btn.green { background: #28c840; }
 
-    .title-text { font-weight: 600; }
-
-    .back-link { font-size: 12px; }
-    .back-link a { text-decoration: none; color: #003399; }
-
     .content {
-      padding: 16px 18px 20px 18px;
+      padding: 18px;
       background: #e4e5e8;
       font-size: 14px;
       line-height: 1.6;
     }
 
-    h1 { font-size: 18px; margin: 0 0 8px 0; }
-    h2 {
-      font-size: 14px;
-      margin: 14px 0 6px 0;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-    p { margin: 0 0 8px 0; }
+    h1 { font-size: 18px; margin-bottom: 6px; }
+    h2 { margin: 14px 0 6px; font-size: 14px; }
 
     .meta {
       font-size: 12px;
       color: #444;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
-    .list { padding-left: 18px; }
-    .list li { margin-bottom: 8px; }
-
-    audio {
-      width: 100%;
-      margin-top: 4px;
-    }
-
-    /* Sticky dream note */
+    /* DREAM NOTE */
     .dream-note {
       position: fixed;
       left: 26px;
@@ -175,33 +148,28 @@
       box-shadow: 0 4px 14px rgba(0,0,0,0.35);
       font-size: 11px;
       transform: rotate(-3deg);
-      z-index: 8;
-    }
-    .dream-note strong {
-      display: block;
-      margin-bottom: 4px;
+      z-index: 10;
     }
 
-    /* IMAGE POPUPS – bigger, fixed-position, behind main */
+    /* POPUP WINDOWS (browser + software) */
     .img-popup {
-      position: fixed;          
-      width: 520px;     
+      position: fixed;
+      width: 520px;
       max-width: 80vw;
-      z-index: 4;       
+      z-index: 4; /* behind main window */
       border-radius: 8px;
       border: 1px solid #3b3b3f;
+      background: #1c1c1f;
       box-shadow: 0 12px 26px rgba(0,0,0,0.55);
       overflow: hidden;
-      background: #1c1c1f;
     }
 
-    /* top bar like Mac window controls */
+    /* top border (dots) */
     .img-popup-topbar {
       height: 22px;
       padding: 0 8px;
       display: flex;
       align-items: center;
-      justify-content: flex-start;
       gap: 6px;
       background: linear-gradient(to bottom, #e8e8eb, #c3c3c6);
       border-bottom: 1px solid #a0a0a5;
@@ -213,11 +181,11 @@
       border-radius: 50%;
       border: 1px solid rgba(0,0,0,0.25);
     }
-    .img-popup-dot.red { background: #ff5f57; }
-    .img-popup-dot.yellow { background: #ffbd2e; }
-    .img-popup-dot.green { background: #28c840; }
+    .red { background:#ff5f57; }
+    .yellow { background:#ffbd2e; }
+    .green { background:#28c840; }
 
-    /* BROWSER STYLE */
+    /* BROWSER toolbar */
     .img-popup-browser .img-popup-toolbar {
       height: 28px;
       padding: 4px 8px;
@@ -228,86 +196,68 @@
       border-bottom: 1px solid #c0c0c5;
     }
 
-    .img-popup-browser .toolbar-pill {
+    .toolbar-pill {
       height: 18px;
-      border-radius: 999px;
-      background: #ffffff;
-      border: 1px solid #c9c9cf;
       flex: 1;
+      border-radius: 999px;
+      background: #fff;
+      border: 1px solid #c9c9cf;
     }
-
-    .img-popup-browser .toolbar-tab {
+    .toolbar-tab {
       width: 46px;
       height: 18px;
       border-radius: 12px;
-      background: #d0d0d8;
-      border: 1px solid #b1b1b8;
+      background:#d0d0d8;
+      border:1px solid #b1b1b8;
     }
 
-    /* SOFTWARE STYLE (TouchDesigner-ish) */
+    /* SOFTWARE toolbar (TouchDesigner look) */
     .img-popup-software .img-popup-toolbar {
       height: 24px;
       padding: 3px 8px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: #25262a;
-      border-bottom: 1px solid #141416;
-      color: #c3c7cf;
-      font-size: 10px;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
+      background:#25262a;
+      border-bottom:1px solid #141416;
+      color:#c3c7cf;
+      font-size:10px;
+      text-transform:uppercase;
     }
 
-    .img-popup-software .software-lights {
-      display: flex;
-      gap: 4px;
-    }
-
+    .software-lights { display:flex; gap:4px; }
     .software-square {
-      width: 10px;
-      height: 10px;
-      background: #3b3f48;
-      border-radius: 2px;
+      width:10px; height:10px;
+      background:#3b3f48; border-radius:2px;
     }
 
-    .img-popup-software .software-mini-bars {
-      display: flex;
-      gap: 3px;
-    }
-
+    .software-mini-bars { display:flex; gap:3px; }
     .software-bar {
-      width: 18px;
-      height: 3px;
-      background: #4bff8a;
-      border-radius: 999px;
+      width:18px; height:3px;
+      background:#4bff8a; border-radius:99px;
     }
 
+    /* IMAGE in popup */
     .img-popup-content {
-      background: #000;
-      padding: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      background:#000;
+      padding:6px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
     }
 
     .img-popup-content img {
-      max-width: 100%;
-      max-height: 65vh;
-      display: block;
-      object-fit: contain;
-    }
-
-    @media (max-width: 600px) {
-      .img-popup {
-        width: 320px;
-      }
+      max-width:100%;
+      max-height:65vh;
+      object-fit:contain;
+      display:block;
     }
   </style>
 </head>
+
 <body>
 
-  <!-- TOP MENU BAR -->
+  <!-- MENU BAR -->
   <div class="menu-bar">
     <div class="menu-left">
       <span></span>
@@ -322,12 +272,14 @@
     <div class="menu-right">
       <span>🔊</span>
       <span>📶</span>
-      <span>🔋 78%</span>
-      <span>Sun 11:34 PM</span>
+      <span>🔋 73%</span>
+      <span>Sun 11:48 PM</span>
     </div>
   </div>
 
+  <!-- MAIN DESKTOP -->
   <div class="desktop">
+
     <!-- MAIN WINDOW -->
     <div class="main-window window">
       <div class="title-bar">
@@ -339,9 +291,7 @@
           </div>
           <div class="title-text">Bukowskis Car</div>
         </div>
-        <div class="back-link">
-          <a href="index.html">← Back to Museum</a>
-        </div>
+        <div class="back-link"><a href="index.html">← Back to Museum</a></div>
       </div>
 
       <div class="content">
@@ -354,15 +304,15 @@
 
         <h2>What it was supposed to be</h2>
         <p>
-          A whole installation built from this one recurring dream I couldn’t shake. In it, Charles Bukowski’s face and whatever counts as his consciousness get slapped onto one of those inflatable dancing guys that convulse outside sketchy car lots. Everytime he finds himself postup up in front of greasy Glendale car dealerships, as though it was his forever resting place. It sounds ridiculous, but it's the ridiculousness is the part that feels important.
+          A whole installation built from this one recurring dream I couldn’t shake. In it, Charles Bukowski’s face and whatever counts as his consciousness get slapped onto one of those inflatable dancing guys that convulse outside sketchy car lots. Everytime he finds himself posted up in front of greasy Glendale car dealerships, as though it were his forever resting place. It sounds ridiculous, but the ridiculousness is the part that feels important.
         </p>
         <p>
-          The plan was to turn this into a real scene. Actual air dancers in a parking lot. Silicone masks with sagging skin and cigarette burn textures. The smell of cheap booze wofting from the inflatable man. A sound piece that layered spoken word with mechanical fan noise and freeway air. The audio here, Bukowskis Car, was supposed to be the first draft of a much bigger thing.
+          The plan was to turn this into a real scene. Actual air dancers in a parking lot. Silicone masks with sagging skin and cigarette burn textures. The smell of cheap booze wafting from the inflatable man. A sound piece that layered spoken word with mechanical fan noise and freeway air. The audio here, Bukowskis Car, was supposed to be the first draft of a much bigger thing.
         </p>
 
         <h2>What exists instead</h2>
         <p>
-          One composition. A spoken word track sitting on top of a rough sound bed. It describes the dream as it kept repeating. Bukowski as a tube of vinyl and air, thrashing in front of a used car lot. The piece never grew past this version. There are no masks. No live air dancers. Just this recording and a folder of notes that read more like a stress log than a production plan.
+          One composition. A spoken word track on top of a rough sound bed. It describes the dream as it kept repeating. Bukowski as a tube of vinyl and air, thrashing in front of a used car lot. The piece never grew past this version. No masks. No live air dancers. Just this recording and a folder of notes that read more like a stress log than a production plan.
         </p>
 
         <h2>Why it stalled</h2>
@@ -374,17 +324,16 @@
 
         <h2>What this fragment reveals</h2>
         <p>
-          That sometimes the body is already doing the performance and the project just records it. That a dream can feel like found footage. That it is possible to plan silicone masks and rented air dancers and still only have a single audio file at the end. The museum keeps this draft because it shows the point where an idea peaks and then collapses under the weight of the life that produced it.
+          That sometimes the body is already doing the performance and the project just documents its collapse. That a dream can feel like found footage. That you can plan silicone masks and rented air dancers and still only have one audio file at the end. The museum keeps this because it shows the moment when an idea peaks and then buckles under the weight of the life that produced it.
         </p>
 
         <h2>Listening</h2>
         <p>
-          This track is the first and only pass. Spoken word over a composition built while the dream was still repeating. Think of it as a test signal from a project that never reached the stage.
+          This track is the first and only draft. Spoken word over a composition built while the dream was still happening. Think of it as a test signal from a project that never reached the stage.
         </p>
 
         <audio controls>
           <source src="biannnoo.mp3" type="audio/mpeg" />
-          Your browser does not support audio playback.
         </audio>
       </div>
     </div>
@@ -393,114 +342,91 @@
   <!-- DREAM NOTE -->
   <div class="dream-note">
     <strong>dream log</strong>
-    I’ve been having a reoccurring dream<br>
-    where Charles Bukowski’s face and consciousness has been put onto one of those inflatable dancing men<br>
-    that flop around in the wind outside of car dealerships.<br>
-    For some reason he is always stationed at that skeevy bmw reseller in Glendale.<br>
+    I’ve been having a recurring dream<br>
+    where Charles Bukowski’s face and consciousness has been put onto one of those inflatable dancing men,<br>
+    the ones flopping around outside car dealerships.<br>
+    For some reason he is always stationed at that skeevy BMW reseller in Glendale.<br>
     I’m not sure why that last detail is relevant, but it feels very significant.
   </div>
 
+  <!-- BACKGROUND POPUP WINDOWS -->
   <script>
-    /* IMAGE POPUPS BEHIND MAIN WINDOW – browser + software */
-
     const popupImages = [
-      {
-        src: "Screen Shot 2025-11-16 at 5.58.23 PM.png",
-        kind: "browser"
-      },
-      {
-        src: "Buk in Touch Designer.png",
-        kind: "software"
-      }
+      { src: "Screen Shot 2025-11-16 at 5.58.23 PM.png", kind: "browser" },
+      { src: "Buk in Touch Designer.png", kind: "software" }
     ];
 
     function createImgPopup(imgData, index, total) {
       const wrap = document.createElement("div");
       wrap.classList.add("img-popup");
-      if (imgData.kind === "browser") {
-        wrap.classList.add("img-popup-browser");
-      } else {
-        wrap.classList.add("img-popup-software");
-      }
+      wrap.classList.add(imgData.kind === "browser" ? "img-popup-browser"
+                                                   : "img-popup-software");
 
-      // top bar with dots, no label
+      /* Topbar dots */
       const topbar = document.createElement("div");
       topbar.className = "img-popup-topbar";
-      ["red","yellow","green"].forEach(color => {
-        const dot = document.createElement("div");
-        dot.className = "img-popup-dot " + color;
-        topbar.appendChild(dot);
+      ["red","yellow","green"].forEach(c=>{
+        const d=document.createElement("div");
+        d.className="img-popup-dot "+c;
+        topbar.appendChild(d);
       });
       wrap.appendChild(topbar);
 
-      // toolbar differs per kind
-      const toolbar = document.createElement("div");
-      toolbar.className = "img-popup-toolbar";
+      /* Toolbar */
+      const toolbar=document.createElement("div");
+      toolbar.className="img-popup-toolbar";
 
-      if (imgData.kind === "browser") {
-        const tab = document.createElement("div");
-        tab.className = "toolbar-tab";
-        const pill = document.createElement("div");
-        pill.className = "toolbar-pill";
+      if(imgData.kind==="browser"){
+        const tab=document.createElement("div");
+        tab.className="toolbar-tab";
+        const pill=document.createElement("div");
+        pill.className="toolbar-pill";
         toolbar.appendChild(tab);
         toolbar.appendChild(pill);
       } else {
-        // software style
-        const left = document.createElement("div");
-        left.className = "software-lights";
-        for (let i = 0; i < 3; i++) {
-          const sq = document.createElement("div");
-          sq.className = "software-square";
+        const left=document.createElement("div");
+        left.className="software-lights";
+        for(let i=0;i<3;i++){
+          const sq=document.createElement("div");
+          sq.className="software-square";
           left.appendChild(sq);
         }
-
-        const right = document.createElement("div");
-        right.className = "software-mini-bars";
-        for (let i = 0; i < 3; i++) {
-          const bar = document.createElement("div");
-          bar.className = "software-bar";
+        const right=document.createElement("div");
+        right.className="software-mini-bars";
+        for(let i=0;i<3;i++){
+          const bar=document.createElement("div");
+          bar.className="software-bar";
           right.appendChild(bar);
         }
-
         toolbar.appendChild(left);
         toolbar.appendChild(right);
       }
-
       wrap.appendChild(toolbar);
 
-      const content = document.createElement("div");
-      content.className = "img-popup-content";
-
-      const img = document.createElement("img");
-      img.src = imgData.src;
-      img.alt = "";
-
+      /* Image */
+      const content=document.createElement("div");
+      content.className="img-popup-content";
+      const img=document.createElement("img");
+      img.src=imgData.src;
       content.appendChild(img);
       wrap.appendChild(content);
 
-      /* NON-OVERLAPPING POSITIONING */
-      const popupWidth = Math.min(520, window.innerWidth * 0.8);
-      const zoneWidth = window.innerWidth / total;
+      /* Non-overlapping random position */
+      const popupWidth=Math.min(520,window.innerWidth*0.8);
+      const zoneWidth=window.innerWidth/total;
+      const zoneStart=zoneWidth*index+20;
+      const zoneEnd=zoneStart+zoneWidth-40;
 
-      const zoneStart = zoneWidth * index + 20;
-      const zoneEnd = zoneStart + zoneWidth - 40;
+      const leftPos=Math.max(20, zoneStart + Math.random()*(zoneEnd-zoneStart-popupWidth));
+      const topPos=60 + Math.random()*(window.innerHeight*0.35);
 
-      const maxLeft = Math.max(zoneStart, 0);
-      const minRight = Math.max(zoneEnd - popupWidth, maxLeft);
-
-      const leftPos = minRight <= maxLeft
-        ? maxLeft
-        : maxLeft + Math.random() * (minRight - maxLeft);
-
-      const topPos = 60 + Math.random() * (window.innerHeight * 0.35);
-
-      wrap.style.left = `${leftPos}px`;
-      wrap.style.top = `${topPos}px`;
+      wrap.style.left=`${leftPos}px`;
+      wrap.style.top=`${topPos}px`;
 
       document.body.appendChild(wrap);
     }
 
-    popupImages.forEach((img, i) => createImgPopup(img, i, popupImages.length));
+    popupImages.forEach((img,i)=>createImgPopup(img,i,popupImages.length));
   </script>
 
 </body>
