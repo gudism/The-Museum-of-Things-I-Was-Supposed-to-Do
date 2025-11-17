@@ -13,77 +13,65 @@
       overflow-x: hidden;
       overflow-y: auto;
       font-family: -apple-system, BlinkMacSystemFont, "Chicago", system-ui, sans-serif;
-      background: #08080f;
-    }
-
-    /* BACKGROUND CLUTTER */
-    #clutter-screenshots, #clutter-icons {
-      position: fixed; inset: 0; pointer-events: none;
-    }
-    #clutter-screenshots { z-index: 0; }
-    #clutter-icons { z-index: 1; }
-
-    .screenshot {
-      position: absolute;
       background:
-        linear-gradient(to bottom, rgba(255,255,255,0.15), rgba(0,0,0,0.35)),
-        radial-gradient(circle at top left, rgba(255,255,255,0.3), transparent 70%);
-      border: 1px solid rgba(255,255,255,0.25);
-      border-radius: 6px;
-      box-shadow: 0 0 12px rgba(0,0,0,0.7);
-      opacity: 0.23;
-      backdrop-filter: blur(1px);
+        #000
+        url("Screen Shot 2025-11-16 at 6.53.20 PM.png")
+        center center / cover
+        no-repeat fixed;
     }
 
-    .icon {
-      position: absolute;
-      width: 42px; height: 42px;
-      font-size: 26px;
-      background: rgba(20,20,30,0.9);
-      border: 1px solid rgba(255,255,255,0.2);
-      border-radius: 6px;
-      display: flex; align-items: center; justify-content: center;
-      color: #f2f2ff;
-      box-shadow:
-        0 0 6px rgba(0,0,0,0.8),
-        0 0 0 1px rgba(0,0,0,0.7);
+    /* TOP MENU BAR (same language as index / project2) */
+    .menu-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 24px;
+      background: rgba(15, 15, 20, 0.94);
+      color: #f5f5f7;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 12px;
+      z-index: 40;
+      backdrop-filter: blur(8px);
+      font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
     }
 
-    /* GLITCH LAYER */
-    .glitch {
-      position: fixed; inset: 0;
-      z-index: 2; pointer-events: none;
-      mix-blend-mode: soft-light;
-      background-image:
-        repeating-linear-gradient(to bottom,
-          rgba(255,255,255,0.05) 0px,
-          rgba(255,255,255,0.05) 1px,
-          transparent 1px,
-          transparent 3px),
-        repeating-linear-gradient(to right,
-          rgba(255,0,255,0.08) 0px,
-          rgba(255,0,255,0.08) 2px,
-          transparent 2px,
-          transparent 4px);
-      opacity: 0.22;
-      animation: glitchMove 2.8s infinite linear;
+    .menu-left,
+    .menu-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
     }
 
-    @keyframes glitchMove {
-      0% { transform: translate(0,0); }
-      50% { transform: translate(-2px,1px); }
-      100% { transform: translate(0,0); }
+    .menu-left span:first-child {
+      font-weight: 700;
+      letter-spacing: 0.03em;
+    }
+
+    .menu-left .app-name {
+      font-weight: 600;
+    }
+
+    .menu-right span {
+      font-size: 11px;
+      opacity: 0.9;
     }
 
     /* MAIN WINDOW */
     .desktop {
-      position: relative; z-index: 5;
+      position: relative;
+      z-index: 5;
       padding: 60px 20px 80px 20px;
-      display: flex; justify-content: center;
+      display: flex;
+      justify-content: center;
     }
 
     .window {
-      width: 90%; max-width: 750px;
+      width: 90%;
+      max-width: 750px;
       background: #d6d7d9;
       border-radius: 6px;
       border: 2px solid #808086;
@@ -93,7 +81,8 @@
 
     .title-bar {
       height: 28px;
-      display: flex; justify-content: space-between;
+      display: flex;
+      justify-content: space-between;
       align-items: center;
       background: linear-gradient(to bottom, #e8e8eb, #c3c3c6);
       border-bottom: 2px solid #b3b3b7;
@@ -103,7 +92,8 @@
 
     .window-buttons { display: flex; gap: 4px; }
     .btn {
-      width: 12px; height: 12px;
+      width: 12px;
+      height: 12px;
       border-radius: 50%;
       border: 1px solid #7c7c7c;
     }
@@ -137,7 +127,8 @@
     /* Sticky note */
     .sticky {
       position: fixed;
-      right: 30px; top: 30px;
+      right: 30px;
+      top: 40px;
       width: 160px;
       padding: 10px;
       background: #fbf6c0;
@@ -150,12 +141,15 @@
     .sticky::before {
       content: "";
       position: absolute;
-      width: 40px; height: 12px;
+      width: 40px;
+      height: 12px;
       background: rgba(255,255,255,0.7);
-      top: -6px; left: 50%;
+      top: -6px;
+      left: 50%;
       transform: translateX(-50%) rotate(-3deg);
       box-shadow: 0 2px 4px rgba(0,0,0,0.2);
     }
+    
 
     /* USB STRIP */
     .usb-strip-wrapper {
@@ -336,16 +330,29 @@
       border: none;
       background: #000;
     }
-
   </style>
 </head>
 
 <body>
 
-  <!-- BACKGROUND LAYERS -->
-  <div id="clutter-screenshots"></div>
-  <div id="clutter-icons"></div>
-  <div class="glitch"></div>
+  <!-- MENU BAR -->
+  <div class="menu-bar">
+    <div class="menu-left">
+      <span></span>
+      <span class="app-name">Museum</span>
+      <span>File</span>
+      <span>Edit</span>
+      <span>View</span>
+      <span>USB</span>
+      <span>Help</span>
+    </div>
+    <div class="menu-right">
+      <span>🔊</span>
+      <span>📶</span>
+      <span>🔋 5%</span>
+      <span>Thu 3:17 AM</span>
+    </div>
+  </div>
 
   <div class="desktop">
     <div class="window">
@@ -411,6 +418,14 @@
       • YOU DON'T NEED MORE THUMB DRIVES JUST BC THEY R FREE DOES NOT MEAN U SHOULD TAKE IT
     </div>
   </div>
+   
+
+    <div class="sticky" style="left: 30px; top: 160px; right: auto; transform: rotate(-2deg);">
+      <strong>bringing mashiach</strong><br />
+      • daven mincha 1:15<br />
+      • HaShem loves, stay strong
+    </div>
+
 
   <!-- USB FILE EXPLORER OVERLAY -->
   <div id="usb-overlay" class="usb-window-overlay">
@@ -545,35 +560,6 @@
   </div>
 
   <script>
-    /* Generate screenshot rectangles */
-    const scContainer = document.getElementById("clutter-screenshots");
-    function createScreenshot() {
-      const div = document.createElement("div");
-      div.classList.add("screenshot");
-      const w = 180 + Math.random() * 260;
-      const h = 90 + Math.random() * 150;
-      div.style.width = w + "px";
-      div.style.height = h + "px";
-      div.style.left = Math.random() * window.innerWidth + "px";
-      div.style.top = Math.random() * window.innerHeight + "px";
-      div.style.transform = `rotate(${(Math.random() * 10 - 5)}deg)`;
-      scContainer.appendChild(div);
-    }
-    for (let i = 0; i < 22; i++) createScreenshot();
-
-    /* Generate clutter icons */
-    const icons = ["📄","💾","📁","🗂️","📎","📀","💿","🖥️"];
-    const icContainer = document.getElementById("clutter-icons");
-    function createIcon() {
-      const div = document.createElement("div");
-      div.classList.add("icon");
-      div.textContent = icons[Math.floor(Math.random() * icons.length)];
-      div.style.left = Math.random() * window.innerWidth + "px";
-      div.style.top = Math.random() * window.innerHeight + "px";
-      icContainer.appendChild(div);
-    }
-    for (let i = 0; i < 50; i++) createIcon();
-
     /* USB overlay interactions */
     const usbThumbs = document.querySelectorAll(".usb-thumb");
     const usbOverlay = document.getElementById("usb-overlay");
