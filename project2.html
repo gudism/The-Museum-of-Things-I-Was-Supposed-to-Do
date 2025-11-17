@@ -219,25 +219,111 @@
       margin-bottom: 4px;
     }
 
-    /* IMAGE POPUP WINDOWS BEHIND MAIN */
+    /* IMAGE POPUP WINDOWS BEHIND MAIN (browser + software) */
     .img-popup {
       position: absolute;
-      width: 260px;
-      max-width: 40vw;
+      width: 420px;
+      max-width: 70vw;
       z-index: 6;
-      display: flex;
-      flex-direction: column;
+      border-radius: 8px;
+      border: 1px solid #3b3b3f;
+      box-shadow: 0 12px 26px rgba(0,0,0,0.55);
+      overflow: hidden;
+      background: #1c1c1f;
     }
 
-    .img-popup .title-bar {
+    /* top bar like Mac window controls */
+    .img-popup-topbar {
       height: 22px;
-      font-size: 11px;
-      padding: 0 6px;
+      padding: 0 8px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 6px;
+      background: linear-gradient(to bottom, #e8e8eb, #c3c3c6);
+      border-bottom: 1px solid #a0a0a5;
     }
 
+    .img-popup-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border: 1px solid rgba(0,0,0,0.25);
+    }
+    .img-popup-dot.red { background: #ff5f57; }
+    .img-popup-dot.yellow { background: #ffbd2e; }
+    .img-popup-dot.green { background: #28c840; }
+
+    /* BROWSER STYLE */
+    .img-popup-browser .img-popup-toolbar {
+      height: 28px;
+      padding: 4px 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: #e5e5ea;
+      border-bottom: 1px solid #c0c0c5;
+    }
+
+    .img-popup-browser .toolbar-pill {
+      height: 18px;
+      border-radius: 999px;
+      background: #ffffff;
+      border: 1px solid #c9c9cf;
+      flex: 1;
+    }
+
+    .img-popup-browser .toolbar-tab {
+      width: 46px;
+      height: 18px;
+      border-radius: 12px;
+      background: #d0d0d8;
+      border: 1px solid #b1b1b8;
+    }
+
+    /* SOFTWARE STYLE (TouchDesigner-ish) */
+    .img-popup-software .img-popup-toolbar {
+      height: 24px;
+      padding: 3px 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #25262a;
+      border-bottom: 1px solid #141416;
+      color: #c3c7cf;
+      font-size: 10px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .img-popup-software .software-lights {
+      display: flex;
+      gap: 4px;
+    }
+
+    .software-square {
+      width: 10px;
+      height: 10px;
+      background: #3b3f48;
+      border-radius: 2px;
+    }
+
+    .img-popup-software .software-mini-bars {
+      display: flex;
+      gap: 3px;
+    }
+
+    .software-bar {
+      width: 18px;
+      height: 3px;
+      background: #4bff8a;
+      border-radius: 999px;
+    }
+
+    /* IMAGE CONTENT */
     .img-popup-content {
       background: #000;
-      padding: 4px;
+      padding: 6px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -245,8 +331,15 @@
 
     .img-popup-content img {
       max-width: 100%;
-      max-height: 40vh;
+      max-height: 55vh;
       display: block;
+      object-fit: contain;
+    }
+
+    @media (max-width: 600px) {
+      .img-popup {
+        width: 320px;
+      }
     }
   </style>
 </head>
@@ -284,10 +377,10 @@
 
         <h2>What it was supposed to be</h2>
         <p>
-          A full installation built around a recurring dream. In the dream Charles Bukowski’s face and consciousness are grafted onto one of those inflatable dancing men that flop around in the wind outside of car dealerships. For some reason he is always stationed at a skeevy BMW reseller in Glendale. The detail feels stupid and also very important.
+          A whole installation built from this one recurring dream I couldn’t shake. In it, Charles Bukowski’s face and whatever counts as his consciousness get slapped onto one of those inflatable dancing guys that convulse outside sketchy car lots. Everytime he finds himself postup up in front of greasy Glendale car dealerships, as though it was his forever resting place. It sounds ridiculous, but it's the ridiculousness is the part that feels important.
         </p>
         <p>
-          The plan was to turn this into a real scene. Actual air dancers in a parking lot. Silicone masks with sagging skin and cigarette burn textures. A sound piece that layered spoken word with mechanical fan noise and freeway air. The audio here, Bukowskis Car, was supposed to be the first draft of a much bigger thing.
+          The plan was to turn this into a real scene. Actual air dancers in a parking lot. Silicone masks with sagging skin and cigarette burn textures. The smell of cheap booze wofting from the inflatable man. A sound piece that layered spoken word with mechanical fan noise and freeway air. The audio here, Bukowskis Car, was supposed to be the first draft of a much bigger thing.
         </p>
 
         <h2>What exists instead</h2>
@@ -327,7 +420,7 @@
     where Charles Bukowski’s face and consciousness has been put onto one of those inflatable dancing men<br>
     that flop around in the wind outside of car dealerships.<br>
     For some reason he is always stationed at that skeevy bmw reseller in Glendale.<br>
-    I’m not sure why that last detail is relevant, but it feels very significant.<br>
+    I’m not sure why that last detail is relevant, but it feels very significant.
   </div>
 
   <script>
@@ -370,56 +463,99 @@
 
     for (let i = 0; i < 50; i++) createIcon();
 
-    /* IMAGE POPUPS BEHIND MAIN WINDOW */
+    /* IMAGE POPUPS BEHIND MAIN WINDOW – browser + software */
     const desktop = document.querySelector(".desktop");
 
     const popupImages = [
       {
-        src: "Screen Shot 2025-11-16 at 5.58.23 PM.png"
+        src: "Screen Shot 2025-11-16 at 5.58.23 PM.png",
+        kind: "browser"
       },
       {
-        src: "Buk in Touch Designer.png"
+        src: "Buk in Touch Designer.png",
+        kind: "software"
       }
     ];
 
     function createImgPopup(imgData, index, total) {
       const wrap = document.createElement("div");
-      wrap.style.position = "absolute";
-      wrap.style.zIndex = "6";
-      wrap.style.background = "#000";
-      wrap.style.padding = "6px";
-      wrap.style.border = "2px solid #808086";
-      wrap.style.borderRadius = "6px";
-      wrap.style.boxShadow = "0 10px 25px rgba(0,0,0,0.45)";
-      wrap.style.display = "flex";
-      wrap.style.alignItems = "center";
-      wrap.style.justifyContent = "center";
+      wrap.classList.add("img-popup");
+      if (imgData.kind === "browser") {
+        wrap.classList.add("img-popup-browser");
+      } else {
+        wrap.classList.add("img-popup-software");
+      }
 
-      // BIGGER image size
-      wrap.style.width = "360px";
-      wrap.style.height = "260px";
+      // top bar with dots, no label
+      const topbar = document.createElement("div");
+      topbar.className = "img-popup-topbar";
+      ["red","yellow","green"].forEach(color => {
+        const dot = document.createElement("div");
+        dot.className = "img-popup-dot " + color;
+        topbar.appendChild(dot);
+      });
+      wrap.appendChild(topbar);
+
+      // toolbar differs per kind
+      const toolbar = document.createElement("div");
+      toolbar.className = "img-popup-toolbar";
+
+      if (imgData.kind === "browser") {
+        const tab = document.createElement("div");
+        tab.className = "toolbar-tab";
+        const pill = document.createElement("div");
+        pill.className = "toolbar-pill";
+        toolbar.appendChild(tab);
+        toolbar.appendChild(pill);
+      } else {
+        // software style
+        const left = document.createElement("div");
+        left.className = "software-lights";
+        for (let i = 0; i < 3; i++) {
+          const sq = document.createElement("div");
+          sq.className = "software-square";
+          left.appendChild(sq);
+        }
+
+        const right = document.createElement("div");
+        right.className = "software-mini-bars";
+        for (let i = 0; i < 3; i++) {
+          const bar = document.createElement("div");
+          bar.className = "software-bar";
+          right.appendChild(bar);
+        }
+
+        toolbar.appendChild(left);
+        toolbar.appendChild(right);
+      }
+
+      wrap.appendChild(toolbar);
+
+      const content = document.createElement("div");
+      content.className = "img-popup-content";
 
       const img = document.createElement("img");
       img.src = imgData.src;
-      img.style.maxWidth = "100%";
-      img.style.maxHeight = "100%";
-      img.style.objectFit = "contain";
+      img.alt = "";
 
-      wrap.appendChild(img);
+      content.appendChild(img);
+      wrap.appendChild(content);
 
-      // ---- NON-OVERLAPPING POSITIONING ----
-      // Divide the screen into equal "zones" so they can't collide
+      /* NON-OVERLAPPING POSITIONING */
+      const popupWidth = Math.min(420, window.innerWidth * 0.7);
       const zoneWidth = window.innerWidth / total;
 
-      // Left boundary of this popup's zone
-      const zoneStart = zoneWidth * index;
-      const zoneEnd = zoneStart + zoneWidth;
+      const zoneStart = zoneWidth * index + 20;
+      const zoneEnd = zoneStart + zoneWidth - 40;
 
-      // Random X inside the zone while keeping the whole popup on screen
-      const leftPos = Math.random() * (zoneEnd - zoneStart - 360) + zoneStart;
+      const maxLeft = Math.max(zoneStart, 0);
+      const minRight = Math.max(zoneEnd - popupWidth, maxLeft);
 
-      // Random Y somewhere in the upper part of the screen
-      const topPos = 80 + Math.random() * (window.innerHeight * 0.4);
+      const leftPos = minRight <= maxLeft
+        ? maxLeft
+        : maxLeft + Math.random() * (minRight - maxLeft);
+
+      const topPos = 60 + Math.random() * (window.innerHeight * 0.35);
 
       wrap.style.left = `${leftPos}px`;
       wrap.style.top = `${topPos}px`;
@@ -428,7 +564,6 @@
     }
 
     popupImages.forEach((img, i) => createImgPopup(img, i, popupImages.length));
-
   </script>
 
 </body>
