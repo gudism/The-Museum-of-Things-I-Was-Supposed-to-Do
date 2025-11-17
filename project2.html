@@ -12,93 +12,17 @@
       padding: 0;
     }
 
-    /* PAGE BACKGROUND (matches USB page) */
+    /* PAGE BACKGROUND: your real desktop screenshot */
     html, body {
       min-height: 100vh;
       overflow-x: hidden;
       overflow-y: auto;
       font-family: -apple-system, BlinkMacSystemFont, "Chicago", system-ui, sans-serif;
-      background: #08080f;
-    }
-
-    /* BACKGROUND CLUTTER LAYERS */
-    #clutter-screenshots {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
-      overflow: hidden;
-    }
-
-    .screenshot {
-      position: absolute;
-      background: linear-gradient(
-          to bottom,
-          rgba(255,255,255,0.15),
-          rgba(0,0,0,0.35)
-        ),
-        radial-gradient(circle at top left, rgba(255,255,255,0.3), transparent 70%);
-      border: 1px solid rgba(255,255,255,0.25);
-      border-radius: 6px;
-      box-shadow: 0 0 12px rgba(0,0,0,0.7);
-      opacity: 0.23;
-      backdrop-filter: blur(1px);
-    }
-
-    #clutter-icons {
-      position: fixed;
-      inset: 0;
-      z-index: 1;
-      pointer-events: none;
-    }
-
-    .icon {
-      position: absolute;
-      width: 42px;
-      height: 42px;
-      font-size: 26px;
-      background: rgba(20,20,30,0.9);
-      border: 1px solid rgba(255,255,255,0.2);
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #f2f2ff;
-      box-shadow:
-        0 0 6px rgba(0,0,0,0.8),
-        0 0 0 1px rgba(0,0,0,0.7);
-    }
-
-    /* GLITCH LAYER */
-    .glitch {
-      position: fixed;
-      inset: 0;
-      z-index: 2;
-      pointer-events: none;
-      mix-blend-mode: soft-light;
-      background-image:
-        repeating-linear-gradient(
-          to bottom,
-          rgba(255,255,255,0.05) 0px,
-          rgba(255,255,255,0.05) 1px,
-          transparent 1px,
-          transparent 3px
-        ),
-        repeating-linear-gradient(
-          to right,
-          rgba(255,0,255,0.08) 0px,
-          rgba(255,0,255,0.08) 2px,
-          transparent 2px,
-          transparent 4px
-        );
-      opacity: 0.22;
-      animation: glitchMove 2.8s infinite linear;
-    }
-
-    @keyframes glitchMove {
-      0% { transform: translate(0,0); }
-      50% { transform: translate(-2px,1px); }
-      100% { transform: translate(0,0); }
+      background:
+        #000
+        url("Screen Shot 2025-11-16 at 6.53.20 PM.png")
+        center center / cover
+        no-repeat fixed;
     }
 
     /* MAIN DESKTOP */
@@ -205,7 +129,7 @@
       position: fixed;
       left: 26px;
       bottom: 30px;
-      width: 190px;
+      width: 260px;
       padding: 10px;
       background: #f3e2ff;
       border-radius: 5px;
@@ -219,20 +143,18 @@
       margin-bottom: 4px;
     }
 
-   
     /* IMAGE POPUPS – bigger, fixed-position, behind main */
-.img-popup {
-  position: fixed;          
-  width: 520px;     
-  max-width: 80vw;
-  z-index: 4;       
-  border-radius: 8px;
-  border: 1px solid #3b3b3f;
-  box-shadow: 0 12px 26px rgba(0,0,0,0.55);
-  overflow: hidden;
-  background: #1c1c1f;
-}
-
+    .img-popup {
+      position: fixed;          
+      width: 520px;     
+      max-width: 80vw;
+      z-index: 4;       
+      border-radius: 8px;
+      border: 1px solid #3b3b3f;
+      box-shadow: 0 12px 26px rgba(0,0,0,0.55);
+      overflow: hidden;
+      background: #1c1c1f;
+    }
 
     /* top bar like Mac window controls */
     .img-popup-topbar {
@@ -322,17 +244,17 @@
       border-radius: 999px;
     }
 
-    .img-popup-content img {
-  max-width: 100%;
-  max-height: 65vh;
-  display: block;
-  object-fit: contain;
-}
-
+    .img-popup-content {
+      background: #000;
+      padding: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
     .img-popup-content img {
       max-width: 100%;
-      max-height: 55vh;
+      max-height: 65vh;
       display: block;
       object-fit: contain;
     }
@@ -345,11 +267,6 @@
   </style>
 </head>
 <body>
-
-  <!-- BACKGROUND LAYERS -->
-  <div id="clutter-screenshots"></div>
-  <div id="clutter-icons"></div>
-  <div class="glitch"></div>
 
   <div class="desktop">
     <!-- MAIN WINDOW -->
@@ -425,47 +342,7 @@
   </div>
 
   <script>
-    /* Generate screenshot rectangles */
-    const scContainer = document.getElementById("clutter-screenshots");
-
-    function createScreenshot() {
-      const div = document.createElement("div");
-      div.classList.add("screenshot");
-
-      const w = 180 + Math.random() * 260;
-      const h = 90 + Math.random() * 150;
-
-      div.style.width = w + "px";
-      div.style.height = h + "px";
-
-      div.style.left = Math.random() * window.innerWidth + "px";
-      div.style.top = Math.random() * window.innerHeight + "px";
-
-      div.style.transform = `rotate(${(Math.random() * 10 - 5)}deg)`;
-      scContainer.appendChild(div);
-    }
-
-    for (let i = 0; i < 22; i++) createScreenshot();
-
-    /* Generate clutter icons */
-    const icons = ["📄","💾","📁","🗂️","📎","📀","💿","🖥️","🧾","📂"];
-    const icContainer = document.getElementById("clutter-icons");
-
-    function createIcon() {
-      const div = document.createElement("div");
-      div.classList.add("icon");
-      div.textContent = icons[Math.floor(Math.random() * icons.length)];
-
-      div.style.left = Math.random() * window.innerWidth + "px";
-      div.style.top = Math.random() * window.innerHeight + "px";
-
-      icContainer.appendChild(div);
-    }
-
-    for (let i = 0; i < 50; i++) createIcon();
-
     /* IMAGE POPUPS BEHIND MAIN WINDOW – browser + software */
-    const desktop = document.querySelector(".desktop");
 
     const popupImages = [
       {
@@ -543,7 +420,7 @@
       wrap.appendChild(content);
 
       /* NON-OVERLAPPING POSITIONING */
-      const popupWidth = Math.min(420, window.innerWidth * 0.7);
+      const popupWidth = Math.min(520, window.innerWidth * 0.8);
       const zoneWidth = window.innerWidth / total;
 
       const zoneStart = zoneWidth * index + 20;
@@ -561,7 +438,7 @@
       wrap.style.left = `${leftPos}px`;
       wrap.style.top = `${topPos}px`;
 
-      desktop.appendChild(wrap);
+      document.body.appendChild(wrap);
     }
 
     popupImages.forEach((img, i) => createImgPopup(img, i, popupImages.length));
