@@ -370,78 +370,63 @@
 
     /* IMAGE POPUPS BEHIND MAIN WINDOW */
     const desktop = document.querySelector(".desktop");
+
     const popupImages = [
       {
-        src: "Screen Shot 2025-11-16 at 5.58.23 PM.png",
-        title: "Screen Shot 2025-11-16 at 5.58.23 PM"
+        src: "Screen Shot 2025-11-16 at 5.58.23 PM.png"
       },
       {
-        src: "Buk in Touch Designer.png",
-        title: "Buk in Touch Designer"
+        src: "Buk in Touch Designer.png"
       }
     ];
 
-    function createImgPopup(imgData) {
+    function createImgPopup(imgData, index, total) {
       const wrap = document.createElement("div");
-      wrap.classList.add("window", "img-popup");
+      wrap.style.position = "absolute";
+      wrap.style.zIndex = "6";
+      wrap.style.background = "#000";
+      wrap.style.padding = "6px";
+      wrap.style.border = "2px solid #808086";
+      wrap.style.borderRadius = "6px";
+      wrap.style.boxShadow = "0 10px 25px rgba(0,0,0,0.45)";
+      wrap.style.display = "flex";
+      wrap.style.alignItems = "center";
+      wrap.style.justifyContent = "center";
 
-      // title bar
-      const titleBar = document.createElement("div");
-      titleBar.className = "title-bar";
-
-      const left = document.createElement("div");
-      left.className = "left";
-
-      const buttons = document.createElement("div");
-      buttons.className = "window-buttons";
-      ["red","yellow","green"].forEach(c => {
-        const b = document.createElement("div");
-        b.className = "btn " + c;
-        buttons.appendChild(b);
-      });
-
-      const titleText = document.createElement("div");
-      titleText.className = "title-text";
-      titleText.textContent = imgData.title;
-
-      left.appendChild(buttons);
-      left.appendChild(titleText);
-
-      const spacer = document.createElement("div");
-      spacer.style.fontSize = "11px";
-      spacer.textContent = ""; // no right-side controls
-
-      titleBar.appendChild(left);
-      titleBar.appendChild(spacer);
-
-      // content
-      const content = document.createElement("div");
-      content.className = "img-popup-content";
+      // BIGGER image size
+      wrap.style.width = "360px";
+      wrap.style.height = "260px";
 
       const img = document.createElement("img");
       img.src = imgData.src;
-      img.alt = imgData.title;
+      img.style.maxWidth = "100%";
+      img.style.maxHeight = "100%";
+      img.style.objectFit = "contain";
 
-      content.appendChild(img);
+      wrap.appendChild(img);
 
-      wrap.appendChild(titleBar);
-      wrap.appendChild(content);
+      // ---- NON-OVERLAPPING POSITIONING ----
+      // Divide the screen into equal "zones" so they can't collide
+      const zoneWidth = window.innerWidth / total;
 
-      // random position behind main window
-      const margin = 40;
-      const maxX = Math.max(0, window.innerWidth - 260 - margin);
-      const maxY = Math.max(80, window.innerHeight - 260 - margin);
+      // Left boundary of this popup's zone
+      const zoneStart = zoneWidth * index;
+      const zoneEnd = zoneStart + zoneWidth;
 
-      const leftPos = margin + Math.random() * (maxX - margin);
-      const topPos = margin + Math.random() * (maxY - margin);
+      // Random X inside the zone while keeping the whole popup on screen
+      const leftPos = Math.random() * (zoneEnd - zoneStart - 360) + zoneStart;
 
-      wrap.style.left = leftPos + "px";
-      wrap.style.top = topPos + "px";
+      // Random Y somewhere in the upper part of the screen
+      const topPos = 80 + Math.random() * (window.innerHeight * 0.4);
+
+      wrap.style.left = `${leftPos}px`;
+      wrap.style.top = `${topPos}px`;
 
       desktop.appendChild(wrap);
     }
 
-    popupImages.forEach(createImgPopup);
+    popupImages.forEach((img, i) => createImgPopup(img, i, popupImages.length));
+
   </script>
 
 </body>
