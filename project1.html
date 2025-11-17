@@ -7,6 +7,7 @@
 
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
+
     html, body {
       min-height: 100vh;
       overflow-x: hidden;
@@ -24,8 +25,9 @@
 
     .screenshot {
       position: absolute;
-      background: linear-gradient(to bottom, rgba(255,255,255,0.15), rgba(0,0,0,0.35)),
-                  radial-gradient(circle at top left, rgba(255,255,255,0.3), transparent 70%);
+      background:
+        linear-gradient(to bottom, rgba(255,255,255,0.15), rgba(0,0,0,0.35)),
+        radial-gradient(circle at top left, rgba(255,255,255,0.3), transparent 70%);
       border: 1px solid rgba(255,255,255,0.25);
       border-radius: 6px;
       box-shadow: 0 0 12px rgba(0,0,0,0.7);
@@ -42,17 +44,27 @@
       border-radius: 6px;
       display: flex; align-items: center; justify-content: center;
       color: #f2f2ff;
-      box-shadow: 0 0 6px rgba(0,0,0,0.8),
-                  0 0 0 1px rgba(0,0,0,0.7);
+      box-shadow:
+        0 0 6px rgba(0,0,0,0.8),
+        0 0 0 1px rgba(0,0,0,0.7);
     }
 
+    /* GLITCH LAYER */
     .glitch {
       position: fixed; inset: 0;
       z-index: 2; pointer-events: none;
       mix-blend-mode: soft-light;
       background-image:
-        repeating-linear-gradient(to bottom, rgba(255,255,255,0.05) 0px, rgba(255,255,255,0.05) 1px, transparent 1px, transparent 3px),
-        repeating-linear-gradient(to right, rgba(255,0,255,0.08) 0px, rgba(255,0,255,0.08) 2px, transparent 2px, transparent 4px);
+        repeating-linear-gradient(to bottom,
+          rgba(255,255,255,0.05) 0px,
+          rgba(255,255,255,0.05) 1px,
+          transparent 1px,
+          transparent 3px),
+        repeating-linear-gradient(to right,
+          rgba(255,0,255,0.08) 0px,
+          rgba(255,0,255,0.08) 2px,
+          transparent 2px,
+          transparent 4px);
       opacity: 0.22;
       animation: glitchMove 2.8s infinite linear;
     }
@@ -63,6 +75,7 @@
       100% { transform: translate(0,0); }
     }
 
+    /* MAIN WINDOW */
     .desktop {
       position: relative; z-index: 5;
       padding: 60px 20px 80px 20px;
@@ -94,10 +107,13 @@
       border-radius: 50%;
       border: 1px solid #7c7c7c;
     }
-    .red { background: #ff5f57; }
-    .yellow { background: #ffbd2e; }
-    .green { background: #28c840; }
+    .btn.red { background: #ff5f57; }
+    .btn.yellow { background: #ffbd2e; }
+    .btn.green { background: #28c840; }
 
+    .title-text { font-weight: 600; }
+
+    .back-link { font-size: 12px; }
     .back-link a { color: #003399; text-decoration: none; }
 
     .content {
@@ -114,18 +130,31 @@
       text-transform: uppercase;
       letter-spacing: 0.06em;
     }
+    .meta { font-size: 12px; margin-bottom: 14px; color: #444; }
+    .list { padding-left: 20px; }
     .list li { margin-bottom: 6px; }
 
+    /* Sticky note */
     .sticky {
       position: fixed;
       right: 30px; top: 30px;
-      background: #fbf6c0;
+      width: 160px;
       padding: 10px;
-      width: 160px; font-size: 11px;
-      z-index: 10;
+      background: #fbf6c0;
       border-radius: 4px;
-      transform: rotate(2.5deg);
       box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+      font-size: 11px;
+      transform: rotate(2.5deg);
+      z-index: 10;
+    }
+    .sticky::before {
+      content: "";
+      position: absolute;
+      width: 40px; height: 12px;
+      background: rgba(255,255,255,0.7);
+      top: -6px; left: 50%;
+      transform: translateX(-50%) rotate(-3deg);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
     }
 
     /* USB STRIP */
@@ -135,23 +164,38 @@
       padding-top: 14px;
     }
 
-    .usb-strip { display: flex; gap: 26px; justify-content: center; }
+    .usb-strip-label {
+      font-size: 12px;
+      margin-bottom: 8px;
+      color: #444;
+    }
+
+    .usb-strip {
+      display: flex;
+      justify-content: center;
+      gap: 26px;
+      flex-wrap: wrap;
+    }
+
     .usb-thumb {
-      width: 90px; cursor: pointer;
+      width: 90px;
+      cursor: pointer;
       filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));
-      transition: 0.15s;
+      transition: transform 0.15s ease, filter 0.15s ease;
     }
     .usb-thumb:hover {
       transform: translateY(-3px) scale(1.03);
       filter: drop-shadow(0 8px 14px rgba(0,0,0,0.7));
     }
 
-    /* OVERLAY FILE EXPLORER */
+    /* USB FILE EXPLORER OVERLAY */
     .usb-window-overlay {
-      position: fixed; inset: 0;
+      position: fixed;
+      inset: 0;
       background: rgba(0,0,0,0.4);
       display: none;
-      align-items: center; justify-content: center;
+      align-items: center;
+      justify-content: center;
       z-index: 40;
     }
 
@@ -164,214 +208,350 @@
       overflow: hidden;
     }
 
+    .usb-window .title-bar {
+      font-size: 12px;
+      height: 26px;
+    }
+
     .usb-close-btn {
       font-size: 14px;
-      background: #f0f0f0;
-      border: 1px solid #888;
-      padding: 2px 6px;
       cursor: pointer;
+      padding: 2px 6px;
+      border-radius: 4px;
+      border: 1px solid #8a8a8a;
+      background: #f0f0f0;
     }
+    .usb-close-btn:hover { background: #ffffff; }
 
+    /* Finder-like grid */
     .file-tree {
       background: #e4e5e8;
-      padding: 12px 16px;
+      padding: 14px 16px 18px 16px;
+      font-size: 13px;
       max-height: 60vh;
       overflow-y: auto;
-      font-size: 13px;
     }
 
-    .file-tree ul { list-style: none; padding-left: 18px; }
-    .file-tree li { margin: 4px 0; }
-    .folder-label { cursor: pointer; display: flex; gap: 4px; }
-    .file-entry { display: flex; gap: 6px; padding-left: 14px; }
-    .file-entry a { color: #111; text-decoration: none; }
-    .file-entry a:hover { text-decoration: underline; }
+    .folder-section {
+      margin-bottom: 18px;
+    }
+
+    .folder-title {
+      font-weight: 600;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .folder-title span.emoji {
+      font-size: 16px;
+    }
+
+    .file-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+      gap: 12px;
+    }
+
+    .file-tile {
+      text-align: center;
+      font-size: 11px;
+    }
+
+    .file-icon-box {
+      width: 68px;
+      height: 68px;
+      margin: 0 auto 4px auto;
+      border-radius: 10px;
+      background: linear-gradient(to bottom, #fdfdfd, #d6d7db);
+      border: 1px solid #a0a1a8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.25);
+      overflow: hidden;
+    }
+
+    .file-icon-box span {
+      font-size: 30px;
+    }
+
+    .file-tile a {
+      text-decoration: none;
+      color: #111;
+      word-wrap: break-word;
+    }
+
+    .file-tile a:hover {
+      text-decoration: underline;
+    }
 
   </style>
 </head>
 
 <body>
 
-<!-- BACKGROUND -->
-<div id="clutter-screenshots"></div>
-<div id="clutter-icons"></div>
-<div class="glitch"></div>
+  <!-- BACKGROUND LAYERS -->
+  <div id="clutter-screenshots"></div>
+  <div id="clutter-icons"></div>
+  <div class="glitch"></div>
 
-<div class="desktop">
-  <div class="window">
-
-    <div class="title-bar">
-      <div style="display:flex; gap:6px; align-items:center;">
-        <div class="window-buttons">
-          <div class="btn red"></div>
-          <div class="btn yellow"></div>
-          <div class="btn green"></div>
+  <div class="desktop">
+    <div class="window">
+      <div class="title-bar">
+        <div style="display:flex; align-items:center; gap:6px;">
+          <div class="window-buttons">
+            <div class="btn red"></div>
+            <div class="btn yellow"></div>
+            <div class="btn green"></div>
+          </div>
+          <div class="title-text">The USB Archive</div>
         </div>
-        <div class="title-text">The USB Archive</div>
-      </div>
-      <div class="back-link">
-        <a href="index.html">← Back to Museum</a>
-      </div>
-    </div>
 
-    <div class="content">
-
-      <div class="meta">
-        Status: ongoing and unresolved  
-        <br>Years active: 2018 to present
-      </div>
-
-      <h1>The USB Archive</h1>
-
-      <h2>What it was supposed to be</h2>
-      <p>A full catalog of the USB drives I have collected over the years. They never came from one place. A lot were extras from the UC Riverside Religious Studies department, the kind of thing that sits in drawers or gets handed out at workshops. Others came from dollar stores or drug stores. All cheap. All inconsistent. I wanted to record what ended up on them. Scans of documents and photographs. Religious brochures handed to me on sidewalks. Free zines I picked up from bus stops. Drawings on napkins. Reference images. Notes from classes. PDFs from library archives. Copies of historical documents from my workplace. A mix of work and leisure stored with no hierarchy.</p>
-
-      <h2>What exists instead</h2>
-      <p>A pile of mismatched drives in different colors and sizes. Some open to folders of archival documents or scanned manuscripts. Others hold street photos or textures I wanted to use in a project. A few contain only one image I saved at some point and no longer remember. One drive has handouts from a religious studies conference. Another has a stack of zines I meant to read. I started a spreadsheet that tracked the first few drives and then stopped because nothing about the collection stays organized for long.</p>
-
-      <h2>Why it stalled</h2>
-      <ul class="list">
-        <li>The drives reflect a life lived in fragments that resist sorting.</li>
-        <li>Each one opens a different world and asks for more attention than I expected.</li>
-        <li>The project became a record of my collecting habits rather than the files themselves.</li>
-      </ul>
-
-      <h2>What this fragment reveals</h2>
-      <p>That cheap storage carries real stories. That an archive can grow without permission. That work and leisure and spiritual ephemera all settle next to each other when no one is curating the boundaries. The museum keeps this here because it shows how daily life gathers itself. It is not clean and it is not finished. It still tells the truth.</p>
-
-      <!-- USB STRIP -->
-      <div class="usb-strip-wrapper">
-        <div class="usb-strip">
-          <img src="USB1.png" class="usb-thumb">
-          <img src="USB2.png" class="usb-thumb">
-          <img src="USB3.png" class="usb-thumb">
+        <div class="back-link">
+          <a href="index.html">← Back to Museum</a>
         </div>
       </div>
 
+      <div class="content">
+
+        <div class="meta">
+          Status: ongoing and unresolved  
+          <br>Years active: 2018 to present
+        </div>
+
+        <h1>The USB Archive</h1>
+
+        <h2>What it was supposed to be</h2>
+        <p>A full catalog of the USB drives I have collected over the years. They never came from one place. A lot were extras from the UC Riverside Religious Studies department, the kind of thing that sits in drawers or gets handed out at workshops. Others came from dollar stores or drug stores. All cheap. All inconsistent. I wanted to record what ended up on them. Scans of documents and photographs. Religious brochures handed to me on sidewalks. Free zines I picked up from bus stops. Drawings on napkins. Reference images. Notes from classes. PDFs from library archives. Copies of historical documents from my workplace. A mix of work and leisure stored with no hierarchy.</p>
+
+        <h2>What exists instead</h2>
+        <p>A pile of mismatched drives in different colors and sizes. Some open to folders of archival documents or scanned manuscripts. Others hold street photos or textures I wanted to use in a project. A few contain only one image I saved at some point and no longer remember. One drive has handouts from a religious studies conference. Another has a stack of zines I meant to read. I started a spreadsheet that tracked the first few drives and then stopped because nothing about the collection stays organized for long.</p>
+
+        <h2>Why it stalled</h2>
+        <ul class="list">
+          <li>The drives reflect a life lived in fragments that resist sorting.</li>
+          <li>Each one opens a different world and asks for more attention than I expected.</li>
+          <li>The project became a record of my collecting habits rather than the files themselves.</li>
+        </ul>
+
+        <h2>What this fragment reveals</h2>
+        <p>That cheap storage carries real stories. That an archive can grow without permission. That work and leisure and spiritual ephemera all settle next to each other when no one is curating the boundaries. The museum keeps this here because it shows how daily life gathers itself. It is not clean and it is not finished. It still tells the truth.</p>
+
+        <!-- USB STRIP -->
+        <div class="usb-strip-wrapper">
+          <div class="usb-strip-label">
+            Click a USB to open a sample of its contents.
+          </div>
+          <div class="usb-strip">
+            <img src="USB1.png" alt="USB drive 1" class="usb-thumb">
+            <img src="USB2.png" alt="USB drive 2" class="usb-thumb">
+            <img src="USB3.png" alt="USB drive 3" class="usb-thumb">
+          </div>
+        </div>
+
+      </div>
     </div>
 
+    <div class="sticky">
+      to do<br />
+      • label the blue one w nail polish stain 'walk the talk 2021'<br />
+      • scan the jesus brochure in la room under coin plate<br />
+      • YOU DON'T NEED MORE THUMB DRIVES JUST BC THEY R FREE DOES NOT MEAN U SHOULD TAKE IT
+    </div>
   </div>
 
-  <!-- Sticky -->
-  <div class="sticky">
-    to do<br />
-    • label blue usb ‘walk the talk 2021’<br />
-    • scan jesus brochure<br />
-    • STOP TAKING FREE USB DRIVES
-  </div>
-</div>
-
-<!-- OVERLAY -->
-<div id="usb-overlay" class="usb-window-overlay">
-  <div class="usb-window">
-    <div class="title-bar">
-      <div style="display:flex; gap:6px; align-items:center;">
-        <div class="window-buttons">
-          <div class="btn red"></div>
-          <div class="btn yellow"></div>
-          <div class="btn green"></div>
+  <!-- USB FILE EXPLORER OVERLAY -->
+  <div id="usb-overlay" class="usb-window-overlay">
+    <div class="usb-window">
+      <div class="title-bar">
+        <div style="display:flex; align-items:center; gap:6px;">
+          <div class="window-buttons">
+            <div class="btn red"></div>
+            <div class="btn yellow"></div>
+            <div class="btn green"></div>
+          </div>
+          <div class="title-text">USB Contents</div>
         </div>
-        <div class="title-text">USB Contents</div>
+        <div>
+          <button id="usb-close" class="usb-close-btn">×</button>
+        </div>
       </div>
-      <button id="usb-close" class="usb-close-btn">×</button>
-    </div>
 
-    <!-- FILE TREE -->
-    <div class="file-tree">
-      <ul>
+      <div class="file-tree">
+        <!-- Images section -->
+        <div class="folder-section">
+          <div class="folder-title">
+            <span class="emoji">📁</span>
+            <span>Images</span>
+          </div>
+          <div class="file-grid">
+            <div class="file-tile">
+              <div class="file-icon-box"><span>🖼️</span></div>
+              <a href="IMAG0038.JPG">IMAG0038.JPG</a>
+            </div>
+            <div class="file-tile">
+              <div class="file-icon-box"><span>🖼️</span></div>
+              <a href="IMAG0041.JPG">IMAG0041.JPG</a>
+            </div>
+            <div class="file-tile">
+              <div class="file-icon-box"><span>🖼️</span></div>
+              <a href="IMAG0042.JPG">IMAG0042.JPG</a>
+            </div>
+            <div class="file-tile">
+              <div class="file-icon-box"><span>🖼️</span></div>
+              <a href="IMAG0048.JPG">IMAG0048.JPG</a>
+            </div>
+            <div class="file-tile">
+              <div class="file-icon-box"><span>🖼️</span></div>
+              <a href="IMAG0061.JPG">IMAG0061.JPG</a>
+            </div>
+            <div class="file-tile">
+              <div class="file-icon-box"><span>🖼️</span></div>
+              <a href="IMAG0105.JPG">IMAG0105.JPG</a>
+            </div>
+          </div>
+        </div>
 
-        <!-- ROOT IMAGES -->
-        <li class="folder">
-          <div class="folder-label">📁 Images</div>
-          <ul>
-            <li class="file-entry">🖼️ <a href="IMAG0038.JPG">IMAG0038.JPG</a></li>
-            <li class="file-entry">🖼️ <a href="IMAG0041.JPG">IMAG0041.JPG</a></li>
-            <li class="file-entry">🖼️ <a href="IMAG0042.JPG">IMAG0042.JPG</a></li>
-            <li class="file-entry">🖼️ <a href="IMAG0048.JPG">IMAG0048.JPG</a></li>
-            <li class="file-entry">🖼️ <a href="IMAG0061.JPG">IMAG0061.JPG</a></li>
-            <li class="file-entry">🖼️ <a href="IMAG0105.JPG">IMAG0105.JPG</a></li>
-          </ul>
-        </li>
-
-        <!-- 1987 SRO HOUSING -->
-        <li class="folder">
-          <div class="folder-label">📁 1987 SRO housing</div>
-          <ul>
-            <li class="file-entry">📄 <a href="1987 SRO housing/20220705_BUILDING COMMON GROUND.pdf">20220705_BUILDING COMMON GROUND.pdf</a></li>
-            <li class="file-entry">📄 <a href="1987 SRO housing/20220705_mERSQNNEiaiwi Community Builder Project Expediter Sub-t.pdf">20220705_mERSQNNEiaiwi Community Builder Project Expediter Sub-t.pdf</a></li>
-            <li class="file-entry">📄 <a href="1987 SRO housing/20220705_Organizational History and Accomplishments.pdf">20220705_Organizational History and Accomplishments.pdf</a></li>
-          </ul>
-        </li>
+        <!-- 1987 SRO housing -->
+        <div class="folder-section">
+          <div class="folder-title">
+            <span class="emoji">📁</span>
+            <span>1987 SRO housing</span>
+          </div>
+          <div class="file-grid">
+            <div class="file-tile">
+              <div class="file-icon-box"><span>📄</span></div>
+              <a href="1987 SRO housing/20220705_BUILDING COMMON GROUND.pdf">
+                20220705_BUILDING COMMON GROUND.pdf
+              </a>
+            </div>
+            <div class="file-tile">
+              <div class="file-icon-box"><span>📄</span></div>
+              <a href="1987 SRO housing/20220705_mERSQNNEiaiwi Community Builder Project Expediter Sub-t.pdf">
+                20220705_mERSQNNEiaiwi…Sub-t.pdf
+              </a>
+            </div>
+            <div class="file-tile">
+              <div class="file-icon-box"><span>📄</span></div>
+              <a href="1987 SRO housing/20220705_Organizational History and Accomplishments.pdf">
+                20220705_Organizational History and Accomplishments.pdf
+              </a>
+            </div>
+          </div>
+        </div>
 
         <!-- Homeless Weiters Coalition -->
-        <li class="folder">
-          <div class="folder-label">📁 Homeless Weiters Coalition</div>
-          <ul>
-            <li class="file-entry">📄 <a href="Homeless Weiters Coalition/20220705_Table of Contents About Performing Communities Los Ange.pdf">20220705_Table of Contents About Performing Communities Los Ange.pdf</a></li>
-          </ul>
-        </li>
+        <div class="folder-section">
+          <div class="folder-title">
+            <span class="emoji">📁</span>
+            <span>Homeless Weiters Coalition</span>
+          </div>
+          <div class="file-grid">
+            <div class="file-tile">
+              <div class="file-icon-box"><span>📄</span></div>
+              <a href="Homeless Weiters Coalition/20220705_Table of Contents About Performing Communities Los Ange.pdf">
+                20220705_Table of Contents About Performing Communities Los Ange.pdf
+              </a>
+            </div>
+          </div>
+        </div>
 
         <!-- LA Stock Exchange -->
-        <li class="folder">
-          <div class="folder-label">📁 LA Stock Exchange</div>
-          <ul>
-            <li class="file-entry">📄 <a href="LA Stock Exchange/Bank forcloses on old stock exchange building.pdf">Bank forcloses on old stock exchange building.pdf</a></li>
-            <li class="file-entry">📄 <a href="LA Stock Exchange/Los Angeles Stock Exchange History Organization Operation.pdf">Los Angeles Stock Exchange History Organization Operation.pdf</a></li>
-          </ul>
-        </li>
+        <div class="folder-section">
+          <div class="folder-title">
+            <span class="emoji">📁</span>
+            <span>LA Stock Exchange</span>
+          </div>
+          <div class="file-grid">
+            <div class="file-tile">
+              <div class="file-icon-box"><span>📄</span></div>
+              <a href="LA Stock Exchange/Bank forcloses on old stock exchange building.pdf">
+                Bank forcloses on old stock exchange building.pdf
+              </a>
+            </div>
+            <div class="file-tile">
+              <div class="file-icon-box"><span>📄</span></div>
+              <a href="LA Stock Exchange/Los Angeles Stock Exchange History Organization Operation.pdf">
+                Los Angeles Stock Exchange History Organization Operation.pdf
+              </a>
+            </div>
+          </div>
+        </div>
 
-      </ul>
+      </div>
     </div>
-
   </div>
-</div>
 
-<script>
-  /* clutter */
-  const sc = document.getElementById("clutter-screenshots");
-  for (let i = 0; i < 20; i++) {
-    const d = document.createElement("div");
-    d.classList.add("screenshot");
-    d.style.width = 180 + Math.random() * 260 + "px";
-    d.style.height = 90 + Math.random() * 150 + "px";
-    d.style.left = Math.random() * window.innerWidth + "px";
-    d.style.top = Math.random() * window.innerHeight + "px";
-    d.style.transform = `rotate(${Math.random() * 10 - 5}deg)`;
-    sc.appendChild(d);
-  }
+  <div class="sticky">
+    to do<br />
+    • label the blue one w nail polish stain 'walk the talk 2021'<br />
+    • scan the jesus brochure in la room under coin plate<br />
+    • YOU DON'T NEED MORE THUMB DRIVES JUST BC THEY R FREE DOES NOT MEAN U SHOULD TAKE IT
+  </div>
 
-  const icons = ["📄","💾","📁","🗂️","📎","📀"];
-  const ic = document.getElementById("clutter-icons");
-  for (let i = 0; i < 40; i++) {
-    const d = document.createElement("div");
-    d.classList.add("icon");
-    d.textContent = icons[Math.floor(Math.random() * icons.length)];
-    d.style.left = Math.random() * window.innerWidth + "px";
-    d.style.top = Math.random() * window.innerHeight + "px";
-    ic.appendChild(d);
-  }
+  <script>
+    /* Generate screenshot rectangles */
+    const scContainer = document.getElementById("clutter-screenshots");
 
-  /* overlay */
-  const thumbs = document.querySelectorAll(".usb-thumb");
-  const ov = document.getElementById("usb-overlay");
-  const close = document.getElementById("usb-close");
+    function createScreenshot() {
+      const div = document.createElement("div");
+      div.classList.add("screenshot");
 
-  thumbs.forEach(t => {
-    t.addEventListener("click", () => {
-      ov.style.display = "flex";
-    });
-  });
+      const w = 180 + Math.random() * 260;
+      const h = 90 + Math.random() * 150;
 
-  close.addEventListener("click", () => {
-    ov.style.display = "none";
-  });
+      div.style.width = w + "px";
+      div.style.height = h + "px";
 
-  ov.addEventListener("click", (e) => {
-    if (e.target === ov) {
-      ov.style.display = "none";
+      div.style.left = Math.random() * window.innerWidth + "px";
+      div.style.top = Math.random() * window.innerHeight + "px";
+
+      div.style.transform = `rotate(${(Math.random() * 10 - 5)}deg)`;
+      scContainer.appendChild(div);
     }
-  });
-</script>
+
+    for (let i = 0; i < 22; i++) createScreenshot();
+
+    /* Generate clutter icons */
+    const icons = ["📄","💾","📁","🗂️","📎","📀","💿","🖥️"];
+    const icContainer = document.getElementById("clutter-icons");
+
+    function createIcon() {
+      const div = document.createElement("div");
+      div.classList.add("icon");
+      div.textContent = icons[Math.floor(Math.random() * icons.length)];
+
+      div.style.left = Math.random() * window.innerWidth + "px";
+      div.style.top = Math.random() * window.innerHeight + "px";
+
+      icContainer.appendChild(div);
+    }
+
+    for (let i = 0; i < 50; i++) createIcon();
+
+    /* USB overlay interactions */
+    const usbThumbs = document.querySelectorAll(".usb-thumb");
+    const usbOverlay = document.getElementById("usb-overlay");
+    const usbClose = document.getElementById("usb-close");
+
+    usbThumbs.forEach(thumb => {
+      thumb.addEventListener("click", () => {
+        usbOverlay.style.display = "flex";
+      });
+    });
+
+    usbClose.addEventListener("click", () => {
+      usbOverlay.style.display = "none";
+    });
+
+    usbOverlay.addEventListener("click", (e) => {
+      if (e.target === usbOverlay) {
+        usbOverlay.style.display = "none";
+      }
+    });
+  </script>
 
 </body>
 </html>
