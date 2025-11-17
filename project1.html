@@ -330,10 +330,6 @@
       opacity: 0.92;
     }
 
-    .file-entry span {
-      white-space: nowrap;
-    }
-
     .file-icon {
       font-size: 13px;
     }
@@ -341,6 +337,18 @@
     .folder-icon {
       font-size: 13px;
     }
+
+    /* Links for files */
+    .file-entry a {
+      text-decoration: none;
+      color: #111;
+      white-space: nowrap;
+    }
+
+    .file-entry a:hover {
+      text-decoration: underline;
+    }
+
   </style>
 </head>
 
@@ -393,16 +401,16 @@
         <h2>What this fragment reveals</h2>
         <p>That cheap storage carries real stories. That an archive can grow without permission. That work and leisure and spiritual ephemera all settle next to each other when no one is curating the boundaries. The museum keeps this here because it shows how daily life gathers itself. It is not clean and it is not finished. It still tells the truth.</p>
 
-        <!-- USB STRIP ADDED HERE -->
+        <!-- USB STRIP -->
         <div class="usb-strip-wrapper">
           <div class="usb-strip-label">
             Click a USB to open a sample of its folders.
           </div>
           <div class="usb-strip">
+            <!-- If your images are JPG instead, change to USB1.jpg etc -->
             <img src="USB1.png" alt="USB drive 1" class="usb-thumb">
             <img src="USB2.png" alt="USB drive 2" class="usb-thumb">
             <img src="USB3.png" alt="USB drive 3" class="usb-thumb">
-
           </div>
         </div>
 
@@ -442,22 +450,40 @@
             </div>
             <ul>
               <li class="file-entry">
-                <span class="file-icon">🖼️</span><span>IMAG0038.jpg</span>
+                <span class="file-icon">🖼️</span>
+                <a href="IRISSCAN Book 3/IMAG0038.jpg" target="_blank">
+                  IMAG0038.jpg
+                </a>
               </li>
               <li class="file-entry">
-                <span class="file-icon">🖼️</span><span>IMAG0041.JPG</span>
+                <span class="file-icon">🖼️</span>
+                <a href="IRISSCAN Book 3/IMAG0041.JPG" target="_blank">
+                  IMAG0041.JPG
+                </a>
               </li>
               <li class="file-entry">
-                <span class="file-icon">🖼️</span><span>IMAG0042.JPG</span>
+                <span class="file-icon">🖼️</span>
+                <a href="IRISSCAN Book 3/IMAG0042.JPG" target="_blank">
+                  IMAG0042.JPG
+                </a>
               </li>
               <li class="file-entry">
-                <span class="file-icon">🖼️</span><span>IMAG0048.JPG</span>
+                <span class="file-icon">🖼️</span>
+                <a href="IRISSCAN Book 3/IMAG0048.JPG" target="_blank">
+                  IMAG0048.JPG
+                </a>
               </li>
               <li class="file-entry">
-                <span class="file-icon">🖼️</span><span>IMAG0061.JPG</span>
+                <span class="file-icon">🖼️</span>
+                <a href="IRISSCAN Book 3/IMAG0061.JPG" target="_blank">
+                  IMAG0061.JPG
+                </a>
               </li>
               <li class="file-entry">
-                <span class="file-icon">🖼️</span><span>IMAG0105.JPG</span>
+                <span class="file-icon">🖼️</span>
+                <a href="IRISSCAN Book 3/IMAG0105.JPG" target="_blank">
+                  IMAG0105.JPG
+                </a>
               </li>
             </ul>
           </li>
@@ -468,6 +494,7 @@
               <span>LAPD</span>
             </div>
             <ul>
+              <!-- 1987 SRO Housing -->
               <li class="folder">
                 <div class="folder-label">
                   <span class="folder-icon">📁</span>
@@ -475,17 +502,27 @@
                 </div>
                 <ul>
                   <li class="file-entry">
-                    <span class="file-icon">📄</span><span>20220705_BUILDING COMMON GROUND.pdf</span>
+                    <span class="file-icon">📄</span>
+                    <a href="LAPD/1987 SRO Housing/20220705_BUILDING COMMON GROUND.pdf" target="_blank">
+                      20220705_BUILDING COMMON GROUND.pdf
+                    </a>
                   </li>
                   <li class="file-entry">
-                    <span class="file-icon">📄</span><span>20220705_mERSQNNEiaiwi Community Builder Project Expediter Sub-t.pdf</span>
+                    <span class="file-icon">📄</span>
+                    <a href="LAPD/1987 SRO Housing/20220705_mERSQNNEiaiwi Community Builder Project Expediter Sub-t.pdf" target="_blank">
+                      20220705_mERSQNNEiaiwi Community Builder Project Expediter Sub-t.pdf
+                    </a>
                   </li>
                   <li class="file-entry">
-                    <span class="file-icon">📄</span><span>20220705_Organizational History and Accomplishments.pdf</span>
+                    <span class="file-icon">📄</span>
+                    <a href="LAPD/1987 SRO Housing/20220705_Organizational History and Accomplishments.pdf" target="_blank">
+                      20220705_Organizational History and Accomplishments.pdf
+                    </a>
                   </li>
                 </ul>
               </li>
 
+              <!-- Homeless Writers Coalition -->
               <li class="folder">
                 <div class="folder-label">
                   <span class="folder-icon">📁</span>
@@ -493,11 +530,15 @@
                 </div>
                 <ul>
                   <li class="file-entry">
-                    <span class="file-icon">📄</span><span>20220705_Table of Contents About Performing Communities Los Ange.pdf</span>
+                    <span class="file-icon">📄</span>
+                    <a href="LAPD/Homeless Writers Coalition/20220705_Table of Contents About Performing Communities Los Ange.pdf" target="_blank">
+                      20220705_Table of Contents About Performing Communities Los Ange.pdf
+                    </a>
                   </li>
                 </ul>
               </li>
 
+              <!-- LAMP -->
               <li class="folder">
                 <div class="folder-label">
                   <span class="folder-icon">📁</span>
@@ -505,14 +546,21 @@
                 </div>
                 <ul>
                   <li class="file-entry">
-                    <span class="file-icon">📄</span><span>20220705_METRO.pdf</span>
+                    <span class="file-icon">📄</span>
+                    <a href="LAPD/LAMP/20220705_METRO.pdf" target="_blank">
+                      20220705_METRO.pdf
+                    </a>
                   </li>
                   <li class="file-entry">
-                    <span class="file-icon">📄</span><span>20220705_Skid Row Home for Mentally 111 OKd for L.A. Commercial .pdf</span>
+                    <span class="file-icon">📄</span>
+                    <a href="LAPD/LAMP/20220705_Skid Row Home for Mentally 111 OKd for L.A. Commercial .pdf" target="_blank">
+                      20220705_Skid Row Home for Mentally 111 OKd for L.A. Commercial .pdf
+                    </a>
                   </li>
                 </ul>
               </li>
 
+              <!-- LA History -->
               <li class="folder">
                 <div class="folder-label">
                   <span class="folder-icon">📁</span>
@@ -526,10 +574,16 @@
                     </div>
                     <ul>
                       <li class="file-entry">
-                        <span class="file-icon">📄</span><span>Bank forcloses on old stock exchange building.pdf</span>
+                        <span class="file-icon">📄</span>
+                        <a href="LAPD/LA History/Stock Exchange/Bank forcloses on old stock exchange building.pdf" target="_blank">
+                          Bank forcloses on old stock exchange building.pdf
+                        </a>
                       </li>
                       <li class="file-entry">
-                        <span class="file-icon">📄</span><span>Los Angeles Stock Exchange History Organization Operation.pdf</span>
+                        <span class="file-icon">📄</span>
+                        <a href="LAPD/LA History/Stock Exchange/Los Angeles Stock Exchange History Organization Operation.pdf" target="_blank">
+                          Los Angeles Stock Exchange History Organization Operation.pdf
+                        </a>
                       </li>
                     </ul>
                   </li>
@@ -551,8 +605,8 @@
       const div = document.createElement("div");
       div.classList.add("screenshot");
 
-      const w = 180 + Math.random()*260;
-      const h = 90 + Math.random()*150;
+      const w = 180 + Math.random() * 260;
+      const h = 90 + Math.random() * 150;
 
       div.style.width = w + "px";
       div.style.height = h + "px";
@@ -560,11 +614,11 @@
       div.style.left = Math.random() * window.innerWidth + "px";
       div.style.top = Math.random() * window.innerHeight + "px";
 
-      div.style.transform = `rotate(${(Math.random()*10-5)}deg)`;
+      div.style.transform = `rotate(${(Math.random() * 10 - 5)}deg)`;
       scContainer.appendChild(div);
     }
 
-    for (let i=0; i<22; i++) createScreenshot();
+    for (let i = 0; i < 22; i++) createScreenshot();
 
     /* Generate clutter icons */
     const icons = ["📄","💾","📁","🗂️","📎","📀","💿","🖥️","🧾","📂"];
@@ -573,7 +627,7 @@
     function createIcon() {
       const div = document.createElement("div");
       div.classList.add("icon");
-      div.textContent = icons[Math.floor(Math.random()*icons.length)];
+      div.textContent = icons[Math.floor(Math.random() * icons.length)];
 
       div.style.left = Math.random() * window.innerWidth + "px";
       div.style.top = Math.random() * window.innerHeight + "px";
@@ -581,7 +635,7 @@
       icContainer.appendChild(div);
     }
 
-    for (let i=0; i<50; i++) createIcon();
+    for (let i = 0; i < 50; i++) createIcon();
 
     /* USB overlay interactions */
     const usbThumbs = document.querySelectorAll(".usb-thumb");
