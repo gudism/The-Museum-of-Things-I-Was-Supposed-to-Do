@@ -5,72 +5,93 @@
   <title>Audio Reactive Visuals (No Audio)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     html, body {
+      width: 100%;
       min-height: 100vh;
       overflow-x: hidden;
       overflow-y: auto;
       font-family: -apple-system, BlinkMacSystemFont, "Chicago", system-ui, sans-serif;
-      background:
-        #000
-        url("Screen Shot 2025-11-16 at 6.53.20 PM.png")
-        center center / cover
-        no-repeat fixed;
     }
 
-    /* TOP MENU BAR */
+    /* REAL DESKTOP BACKGROUND */
+    body {
+      background: url("Screen Shot 2025-11-16 at 6.53.20 PM.png")
+        center center / cover no-repeat fixed;
+    }
+
+    /* MENU BAR */
     .menu-bar {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
+      top: 0; left: 0; right: 0;
       height: 24px;
-      background: rgba(15, 15, 20, 0.94);
-      color: #f5f5f7;
+      background: rgba(10,10,16,0.78);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid rgba(0,0,0,0.6);
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
       font-size: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 12px;
-      z-index: 40;
-      backdrop-filter: blur(8px);
-      font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      color: #f1f1f5;
+    }
+    .menu-bar span { margin-right: 18px; }
+    .menu-bar .menu-title { font-weight: 600; margin-right: 24px; }
+    .menu-bar .menu-right { margin-left: auto; opacity: 0.85; }
+
+    /* GLITCH OVERLAY */
+    .glitch {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      mix-blend-mode: soft-light;
+      background-image:
+        repeating-linear-gradient(to bottom,
+          rgba(255,255,255,0.04) 0px,
+          rgba(255,255,255,0.04) 1px,
+          transparent 1px,
+          transparent 3px),
+        repeating-linear-gradient(to right,
+          rgba(255,0,255,0.06) 0px,
+          rgba(255,0,255,0.06) 2px,
+          transparent 2px,
+          transparent 4px);
+      opacity: 0.23;
+      animation: glitchMove 2.8s infinite linear;
+    }
+    @keyframes glitchMove {
+      0% { transform: translate(0,0); }
+      50% { transform: translate(-2px,1px); }
+      100% { transform: translate(0,0); }
     }
 
-    .menu-left,
-    .menu-right {
-      display: flex;
-      align-items: center;
-      gap: 14px;
+    /* BACKGROUND POPUP (NO BORDER) */
+    .bg-popup {
+      position: fixed;
+      top: 110px;
+      left: 50px;
+      z-index: 2;
+      width: 520px;
+      opacity: 0.92;
+      transform: rotate(-2deg);
+      pointer-events: none;
+    }
+    .bg-popup img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border: none;
+      box-shadow: none;
     }
 
-    .menu-left span:first-child {
-      font-weight: 700;
-      letter-spacing: 0.03em;
-    }
-
-    .menu-left .app-name {
-      font-weight: 600;
-    }
-
-    .menu-right span {
-      font-size: 11px;
-      opacity: 0.9;
-    }
-
-    /* DESKTOP + MAIN WINDOW */
+    /* MAIN DESKTOP */
     .desktop {
       position: relative;
-      width: 100%;
-      min-height: 100vh;
-      padding: 60px 20px 40px 20px; /* space for menu bar + some bottom padding */
+      padding: 60px 20px 80px 20px;
+      z-index: 5;
       display: flex;
-      align-items: flex-start;
       justify-content: center;
     }
 
@@ -80,8 +101,10 @@
       background: #d6d7d9;
       border-radius: 6px;
       border: 2px solid #808086;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.45);
       overflow: hidden;
+      position: relative;
+      z-index: 10;
     }
 
     .title-bar {
@@ -95,33 +118,18 @@
       justify-content: space-between;
     }
 
-    .left {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .window-buttons {
-      display: flex;
-      gap: 4px;
-      margin-right: 4px;
-    }
-
+    .window-buttons { display: flex; gap: 4px; margin-right: 4px; }
     .btn {
-      width: 12px;
-      height: 12px;
+      width: 12px; height: 12px;
       border-radius: 50%;
       border: 1px solid #7c7c7c;
-      background: #fdfdfd;
     }
     .btn.red { background: #ff5f57; }
     .btn.yellow { background: #ffbd2e; }
     .btn.green { background: #28c840; }
 
     .title-text { font-weight: 600; }
-
-    .back-link { font-size: 12px; }
-    .back-link a { text-decoration: none; color: #003399; }
+    .back-link a { text-decoration: none; color: #003399; font-size: 12px; }
 
     .content {
       padding: 16px 18px 30px 18px;
@@ -130,24 +138,18 @@
       line-height: 1.6;
     }
 
-    h1 { font-size: 18px; margin: 0 0 8px 0; }
-    h2 {
-      font-size: 14px;
-      margin: 14px 0 6px 0;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-    p { margin: 0 0 8px 0; }
-    .meta { font-size: 12px; color: #444; margin-bottom: 12px; }
+    h1 { font-size: 18px; margin-bottom: 8px; }
+    h2 { font-size: 14px; margin: 14px 0 8px 0; letter-spacing: 0.05em; text-transform: uppercase; }
+    .meta { font-size: 12px; color: #444; margin-bottom: 14px; }
 
-    /* MINI WINDOWS */
+    /* VIDEO WINDOWS */
     .mini-window {
       margin: 22px 0;
       background: #d6d7d9;
       border-radius: 6px;
       border: 2px solid #808086;
-      box-shadow: 0 6px 14px rgba(0,0,0,0.25);
       overflow: hidden;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.25);
     }
 
     .mini-titlebar {
@@ -160,15 +162,9 @@
       font-size: 12px;
     }
 
-    .mini-buttons {
-      display: flex;
-      gap: 4px;
-      margin-right: 6px;
-    }
-
+    .mini-buttons { display: flex; gap: 4px; margin-right: 4px; }
     .mini-btn {
-      width: 10px;
-      height: 10px;
+      width: 10px; height: 10px;
       border-radius: 50%;
       border: 1px solid #7c7c7c;
     }
@@ -176,20 +172,9 @@
     .mini-btn.yellow { background: #ffbd2e; }
     .mini-btn.green { background: #28c840; }
 
-    .mini-title {
-      font-weight: 600;
-      font-size: 12px;
-    }
-
-    .mini-video-area {
-      padding: 10px;
-      background: #e4e5e8;
-    }
-
-    .mini-video-area video {
-      width: 100%;
-      border-radius: 6px;
-    }
+    .mini-title { font-weight: 600; }
+    .mini-video-area { padding: 10px; background: #e4e5e8; }
+    .mini-video-area video { width: 100%; border-radius: 6px; }
   </style>
 </head>
 
@@ -197,21 +182,21 @@
 
   <!-- MENU BAR -->
   <div class="menu-bar">
-    <div class="menu-left">
-      <span></span>
-      <span class="app-name">Museum</span>
-      <span>File</span>
-      <span>Edit</span>
-      <span>View</span>
-      <span>Projects</span>
-      <span>Help</span>
-    </div>
-    <div class="menu-right">
-      <span>🔊</span>
-      <span>📶</span>
-      <span>🔋 5%</span>
-      <span>Thu 3:17 AM</span>
-    </div>
+    <span class="menu-title">Audio Reactive Visuals</span>
+    <span>File</span>
+    <span>Edit</span>
+    <span>View</span>
+    <span>Window</span>
+    <span>Help</span>
+    <div class="menu-right">Fri 4:22 pm · Battery 6%</div>
+  </div>
+
+  <!-- GLITCH OVERLAY -->
+  <div class="glitch"></div>
+
+  <!-- BACKGROUND POPUP IMAGE (NO BORDER) -->
+  <div class="bg-popup">
+    <img src="Screen Shot 2025-11-16 at 8.56.03 PM.png" alt="background popup">
   </div>
 
   <div class="desktop">
@@ -225,12 +210,11 @@
           </div>
           <div class="title-text">Audio Reactive Visuals</div>
         </div>
-        <div class="back-link">
-          <a href="index.html">← Back to Museum</a>
-        </div>
+        <div class="back-link"><a href="index.html">← Back to Museum</a></div>
       </div>
 
       <div class="content">
+
         <div class="meta">
           Status: orphaned experiments  
           <br>Location: various TouchDesigner networks
@@ -240,30 +224,30 @@
 
         <h2>What it was supposed to be</h2>
         <p>
-          A growing collection of audio reactive TouchDesigner visuals that would eventually respond to original sound. I wanted each piece to move in a way that felt like it was listening. Shapes that tremble with bass. Lines that shiver with higher frequencies. A small universe of motion tied to something you could hear.
+          A growing collection of audio reactive TouchDesigner visuals that were supposed to respond to original sound. Shapes trembling at bass, lines shivering at high frequencies. A system that listened back.
         </p>
 
         <h2>What exists instead</h2>
         <p>
-          Visuals that are in motion but not actually reacting to anything outside themselves. They pulse and distort as if music is present, but the input is internal. They are reacting to nothing and still moving anyway.
+          Visuals that move but aren't listening to anything. They pulse out of habit. They pretend the audio is there.
         </p>
 
         <h2>Why it stalled</h2>
         <p>
-          The sound never caught up to the visuals. Each network was waiting for a track that did not exist. The patches moved on their own and stayed that way.
+          The sound never arrived. Each patch sat waiting for a track that didn't exist.
         </p>
 
         <h2>What this fragment reveals</h2>
         <p>
-          That motion can be a habit. That a system can pretend to be reactive even when it is alone. That the gap between sound and image is its own kind of space.
+          That motion can be muscle memory. That you can build a whole feedback system with no input and it will still try to perform.
         </p>
 
         <h2>Video archive</h2>
         <p>
-          These clips come from different sessions. Each one was built to react to audio and instead ended up reacting to nothing in particular.
-          They now sit here like small programs running on a computer that does not have speakers.
+          Clips from different sessions. All built to react to audio. All reacting to nothing now.
         </p>
 
+        <!-- VIDEO WINDOWS -->
         <div class="mini-window">
           <div class="mini-titlebar">
             <div class="mini-buttons">
@@ -274,9 +258,7 @@
             <div class="mini-title">mahfaceTD.0.mp4</div>
           </div>
           <div class="mini-video-area">
-            <video controls>
-              <source src="mahfaceTD.0.mp4" type="video/mp4">
-            </video>
+            <video controls><source src="mahfaceTD.0.mp4" type="video/mp4"></video>
           </div>
         </div>
 
@@ -290,9 +272,7 @@
             <div class="mini-title">roadblobTD.0.mp4</div>
           </div>
           <div class="mini-video-area">
-            <video controls>
-              <source src="roadblobTD.0.mp4" type="video/mp4">
-            </video>
+            <video controls><source src="roadblobTD.0.mp4" type="video/mp4"></video>
           </div>
         </div>
 
@@ -304,32 +284,29 @@
               <div class="mini-btn green"></div>
             </div>
             <div class="mini-title">trainTD.0.mp4</div>
-            <div class="mini-window">
-  <div class="mini-titlebar">
-    <div class="mini-buttons">
-      <div class="mini-btn red"></div>
-      <div class="mini-btn yellow"></div>
-      <div class="mini-btn green"></div>
-    </div>
-    <div class="mini-title">circlereactTD.0 (1) (1).mp4</div>
-  </div>
-  <div class="mini-video-area">
-    <video controls>
-      <source src="circlereactTD.0 (1) (1).mp4" type="video/mp4">
-    </video>
-  </div>
-</div>
-
           </div>
           <div class="mini-video-area">
-            <video controls>
-              <source src="trainTD.0.mp4" type="video/mp4">
-            </video>
+            <video controls><source src="trainTD.0.mp4" type="video/mp4"></video>
+          </div>
+        </div>
+
+        <div class="mini-window">
+          <div class="mini-titlebar">
+            <div class="mini-buttons">
+              <div class="mini-btn red"></div>
+              <div class="mini-btn yellow"></div>
+              <div class="mini-btn green"></div>
+            </div>
+            <div class="mini-title">circlereactTD.0 (1) (1).mp4</div>
+          </div>
+          <div class="mini-video-area">
+            <video controls><source src="circlereactTD.0 (1) (1).mp4" type="video/mp4"></video>
           </div>
         </div>
 
       </div>
     </div>
   </div>
+
 </body>
 </html>
