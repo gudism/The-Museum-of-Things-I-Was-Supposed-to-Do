@@ -329,36 +329,48 @@
 <script>
   /* clutter */
   const sc = document.getElementById("clutter-screenshots");
-  for (let i=0;i<20;i++) {
-    const d=document.createElement("div");
+  for (let i = 0; i < 20; i++) {
+    const d = document.createElement("div");
     d.classList.add("screenshot");
-    d.style.width=180+Math.random()*260+"px";
-    d.style.height=90+Math.random()*150+"px";
-    d.style.left=Math.random()*window.innerWidth+"px";
-    d.style.top=Math.random()*window.innerHeight+"px";
-    d.style.transform=`rotate(${Math.random()*10-5}deg)`;
+    d.style.width = 180 + Math.random() * 260 + "px";
+    d.style.height = 90 + Math.random() * 150 + "px";
+    d.style.left = Math.random() * window.innerWidth + "px";
+    d.style.top = Math.random() * window.innerHeight + "px";
+    d.style.transform = `rotate(${Math.random() * 10 - 5}deg)`;
     sc.appendChild(d);
   }
 
-  const icons=["📄","💾","📁","🗂️","📎","📀"];
+  const icons = ["📄","💾","📁","🗂️","📎","📀"];
   const ic = document.getElementById("clutter-icons");
-  for (let i=0;i<40;i++) {
-    const d=document.createElement("div");
+  for (let i = 0; i < 40; i++) {
+    const d = document.createElement("div");
     d.classList.add("icon");
-    d.textContent=icons[Math.floor(Math.random()*icons.length)];
-    d.style.left=Math.random()*window.innerWidth+"px";
-    d.style.top=Math.random()*window.innerHeight+"px";
+    d.textContent = icons[Math.floor(Math.random() * icons.length)];
+    d.style.left = Math.random() * window.innerWidth + "px";
+    d.style.top = Math.random() * window.innerHeight + "px";
     ic.appendChild(d);
   }
 
   /* overlay */
-  const thumbs=document.querySelectorAll(".usb-thumb");
-  const ov=document.getElementById("usb-overlay");
-  const close=document.getElementById("usb-close");
+  const thumbs = document.querySelectorAll(".usb-thumb");
+  const ov = document.getElementById("usb-overlay");
+  const close = document.getElementById("usb-close");
 
-  thumbs.forEach(t=>t.addEventListener("click",()=>ov.style.display="flex"));
-  close.addEventListener("click",()=>ov.style.display="none"));
-  ov.addEventListener("click",(e)=>{ if(e.target===ov) ov.style.display="none"; });
+  thumbs.forEach(t => {
+    t.addEventListener("click", () => {
+      ov.style.display = "flex";
+    });
+  });
+
+  close.addEventListener("click", () => {
+    ov.style.display = "none";
+  });
+
+  ov.addEventListener("click", (e) => {
+    if (e.target === ov) {
+      ov.style.display = "none";
+    }
+  });
 </script>
 
 </body>
