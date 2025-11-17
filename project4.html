@@ -5,34 +5,112 @@
   <title>LA Contracts Bot (Prototype)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-    body {
+    * {
       margin: 0;
       padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Chicago", system-ui, sans-serif;
-      background: radial-gradient(circle at top left, #fefefe, #c3cada);
-      height: 100vh;
-      overflow: hidden;
+      box-sizing: border-box;
     }
 
+    html, body {
+      width: 100%;
+      min-height: 100vh;
+      overflow-x: hidden;
+      overflow-y: auto;
+      font-family: -apple-system, BlinkMacSystemFont, "Chicago", system-ui, sans-serif;
+    }
+
+    /* REAL DESKTOP BACKGROUND */
+    body {
+      background: url("Screen Shot 2025-11-16 at 6.53.20 PM.png")
+        center center / cover no-repeat fixed;
+    }
+
+    /* MENU BAR */
+    .menu-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 24px;
+      background: rgba(10,10,16,0.78);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid rgba(0,0,0,0.6);
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+      font-size: 12px;
+      color: #f1f1f5;
+    }
+
+    .menu-bar span {
+      margin-right: 18px;
+    }
+
+    .menu-bar .menu-title {
+      font-weight: 600;
+      margin-right: 24px;
+    }
+
+    .menu-bar .menu-right {
+      margin-left: auto;
+      opacity: 0.85;
+    }
+
+    /* GLITCH OVERLAY */
+    .glitch {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      mix-blend-mode: soft-light;
+      background-image:
+        repeating-linear-gradient(
+          to bottom,
+          rgba(255,255,255,0.04) 0px,
+          rgba(255,255,255,0.04) 1px,
+          transparent 1px,
+          transparent 3px
+        ),
+        repeating-linear-gradient(
+          to right,
+          rgba(255,0,255,0.06) 0px,
+          rgba(255,0,255,0.06) 2px,
+          transparent 2px,
+          transparent 4px
+        );
+      opacity: 0.23;
+      animation: glitchMove 2.8s infinite linear;
+    }
+
+    @keyframes glitchMove {
+      0% { transform: translate(0,0); }
+      50% { transform: translate(-2px,1px); }
+      100% { transform: translate(0,0); }
+    }
+
+    /* MAIN DESKTOP LAYER */
     .desktop {
       position: relative;
+      z-index: 5;
       width: 100%;
-      height: 100%;
-      padding: 20px;
+      min-height: 100vh;
+      padding: 60px 20px 80px 20px; /* space for menu bar */
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
     }
 
     .window {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -52%);
       width: 90%;
       max-width: 750px;
       background: #d6d7d9;
       border-radius: 6px;
       border: 2px solid #808086;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.45);
       overflow: hidden;
+      position: relative;
+      z-index: 10;
     }
 
     .title-bar {
@@ -107,16 +185,15 @@
       border-radius: 4px;
       padding: 8px 10px;
       border: 1px solid #a5a6aa;
-      margin-bottom: 10px;
+      margin: 8px 0 10px 0;
       white-space: pre-wrap;
     }
 
-    /* error popup */
-
+    /* ERROR POPUP */
     .error-popup {
-      position: absolute;
+      position: fixed;
       right: 30px;
-      top: 50px;
+      top: 60px;
       width: 260px;
       background: #f7e6e6;
       border-radius: 6px;
@@ -124,6 +201,7 @@
       box-shadow: 0 8px 20px rgba(0,0,0,0.45);
       font-size: 12px;
       overflow: hidden;
+      z-index: 20;
     }
     .error-header {
       padding: 4px 8px;
@@ -148,9 +226,27 @@
       font-size: 11px;
       cursor: pointer;
     }
+    .error-body button:hover {
+      background: #ffe2e2;
+    }
   </style>
 </head>
 <body>
+
+  <!-- MENU BAR -->
+  <div class="menu-bar">
+    <span class="menu-title">LA Contracts Bot</span>
+    <span>File</span>
+    <span>Edit</span>
+    <span>View</span>
+    <span>Run</span>
+    <span>Help</span>
+    <div class="menu-right">Fri 4:31 pm · Battery 4%</div>
+  </div>
+
+  <!-- GLITCH OVERLAY -->
+  <div class="glitch"></div>
+
   <div class="desktop">
     <div class="window">
       <div class="title-bar">
@@ -166,10 +262,11 @@
           <a href="index.html">← Back to Museum</a>
         </div>
       </div>
+
       <div class="content">
         <div class="meta">
           Status: stalled prototype  
-          Location: somewhere between GitHub and city hall
+          <br>Location: somewhere between GitHub and city hall
         </div>
 
         <h1>LA Contracts Bot (Prototype)</h1>
@@ -182,7 +279,11 @@
         <h2>What exists instead</h2>
         <p>
           One official document. A collection of fifty public records requests sent to the City Council and to the Office of the City Controller. A paper trail of unanswered emails, broken portals, and delayed responses. A set of scripts that almost run. A folder called
-          <span class="code-block">data_raw</span>
+        </p>
+        <div class="code-block">
+data_raw
+        </div>
+        <p>
           that never filled the way it was supposed to. A five year crashout that became part of the project whether I wanted it or not.
         </p>
 
