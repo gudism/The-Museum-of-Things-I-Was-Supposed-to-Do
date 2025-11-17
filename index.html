@@ -194,6 +194,11 @@
       min-height: 0;
     }
 
+    /* single-column layout for folders with no side text */
+    .folder-content-single {
+      grid-template-columns: 1fr;
+    }
+
     .folder-main {
       padding: 10px;
       overflow-y: auto;
@@ -288,6 +293,38 @@
     .side-text {
       line-height: 1.4;
       margin-bottom: 6px;
+    }
+
+    /* system warning popup (bottom right) */
+    .system-popup {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 260px;
+      background: rgba(14,14,28,0.96);
+      border: 1px solid #ff9bde;
+      box-shadow: 0 0 10px rgba(0,0,0,0.9);
+      color: #fdf0ff;
+      font-family: "Geneva", system-ui, sans-serif;
+      font-size: 11px;
+      padding: 8px 10px;
+      z-index: 150;
+      animation: popupPulse 2.6s infinite ease-in-out;
+    }
+
+    .system-popup-title {
+      font-weight: bold;
+      margin-bottom: 4px;
+    }
+
+    .system-popup-body {
+      opacity: 0.9;
+    }
+
+    @keyframes popupPulse {
+      0% { transform: translateY(0); box-shadow:0 0 10px rgba(255,155,222,0.6); }
+      50% { transform: translateY(-2px); box-shadow:0 0 16px rgba(255,186,239,0.9); }
+      100% { transform: translateY(0); box-shadow:0 0 10px rgba(255,155,222,0.6); }
     }
 
     .hidden {
@@ -412,7 +449,7 @@
     </div>
   </div>
 
-  <!-- USB ARCHIVE FOLDER -->
+  <!-- USB ARCHIVE FOLDER (no side text) -->
   <div class="folder-window hidden" id="usb-folder" style="top: 120px; left: 240px;">
     <div class="folder-header">
       <div class="folder-header-left">
@@ -430,7 +467,7 @@
       <span>Sort</span>
       <span>Info</span>
     </div>
-    <div class="folder-content">
+    <div class="folder-content folder-content-single">
       <div class="folder-main">
         <div class="folder-section-title">contents</div>
         <div class="file-grid">
@@ -457,22 +494,10 @@
           </div>
         </div>
       </div>
-      <div class="folder-side">
-        <div class="side-title">USB archive</div>
-        <div class="side-text">
-          An attempt to catalog all the rogue flash drives in my life,  
-          each one full of half started songs, scans of readings,
-          and screenshots that felt important at 3 am.
-        </div>
-        <div class="side-text">
-          This was going to be an installation of USBs as relics,
-          each one labeled with what I thought I was going to do with my life that semester.
-        </div>
-      </div>
     </div>
   </div>
 
-  <!-- BUKOWSKI FOLDER -->
+  <!-- BUKOWSKI FOLDER (no side text) -->
   <div class="folder-window hidden" id="bukowski-folder" style="top: 150px; left: 220px;">
     <div class="folder-header">
       <div class="folder-header-left">
@@ -490,7 +515,7 @@
       <span>Text</span>
       <span>References</span>
     </div>
-    <div class="folder-content">
+    <div class="folder-content folder-content-single">
       <div class="folder-main">
         <div class="folder-section-title">files</div>
         <div class="file-grid">
@@ -519,23 +544,10 @@
           </div>
         </div>
       </div>
-      <div class="folder-side">
-        <div class="side-title">Bukowski’s Car...</div>
-        <div class="side-text">
-          “I have been having a recurring dream where Charles Bukowski’s face and consciousness
-          are put onto one of those inflatable dancing men outside car dealerships.
-          He is always posted at a skeevy BMW reseller in Glendale.”
-        </div>
-        <div class="side-text">
-          This project was going to be a whole scene: real air dancers, silicone masks,
-          and this audio playing in a parking lot of my brain.  
-          Instead it lives here as an open tab in the museum of almosts.
-        </div>
-      </div>
     </div>
   </div>
 
-  <!-- MISC ADMIN FOLDER -->
+  <!-- MISC ADMIN FOLDER (no side text) -->
   <div class="folder-window hidden" id="misc-folder" style="top: 220px; left: 300px;">
     <div class="folder-header">
       <div class="folder-header-left">
@@ -553,7 +565,7 @@
       <span>Sort</span>
       <span>Info</span>
     </div>
-    <div class="folder-content">
+    <div class="folder-content folder-content-single">
       <div class="folder-main">
         <div class="folder-section-title">loose ends</div>
         <div class="file-grid">
@@ -573,14 +585,15 @@
           </div>
         </div>
       </div>
-      <div class="folder-side">
-        <div class="side-title">misc admin</div>
-        <div class="side-text">
-          The paperwork section of the museum.  
-          Reminders, rubrics, and notes I was supposed to act on immediately,
-          filed lovingly under “later.”
-        </div>
-      </div>
+    </div>
+  </div>
+
+  <!-- SYSTEM WARNING POPUP (bottom right) -->
+  <div class="system-popup">
+    <div class="system-popup-title">System message</div>
+    <div class="system-popup-body">
+      The museum is open. Project files in the main folder are the real HTML pages.
+      Everything else is desktop residue.
     </div>
   </div>
 
