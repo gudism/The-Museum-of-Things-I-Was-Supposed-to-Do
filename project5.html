@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>figures.glb</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- 3D viewer -->
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      min-height: 100vh;
+      overflow-x: hidden;
+      overflow-y: auto;
+      font-family: -apple-system, BlinkMacSystemFont, "Chicago", system-ui, sans-serif;
+      background: #000;
+    }
+
+    /* WALLPAPER BACKGROUND (your real desktop screenshot) */
+    .wallpaper {
+      position: fixed;
+      inset: 0;
+      background-image: url("Screen Shot 2025-11-16 at 6.53.20 PM.png");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: 0.96;
+      z-index: -2;
+    }
+
+    /* GLITCH OVERLAY */
+    .glitch-overlay {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+      mix-blend-mode: soft-light;
+      opacity: 0.35;
+      background-image:
+        repeating-linear-gradient(
+          to bottom,
+          rgba(255,255,255,0.06) 0px,
+          rgba(255,255,255,0.06) 1px,
+          transparent 1px,
+          transparent 3px
+        ),
+        repeating-linear-gradient(
+          to right,
+          rgba(255,0,255,0.12) 0px,
+          rgba(255,0,255,0.12) 2px,
+          transparent 2px,
+          transparent 4px
+        );
+      animation: glitchShift 2.8s infinite linear;
+    }
+
+    @keyframes glitchShift {
+      0% { transform: translate(0,0); opacity: 0.28; }
+      50% { transform: translate(-2px,1px); opacity: 0.4; }
+      100% { transform: translate(0,0); opacity: 0.28; }
+    }
+
+    /* MENU BAR */
+    .menu-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 24px;
+      background: rgba(10,10,16,0.86);
+      border-bottom: 1px solid rgba(0,0,0,0.7);
+      backdrop-filter: blur(8px);
+      z-index: 40;
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+      font-size: 12px;
+      color: #f5f5ff;
+      font-family: "Chicago", "Geneva", system-ui, sans-serif;
+    }
+
+    .menu-bar span {
+      margin-right: 18px;
+      cursor: default;
+    }
+
+    .menu-bar .menu-title {
+      font-weight: 600;
+      margin-right: 24px;
+    }
+
+    .menu-bar .menu-right {
+      margin-left: auto;
+      opacity: 0.85;
+      font-size: 11px;
+    }
+
+    /* DESKTOP LAYOUT */
+    .desktop {
+      position: relative;
+      z-index: 5;
+      width: 100%;
+      min-height: 100vh;
+      padding: 60px 20px 80px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 30px;
+    }
+
+    /* GENERIC WINDOW */
+    .window {
+      background: #d6d7d9;
+      border-radius: 6px;
+      border: 2px solid #808086;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.55);
+      overflow: hidden;
+    }
+
+    .title-bar {
+      height: 26px;
+      display: flex;
+      align-items: center;
+      padding: 0 8px;
+      background: linear-gradient(to bottom, #e8e8eb, #c3c3c6);
+      border-bottom: 2px solid #b3b3b7;
+      font-size: 13px;
+      justify-content: space-between;
+    }
+
+    .left {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .window-buttons {
+      display: flex;
+      gap: 4px;
+      margin-right: 4px;
+    }
+
+    .btn {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 1px solid #7c7c7c;
+    }
+
+    .btn.red { background: #ff5f57; }
+    .btn.yellow { background: #ffbd2e; }
+    .btn.green { background: #28c840; }
+
+    .title-text { font-weight: 600; }
+
+    .back-link a {
+      font-size: 12px;
+      color: #003399;
+      text-decoration: none;
+    }
+
+    /* MAIN TEXT WINDOW */
+    .main-window {
+      width: 90%;
+      max-width: 760px;
+    }
+
+    .content {
+      padding: 16px 18px 22px 18px;
+      background: #e4e5e8;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .meta {
+      font-size: 12px;
+      color: #444;
+      margin-bottom: 12px;
+    }
+
+    h1 { font-size: 18px; margin: 0 0 8px 0; }
+    h2 {
+      font-size: 14px;
+      margin: 14px 0 6px 0;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    p { margin: 0 0 8px 0; }
+    .list { padding-left: 18px; }
+    .list li { margin-bottom: 6px; }
+
+    /* MINI 3D WINDOWS (one per figure) */
+    .mini-window {
+      width: 260px;
+      max-width: 90vw;
+    }
+
+    .mini-titlebar {
+      height: 22px;
+      display: flex;
+      align-items: center;
+      padding: 0 6px;
+      background: linear-gradient(to bottom, #e8e8eb, #c3c3c6);
+      border-bottom: 2px solid #b3b3b7;
+      font-size: 12px;
+      justify-content: space-between;
+    }
+
+    .mini-buttons {
+      display: flex;
+      gap: 4px;
+      margin-right: 4px;
+    }
+
+    .mini-btn {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border: 1px solid #7c7c7c;
+    }
+    .mini-btn.red { background: #ff5f57; }
+    .mini-btn.yellow { background: #ffbd2e; }
+    .mini-btn.green { background: #28c840; }
+
+    .mini-title {
+      font-weight: 600;
+      font-size: 12px;
+    }
+
+    .mini-body {
+      background: #d6d7d9;
+      padding: 10px;
+    }
+
+    .mini-caption {
+      font-size: 11px;
+      color: #333;
+      margin-top: 6px;
+    }
+
+    /* 3D VIEWER STYLE */
+    model-viewer {
+      width: 100%;
+      height: 220px;
+      background: #111;
+      border-radius: 4px;
+      border: 1px solid #808086;
+    }
+
+    @media (max-width: 900px) {
+      .desktop {
+        flex-direction: column;
+        align-items: center;
+      }
+      .main-window {
+        order: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- BACKGROUND -->
+  <div class="wallpaper"></div>
+  <div class="glitch-overlay"></div>
+
+  <!-- MENU BAR -->
+  <div class="menu-bar">
+    <span class="menu-title">figures.glb</span>
+    <span>File</span>
+    <span>Edit</span>
+    <span>View</span>
+    <span>Window</span>
+    <span>Help</span>
+    <div class="menu-right">Sat 2:13 am · Battery 3%</div>
+  </div>
+
+  <div class="desktop">
+    <!-- MAIN TEXT / LABEL WINDOW -->
+    <div class="window main-window">
+      <div class="title-bar">
+        <div class="left">
+          <div class="window-buttons">
+            <div class="btn red"></div>
+            <div class="btn yellow"></div>
+            <div class="btn green"></div>
+          </div>
+          <div class="title-text">figures.glb</div>
+        </div>
+        <div class="back-link">
+          <a href="index.html">← Back to Museum</a>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="meta">
+          Status: unresolved scans  
+          <br>Location: orbiting my friends, not quite anywhere
+        </div>
+
+        <h1>figures.glb</h1>
+
+        <h2>What it was supposed to be</h2>
+        <p>
+          I took these 3D scans without a finished project in mind. The only real intention was to grab the people around me and run their faces through a machine. Not in a cute photogrammetry way. More like: take somebody’s likeness, peel it off as geometry, and see what breaks when you start pulling.
+        </p>
+
+        <h2>What exists instead</h2>
+        <p>
+          Three bodies in limbo: <code>paul.glb</code>, <code>lucas.glb</code>, <code>kai.glb</code>. They load. They spin. They sit on my desktop like evidence for a project that never fully admitted what it wanted to do to them. Every file is a person rendered as a lightweight asset waiting to be stretched, glitched, or dropped into a scene that still does not exist.
+        </p>
+
+        <h2>Why it stalled</h2>
+        <ul class="list">
+          <li>The ethics and the impulse collided and neither one really won.</li>
+          <li>I wanted to distort the people I care about without fully deciding how cruel or tender that distortion should be.</li>
+          <li>No virtual space felt right for them to live in permanently, so they stayed homeless on my drive.</li>
+        </ul>
+
+        <h2>What this fragment reveals</h2>
+        <p>
+          That you can turn your friends into files faster than you can decide what it means. That a scan is not neutral just because it is accurate. That there are whole projects made of stalled intentions: half technical, half emotional, all sitting in a folder called something like <code>figures</code> while everyone goes on with their actual lives.
+        </p>
+      </div>
+    </div>
+
+    <!-- MINI 3D WINDOWS -->
+
+    <div class="window mini-window">
+      <div class="mini-titlebar">
+        <div class="left">
+          <div class="mini-buttons">
+            <div class="mini-btn red"></div>
+            <div class="mini-btn yellow"></div>
+            <div class="mini-btn green"></div>
+          </div>
+          <div class="mini-title">paul.glb</div>
+        </div>
+      </div>
+      <div class="mini-body">
+        <model-viewer
+          src="paul.glb"
+          alt="3D scan: paul.glb"
+          camera-controls
+          auto-rotate
+          shadow-intensity="0.9"
+          exposure="1.0"
+        ></model-viewer>
+        <div class="mini-caption">
+          surface detail is faithful, intention is not.
+        </div>
+      </div>
+    </div>
+
+    <div class="window mini-window">
+      <div class="mini-titlebar">
+        <div class="left">
+          <div class="mini-buttons">
+            <div class="mini-btn red"></div>
+            <div class="mini-btn yellow"></div>
+            <div class="mini-btn green"></div>
+          </div>
+          <div class="mini-title">lucas.glb</div>
+        </div>
+      </div>
+      <div class="mini-body">
+        <model-viewer
+          src="lucas.glb"
+          alt="3D scan: lucas.glb"
+          camera-controls
+          auto-rotate
+          shadow-intensity="0.9"
+          exposure="1.0"
+        ></model-viewer>
+        <div class="mini-caption">
+          caught mid-gesture, now permanently loadable.
+        </div>
+      </div>
+    </div>
+
+    <div class="window mini-window">
+      <div class="mini-titlebar">
+        <div class="left">
+          <div class="mini-buttons">
+            <div class="mini-btn red"></div>
+            <div class="mini-btn yellow"></div>
+            <div class="mini-btn green"></div>
+          </div>
+          <div class="mini-title">kai.glb</div>
+        </div>
+      </div>
+      <div class="mini-body">
+        <model-viewer
+          src="kai.glb"
+          alt="3D scan: kai.glb"
+          camera-controls
+          auto-rotate
+          shadow-intensity="0.9"
+          exposure="1.0"
+        ></model-viewer>
+        <div class="mini-caption">
+          waiting for a scene that does not exist yet.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
