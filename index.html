@@ -1,559 +1,231 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Museum of Things I Was Supposed To Do</title>
+  <meta charset="UTF-8" />
+  <title>The Museum</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     html, body {
+      height: 100%;
+      font-family: -apple-system, BlinkMacSystemFont, "Chicago", system-ui, sans-serif;
+      overflow: hidden;
+      background: #000;
+    }
+
+    /* GLITCH VIDEO BACKGROUND */
+    #bg-video {
+      position: fixed;
+      top: 0; left: 0;
       width: 100%;
       height: 100%;
-      overflow: hidden; /* desktop does not scroll */
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
-      background:
-        #000
-        url("Screen Shot 2025-11-16 at 6.53.20 PM.png")
-        center center / cover
-        no-repeat fixed;
+      object-fit: cover;
+      z-index: 0;
+      opacity: 0.28;
+      filter: blur(2px) brightness(0.9);
+      pointer-events: none;
     }
 
-    /* TOP MENU BAR – matching project2 style */
-    .menu-bar {
+    /* TOP HEADER BAR */
+    .top-header {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 24px;
-      background: rgba(15, 15, 20, 0.94);
-      color: #f5f5f7;
-      font-size: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 12px;
-      z-index: 40;
-      backdrop-filter: blur(8px);
-      font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-    }
-
-    .menu-left,
-    .menu-right {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .menu-left span:first-child {
-      font-weight: 700;
-      letter-spacing: 0.03em;
-    }
-
-    .menu-left .app-name {
-      font-weight: 600;
-    }
-
-    .menu-right span {
-      font-size: 11px;
-      opacity: 0.9;
-    }
-
-    /* folder windows */
-    .folder-window {
-      position: absolute;
-      width: 520px;
-      height: 380px;
-      background: #f0f0f5;
-      border: 2px solid #000;
-      z-index: 80;
-      display: flex;
-      flex-direction: column;
-      font-family: "Chicago", "Geneva", system-ui, sans-serif;
-      box-shadow:
-        0 0 14px rgba(0,0,0,0.9),
-        0 0 0 1px rgba(255,255,255,0.15);
-      transform-origin: center;
-      transition: box-shadow 0.15s ease, transform 0.15s ease;
-    }
-
-    .folder-window:hover {
-      animation: windowShake 0.26s infinite;
-    }
-
-    @keyframes windowShake {
-      0% { transform: translate(0,0) rotate(0deg); }
-      25% { transform: translate(-1px,0.5px) rotate(-0.3deg); }
-      50% { transform: translate(1px,-0.5px) rotate(0.4deg); }
-      75% { transform: translate(-1px,0px) rotate(-0.2deg); }
-      100% { transform: translate(0,0) rotate(0deg); }
-    }
-
-    .folder-header {
-      background: linear-gradient(to bottom, #ffffff, #dcdcdc);
-      padding: 6px 10px;
-      font-weight: bold;
-      border-bottom: 2px solid #000;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 13px;
-      cursor: pointer;
-    }
-
-    .folder-header-left {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .folder-buttons {
-      display: flex;
-      gap: 4px;
-    }
-
-    .folder-button {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      border: 1px solid #000;
-      background: #fff;
-    }
-
-    .folder-button.close {
-      background: #ff5f57;
-    }
-
-    .folder-button.min {
-      background: #ffbd2e;
-    }
-
-    .folder-button.max {
-      background: #28c840;
-    }
-
-    .folder-toolbar {
-      background: #e2e2e2;
-      border-bottom: 1px solid #000;
-      padding: 4px 8px;
-      font-size: 11px;
-      display: flex;
-      gap: 10px;
-    }
-
-    .folder-content {
-      flex: 1;
-      background: #ffffff;
-      display: grid;
-      grid-template-columns: 1.7fr 1fr;
-      border-top: 1px solid #000;
-      min-height: 0;
-    }
-
-    /* single-column layout for folders with no side text */
-    .folder-content-single {
-      grid-template-columns: 1fr;
-    }
-
-    .folder-main {
-      padding: 10px;
-      overflow-y: auto;
-      overflow-x: hidden;
-      -webkit-overflow-scrolling: touch;
-      border-right: 1px solid #ddd;
-      font-size: 11px;
-    }
-
-    .folder-side {
-      padding: 10px;
-      overflow-y: auto;
-      overflow-x: hidden;
-      -webkit-overflow-scrolling: touch;
-      font-size: 11px;
-      background: #faf8ff;
-    }
-
-    .folder-section-title {
-      font-size: 11px;
-      font-weight: bold;
-      margin-bottom: 6px;
-    }
-
-    .file-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-bottom: 10px;
-    }
-
-    .file-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 4px 2px;
-      border-radius: 4px;
-    }
-
-    .file-item:hover {
-      background: #eef0ff;
-    }
-
-    .file-icon {
-      width: 32px;
-      height: 40px;
-      border-radius: 4px;
-      border: 1px solid #000;
-      background: linear-gradient(to bottom, #fff, #e5e5ff);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-      flex-shrink: 0;
-    }
-
-    .file-text {
-      display: flex;
-      flex-direction: column;
-      min-width: 0;
-    }
-
-    .file-label-main {
-      font-size: 11px;
-      font-weight: bold;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 320px;
-    }
-
-    .file-label-sub {
-      font-size: 10px;
-      opacity: 0.7;
-    }
-
-    .file-link {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      text-decoration: none;
-      color: inherit;
+      top: 0; left: 0;
       width: 100%;
+      height: 28px;
+      background: rgba(20,20,20,0.75);
+      backdrop-filter: blur(6px);
+      color: #d8d8d8;
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      font-size: 13px;
+      z-index: 20;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
     }
 
-    .side-title {
-      font-weight: bold;
-      margin-bottom: 6px;
-      font-size: 12px;
-    }
-
-    .side-text {
-      line-height: 1.4;
-      margin-bottom: 6px;
-    }
-
-    /* system warning popup (bottom right) */
-    .system-popup {
-      position: fixed;
-      right: 18px;
-      bottom: 18px;
-      width: 260px;
-      background: rgba(14,14,28,0.96);
-      border: 1px solid #ff9bde;
-      box-shadow: 0 0 10px rgba(0,0,0,0.9);
-      color: #fdf0ff;
-      font-family: "Geneva", system-ui, sans-serif;
-      font-size: 11px;
-      padding: 8px 10px;
-      z-index: 150;
-      animation: popupPulse 2.6s infinite ease-in-out;
-    }
-
-    .system-popup-title {
-      font-weight: bold;
-      margin-bottom: 4px;
-    }
-
-    .system-popup-body {
+    .top-header span {
+      margin-right: 14px;
       opacity: 0.9;
     }
 
-    @keyframes popupPulse {
-      0% { transform: translateY(0); box-shadow:0 0 10px rgba(255,155,222,0.6); }
-      50% { transform: translateY(-2px); box-shadow:0 0 16px rgba(255,186,239,0.9); }
-      100% { transform: translateY(0); box-shadow:0 0 10px rgba(255,155,222,0.6); }
+    /* MAIN DESKTOP AREA */
+    .desktop {
+      position: relative;
+      z-index: 5;
+      width: 100%;
+      height: 100%;
+      padding: 60px 20px 40px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
     }
 
-    .hidden {
-      display: none;
+    /* MAIN WINDOW */
+    .window {
+      width: 90%;
+      max-width: 780px;
+      background: #d6d7d9;
+      border-radius: 6px;
+      border: 2px solid #808086;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.45);
+      overflow: hidden;
     }
+
+    .title-bar {
+      height: 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(to bottom, #e8e8eb, #c3c3c6);
+      border-bottom: 2px solid #b3b3b7;
+      padding: 0 8px;
+      font-size: 13px;
+    }
+
+    .title-bar .window-buttons { display: flex; gap: 4px; }
+    .btn {
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      border: 1px solid #7c7c7c;
+    }
+    .red { background: #ff5f57; }
+    .yellow { background: #ffbd2e; }
+    .green { background: #28c840; }
+
+    .content {
+      padding: 20px;
+      background: #e4e5e8;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    /* FOLDER GRID */
+    .folder-grid {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+      gap: 22px;
+    }
+
+    .folder-item {
+      width: 110px;
+      text-align: center;
+      cursor: pointer;
+      user-select: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.15s ease;
+    }
+    .folder-item:hover { transform: scale(1.06); }
+
+    .folder-icon-wrap {
+      width: 72px; height: 72px;
+      margin-bottom: 6px;
+    }
+
+    .folder-icon {
+      width: 100%; height: 100%;
+      object-fit: contain;
+    }
+
+    .folder-name {
+      font-size: 12px;
+      color: #333;
+      text-shadow: 0 1px 1px rgba(255,255,255,0.5);
+    }
+
   </style>
 </head>
+
 <body>
 
-  <!-- MENU BAR -->
-  <div class="menu-bar">
-    <div class="menu-left">
-      <span></span>
-      <span class="app-name">Museum</span>
-      <span>File</span>
-      <span>Edit</span>
-      <span>View</span>
-      <span>Projects</span>
-      <span>Help</span>
-    </div>
-    <div class="menu-right">
-      <span>🔊</span>
-      <span>📶</span>
-      <span>🔋 5%</span>
-      <span>Thu 3:17 AM</span>
-    </div>
+  <!-- GLITCH VIDEO BACKGROUND -->
+  <video id="bg-video" autoplay muted loop playsinline>
+    <source src="glitchbackground.mp4" type="video/mp4">
+  </video>
+
+  <!-- TOP BAR -->
+  <div class="top-header">
+    <span>File</span>
+    <span>Edit</span>
+    <span>View</span>
+    <span>History</span>
+    <span>Bookmarks</span>
+    <span>Window</span>
+    <span>Battery: 14%</span>
   </div>
 
-  <!-- MAIN MUSEUM FOLDER – foreground -->
-  <div class="folder-window" id="museum-folder" style="top: 70px; left: 180px; z-index: 200;">
-    <div class="folder-header">
-      <div class="folder-header-left">
-        <div class="folder-buttons">
-          <div class="folder-button close" id="museum-close"></div>
-          <div class="folder-button min"></div>
-          <div class="folder-button max"></div>
-        </div>
-        <span>Museum of Things I Was Supposed To Do</span>
-      </div>
-      <span>4 items</span>
-    </div>
-    <div class="folder-toolbar">
-      <span>View</span>
-      <span>Sort</span>
-      <span>Info</span>
-    </div>
-    <div class="folder-content">
-      <div class="folder-main">
-        <div class="folder-section-title">Exhibits (click to open full project page)</div>
-        <div class="file-grid">
-          <div class="file-item">
-            <a class="file-link" href="project1.html">
-              <div class="file-icon">📄</div>
-              <div class="file-text">
-                <div class="file-label-main">USB Archive</div>
-                <div class="file-label-sub">project1.html</div>
-              </div>
-            </a>
+  <!-- DESKTOP -->
+  <div class="desktop">
+    <div class="window">
+      <div class="title-bar">
+        <div style="display:flex; align-items:center; gap:6px;">
+          <div class="window-buttons">
+            <div class="btn red"></div>
+            <div class="btn yellow"></div>
+            <div class="btn green"></div>
           </div>
-
-          <div class="file-item">
-            <a class="file-link" href="project2.html">
-              <div class="file-icon">📄</div>
-              <div class="file-text">
-                <div class="file-label-main">Bukowski’s Car... someting???</div>
-                <div class="file-label-sub">project2.html</div>
-              </div>
-            </a>
-          </div>
-
-          <div class="file-item">
-            <a class="file-link" href="project3.html">
-              <div class="file-icon">📄</div>
-              <div class="file-text">
-                <div class="file-label-main">Audio Reactive Visuals (No Audio)</div>
-                <div class="file-label-sub">project3.html</div>
-              </div>
-            </a>
-          </div>
-
-          <div class="file-item">
-            <a class="file-link" href="project4.html">
-              <div class="file-icon">📄</div>
-              <div class="file-text">
-                <div class="file-label-main">LA Contract Bot (prototype)</div>
-                <div class="file-label-sub">project4.html</div>
-              </div>
-            </a>
-          </div>
+          <div>Museum Index</div>
         </div>
       </div>
 
-      <div class="folder-side">
-        <div class="side-title">about this folder</div>
-        <div class="side-text">
-          An informal museum of assignments, performances, and installations
-          that were fully storyboarded in my brain and partially started in real life,
-          then quietly exiled to their own little HTML universes.
-        </div>
-        <div class="side-text">
-         Each file to the left opens onto a project that was theoretically going to be completed in an orderly fashion. 
-        Instead, they’ve been deposited here by chronic overextension and a brain that refuses to triage.
+      <div class="content">
+        <p>
+          Welcome back. Everything here is a fragment.  
+          Nothing is sorted. Nothing is resolved.  
+          Click a folder to enter whatever world it belongs to.
+        </p>
+
+        <!-- PROJECT FOLDER GRID -->
+        <div class="folder-grid">
+
+          <!-- PROJECT 1 -->
+          <div class="folder-item" onclick="window.location.href='project1.html'">
+            <div class="folder-icon-wrap">
+              <img src="folder.png" class="folder-icon">
+            </div>
+            <div class="folder-name">The USB Archive</div>
+          </div>
+
+          <!-- PROJECT 2 -->
+          <div class="folder-item" onclick="window.location.href='project2.html'">
+            <div class="folder-icon-wrap">
+              <img src="folder.png" class="folder-icon">
+            </div>
+            <div class="folder-name">Bukowski’s Car…</div>
+          </div>
+
+          <!-- PROJECT 3 -->
+          <div class="folder-item" onclick="window.location.href='project3.html'">
+            <div class="folder-icon-wrap">
+              <img src="folder.png" class="folder-icon">
+            </div>
+            <div class="folder-name">Audio Reactive Visuals</div>
+          </div>
+
+          <!-- PROJECT 4 -->
+          <div class="folder-item" onclick="window.location.href='project4.html'">
+            <div class="folder-icon-wrap">
+              <img src="folder.png" class="folder-icon">
+            </div>
+            <div class="folder-name">LA Contracts Bot</div>
+          </div>
+
+          <!-- ⭐ NEW PROJECT 5 -->
+          <div class="folder-item" onclick="window.location.href='project5.html'">
+            <div class="folder-icon-wrap">
+              <img src="folder.png" class="folder-icon">
+            </div>
+            <div class="folder-name">figures.glb</div>
+          </div>
+
         </div>
       </div>
     </div>
   </div>
 
-  <!-- USB ARCHIVE FOLDER (hidden, no side text) -->
-  <div class="folder-window hidden" id="usb-folder" style="top: 120px; left: 240px;">
-    <div class="folder-header">
-      <div class="folder-header-left">
-        <div class="folder-buttons">
-          <div class="folder-button close" id="usb-close"></div>
-          <div class="folder-button min"></div>
-          <div class="folder-button max"></div>
-        </div>
-        <span>USB archive</span>
-      </div>
-      <span>too many drives</span>
-    </div>
-    <div class="folder-toolbar">
-      <span>View</span>
-      <span>Sort</span>
-      <span>Info</span>
-    </div>
-    <div class="folder-content folder-content-single">
-      <div class="folder-main">
-        <div class="folder-section-title">contents</div>
-        <div class="file-grid">
-          <div class="file-item">
-            <div class="file-icon">💾</div>
-            <div class="file-text">
-              <div class="file-label-main">usb_dump_01</div>
-              <div class="file-label-sub">mysterious .zip, 2017</div>
-            </div>
-          </div>
-          <div class="file-item">
-            <div class="file-icon">💾</div>
-            <div class="file-text">
-              <div class="file-label-main">thesis_idea_old</div>
-              <div class="file-label-sub">forgotten.docx</div>
-            </div>
-          </div>
-          <div class="file-item">
-            <div class="file-icon">💾</div>
-            <div class="file-text">
-              <div class="file-label-main">backup_of_backup</div>
-              <div class="file-label-sub">safety net or hoard</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- BUKOWSKI FOLDER (hidden, no side text) -->
-  <div class="folder-window hidden" id="bukowski-folder" style="top: 150px; left: 220px;">
-    <div class="folder-header">
-      <div class="folder-header-left">
-        <div class="folder-buttons">
-          <div class="folder-button close" id="bukowski-close"></div>
-          <div class="folder-button min"></div>
-          <div class="folder-button max"></div>
-        </div>
-        <span>Bukowski’s Car...</span>
-      </div>
-      <span>audio + masks</span>
-    </div>
-    <div class="folder-toolbar">
-      <span>Audio</span>
-      <span>Text</span>
-      <span>References</span>
-    </div>
-    <div class="folder-content folder-content-single">
-      <div class="folder-main">
-        <div class="folder-section-title">files</div>
-        <div class="file-grid">
-          <div class="file-item">
-            <a class="file-link" href="project2.html">
-              <div class="file-icon">🎵</div>
-              <div class="file-text">
-                <div class="file-label-main">biannnoo.mp3 – Bukowski’s Car</div>
-                <div class="file-label-sub">project2.html</div>
-              </div>
-            </a>
-          </div>
-          <div class="file-item">
-            <div class="file-icon">📄</div>
-            <div class="file-text">
-              <div class="file-label-main">dream_log_glendale.txt</div>
-              <div class="file-label-sub">why is he at the BMW reseller</div>
-            </div>
-          </div>
-          <div class="file-item">
-            <div class="file-icon">🎭</div>
-            <div class="file-text">
-              <div class="file-label-main">silicone_mask_notes.rtf</div>
-              <div class="file-label-sub">air dancer face experiments</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- MISC ADMIN FOLDER (hidden, no side text) -->
-  <div class="folder-window hidden" id="misc-folder" style="top: 220px; left: 300px;">
-    <div class="folder-header">
-      <div class="folder-header-left">
-        <div class="folder-buttons">
-          <div class="folder-button close" id="misc-close"></div>
-          <div class="folder-button min"></div>
-          <div class="folder-button max"></div>
-        </div>
-        <span>misc admin</span>
-      </div>
-      <span>unresolved tasks</span>
-    </div>
-    <div class="folder-toolbar">
-      <span>View</span>
-      <span>Sort</span>
-      <span>Info</span>
-    </div>
-    <div class="folder-content folder-content-single">
-      <div class="folder-main">
-        <div class="folder-section-title">loose ends</div>
-        <div class="file-grid">
-          <div class="file-item">
-            <div class="file-icon">📄</div>
-            <div class="file-text">
-              <div class="file-label-main">email_drafts_unsent.txt</div>
-              <div class="file-label-sub">apologies, extensions, explanations</div>
-            </div>
-          </div>
-          <div class="file-item">
-            <div class="file-icon">📄</div>
-            <div class="file-text">
-              <div class="file-label-main">to_do_museum.csv</div>
-              <div class="file-label-sub">display plans that never made it</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SYSTEM WARNING POPUP (bottom right, original text) -->
-  <div class="system-popup">
-    <div class="system-popup-title">System message</div>
-    <div class="system-popup-body">
-      The museum is open. Active contents appear only here.
-      Background clutter is genuine and intentionally immobilized..
-    </div>
-  </div>
-
-  <script>
-    // window z index control – keep track of which window is on top
-    let topZ = 80;
-
-    function bringToFront(win) {
-      topZ += 1;
-      win.style.zIndex = topZ;
-    }
-
-    // only the museum folder is interactively foregrounded right now
-    const museumFolder = document.getElementById("museum-folder");
-    museumFolder.addEventListener("mousedown", () => {
-      bringToFront(museumFolder);
-    });
-    museumFolder.style.zIndex = 200;
-  </script>
 </body>
 </html>
