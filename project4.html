@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <title>LA Contracts Bot (Prototype)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
   <style>
     * {
       margin: 0;
@@ -20,19 +19,13 @@
       font-family: -apple-system, BlinkMacSystemFont, "Chicago", system-ui, sans-serif;
     }
 
-    /* ---- VIDEO BACKGROUND ---- */
-    #video-bg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: -1;
-      opacity: 0.9;
+    /* REAL DESKTOP BACKGROUND */
+    body {
+      background: url("Screen Shot 2025-11-16 at 6.53.20 PM.png")
+        center center / cover no-repeat fixed;
     }
 
-    /* ---- MENU BAR ---- */
+    /* MENU BAR */
     .menu-bar {
       position: fixed;
       top: 0;
@@ -64,7 +57,7 @@
       opacity: 0.85;
     }
 
-    /* ---- GLITCH OVERLAY ---- */
+    /* GLITCH OVERLAY */
     .glitch {
       position: fixed;
       inset: 0;
@@ -96,13 +89,13 @@
       100% { transform: translate(0,0); }
     }
 
-    /* ---- MAIN DESKTOP ---- */
+    /* MAIN DESKTOP LAYER */
     .desktop {
       position: relative;
       z-index: 5;
       width: 100%;
       min-height: 100vh;
-      padding: 60px 20px 80px 20px;
+      padding: 60px 20px 80px 20px; /* space for menu bar */
       display: flex;
       justify-content: center;
       align-items: flex-start;
@@ -117,6 +110,7 @@
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.45);
       overflow: hidden;
       position: relative;
+      z-index: 10;
     }
 
     .title-bar {
@@ -130,15 +124,24 @@
       justify-content: space-between;
     }
 
-    .left { display: flex; align-items: center; gap: 6px; }
+    .left {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
 
-    .window-buttons { display: flex; gap: 4px; }
+    .window-buttons {
+      display: flex;
+      gap: 4px;
+      margin-right: 4px;
+    }
 
     .btn {
       width: 12px;
       height: 12px;
       border-radius: 50%;
       border: 1px solid #7c7c7c;
+      background: #fdfdfd;
     }
 
     .btn.red { background: #ff5f57; }
@@ -146,9 +149,10 @@
     .btn.green { background: #28c840; }
 
     .title-text { font-weight: 600; }
-    .back-link a { font-size: 12px; color: #003399; text-decoration: none; }
 
-    /* ---- PAGE CONTENT ---- */
+    .back-link { font-size: 12px; }
+    .back-link a { text-decoration: none; color: #003399; }
+
     .content {
       padding: 16px 18px 20px 18px;
       background: #e4e5e8;
@@ -156,15 +160,26 @@
       line-height: 1.6;
     }
 
-    .meta { font-size: 12px; color: #444; margin-bottom: 12px; }
     h1 { font-size: 18px; margin: 0 0 8px 0; }
-    h2 { font-size: 14px; margin: 14px 0 6px 0; text-transform: uppercase; }
+    h2 { font-size: 14px; margin: 14px 0 6px 0; text-transform: uppercase; letter-spacing: 0.06em; }
+    p { margin: 0 0 8px 0; }
 
-    .list { padding-left: 18px; }
-    .list li { margin-bottom: 6px; }
+    .meta {
+      font-size: 12px;
+      color: #444;
+      margin-bottom: 12px;
+    }
+
+    .list {
+      padding-left: 18px;
+    }
+
+    .list li {
+      margin-bottom: 6px;
+    }
 
     .code-block {
-      font-family: "SF Mono", Menlo, Consolas, monospace;
+      font-family: "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", monospace;
       font-size: 12px;
       background: #cfd0d3;
       border-radius: 4px;
@@ -174,7 +189,7 @@
       white-space: pre-wrap;
     }
 
-    /* ---- ERROR POPUP ---- */
+    /* ERROR POPUP */
     .error-popup {
       position: fixed;
       right: 30px;
@@ -188,39 +203,35 @@
       overflow: hidden;
       z-index: 20;
     }
-
     .error-header {
       padding: 4px 8px;
       background: linear-gradient(to bottom, #f3c6c6, #da8e8e);
       border-bottom: 1px solid #8a3b3b;
       display: flex;
+      align-items: center;
       justify-content: space-between;
       color: #3b0909;
     }
-
     .error-body {
       padding: 9px 10px;
       line-height: 1.4;
       color: #3b0909;
     }
-
     .error-body button {
       margin-top: 8px;
       padding: 2px 8px;
       border-radius: 4px;
       border: 1px solid #8a3b3b;
       background: #f3c6c6;
-      cursor: pointer;
       font-size: 11px;
+      cursor: pointer;
+    }
+    .error-body button:hover {
+      background: #ffe2e2;
     }
   </style>
 </head>
 <body>
-
-  <!-- VIDEO BACKGROUND -->
-  <video id="video-bg" autoplay muted loop playsinline>
-    <source src="glitchbackground.mp4" type="video/mp4">
-  </video>
 
   <!-- MENU BAR -->
   <div class="menu-bar">
@@ -233,6 +244,7 @@
     <div class="menu-right">Fri 4:31 pm · Battery 4%</div>
   </div>
 
+  <!-- GLITCH OVERLAY -->
   <div class="glitch"></div>
 
   <div class="desktop">
@@ -246,7 +258,9 @@
           </div>
           <div class="title-text">LA Contracts Bot (Prototype)</div>
         </div>
-        <div class="back-link"><a href="index.html">← Back to Museum</a></div>
+        <div class="back-link">
+          <a href="index.html">← Back to Museum</a>
+        </div>
       </div>
 
       <div class="content">
@@ -259,18 +273,18 @@
 
         <h2>What it was supposed to be</h2>
         <p>
-          A small bot that could scan public contract data from Los Angeles and flag anything that looked unusual. Not a full investigation, just a background process that noticed patterns the city preferred to ignore.
+          A small bot that could scan public contract data from Los Angeles and flag anything that looked unusual. Not a full investigation, just a quiet background process that noticed patterns the city preferred to ignore. Los Angeles has a long record of treating corruption as a civic rhythm. The council has an equally long record of participating in scandals with city contractors. The Huizar case was only one example. The goal was to make a system that could watch the details without getting pulled into the noise.
         </p>
 
         <h2>What exists instead</h2>
         <p>
-          A folder called:
+          One official document. A collection of fifty public records requests sent to the City Council and to the Office of the City Controller. A paper trail of unanswered emails, broken portals, and delayed responses. A set of scripts that almost run. A folder called
         </p>
-
-        <div class="code-block">data_raw</div>
-
+        <div class="code-block">
+data_raw
+        </div>
         <p>
-          that never filled the way it was supposed to.
+          that never filled the way it was supposed to. A five year crashout that became part of the project whether I wanted it or not.
         </p>
 
         <div class="code-block">
@@ -288,14 +302,12 @@ python run_anomaly_detector.py \
           <li>The city transparency infrastructure is built to slow you down.</li>
           <li>Public records requests took more energy than the actual code.</li>
           <li>The bureaucracy had more stamina than I did.</li>
-          <li>The story kept expanding and the data never arrived on time.</li>
+          <li>The story kept expanding and the data never arrived at the pace the project needed.</li>
         </ul>
 
         <h2>What this fragment reveals</h2>
         <p>
-          That corruption in Los Angeles is a structural habit, not a glitch.  
-          That a bot meant to find anomalies needs data the city refuses to give.  
-          That sometimes the failure is the evidence.
+          That corruption in Los Angeles is not a secret or an exception. It is a structural habit that shapes how information moves. That building a bot to track anomalies requires the very data the city makes difficult to access. That sometimes a project exposes its subject by failing. The museum keeps this prototype because the failure is part of the truth. It documents an attempt to follow the money in a place where the pathways are designed to blur. It also shows the limits of one person trying to build clarity inside a system that is not interested in being seen.
         </p>
       </div>
     </div>
@@ -315,8 +327,6 @@ python run_anomaly_detector.py \
         <button>Ignore and continue</button>
       </div>
     </div>
-
   </div>
-
 </body>
 </html>
