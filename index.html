@@ -62,47 +62,6 @@
       opacity: 0.9;
     }
 
-    /* desktop icons */
-    .desktop-icon {
-      position: absolute;
-      width: 90px;
-      text-align: center;
-      z-index: 60;
-      font-family: "Geneva", system-ui, sans-serif;
-      cursor: pointer;
-      user-select: none;
-      color: #f7f7ff;
-      text-shadow: 0 0 3px rgba(0,0,0,0.9);
-    }
-
-    .desktop-icon .icon-image {
-      width: 52px;
-      height: 44px;
-      margin: 0 auto 4px;
-      border-radius: 8px;
-      border: 2px solid #000;
-      background:
-        linear-gradient(135deg, #fefefe, #e5e5ff 50%, #ffbdf7 100%);
-      box-shadow:
-        0 0 4px rgba(0,0,0,0.7),
-        0 0 0 1px rgba(255,255,255,0.15);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-    }
-
-    .desktop-icon .icon-label {
-      font-size: 11px;
-      margin-top: 2px;
-      padding: 0 4px;
-    }
-
-    .desktop-icon:active .icon-image {
-      transform: translateY(1px);
-      box-shadow: 0 0 2px rgba(0,0,0,0.8);
-    }
-
     /* folder windows */
     .folder-window {
       position: absolute;
@@ -353,22 +312,6 @@
     </div>
   </div>
 
-  <!-- desktop icons -->
-  <div class="desktop-icon" id="icon-usb" style="top: 80px; left: 40px;">
-    <div class="icon-image">📁</div>
-    <div class="icon-label">USB archive</div>
-  </div>
-
-  <div class="desktop-icon" id="icon-bukowski" style="top: 170px; left: 40px;">
-    <div class="icon-image">📁</div>
-    <div class="icon-label">Bukowski’s Car...</div>
-  </div>
-
-  <div class="desktop-icon" id="icon-misc" style="top: 260px; left: 40px;">
-    <div class="icon-image">📁</div>
-    <div class="icon-label">misc admin</div>
-  </div>
-
   <!-- MAIN MUSEUM FOLDER – foreground -->
   <div class="folder-window" id="museum-folder" style="top: 70px; left: 180px; z-index: 200;">
     <div class="folder-header">
@@ -441,15 +384,14 @@
           then quietly exiled to their own little HTML universes.
         </div>
         <div class="side-text">
-          Each file to the left is a door to a project that was supposed to be finished
-          on time, in a calm and organized way. Instead, they live here, curated by
-          anxiety, sleep deprivation, and a sense of humor.
+         Each file to the left opens onto a project that was theoretically going to be completed in an orderly fashion. 
+        Instead, they’ve been deposited here by chronic overextension and a brain that refuses to triage.
         </div>
       </div>
     </div>
   </div>
 
-  <!-- USB ARCHIVE FOLDER (no side text) -->
+  <!-- USB ARCHIVE FOLDER (hidden, no side text) -->
   <div class="folder-window hidden" id="usb-folder" style="top: 120px; left: 240px;">
     <div class="folder-header">
       <div class="folder-header-left">
@@ -497,7 +439,7 @@
     </div>
   </div>
 
-  <!-- BUKOWSKI FOLDER (no side text) -->
+  <!-- BUKOWSKI FOLDER (hidden, no side text) -->
   <div class="folder-window hidden" id="bukowski-folder" style="top: 150px; left: 220px;">
     <div class="folder-header">
       <div class="folder-header-left">
@@ -547,7 +489,7 @@
     </div>
   </div>
 
-  <!-- MISC ADMIN FOLDER (no side text) -->
+  <!-- MISC ADMIN FOLDER (hidden, no side text) -->
   <div class="folder-window hidden" id="misc-folder" style="top: 220px; left: 300px;">
     <div class="folder-header">
       <div class="folder-header-left">
@@ -588,12 +530,12 @@
     </div>
   </div>
 
-  <!-- SYSTEM WARNING POPUP (bottom right) -->
+  <!-- SYSTEM WARNING POPUP (bottom right, original text) -->
   <div class="system-popup">
     <div class="system-popup-title">System message</div>
     <div class="system-popup-body">
-      The museum is open. Project files in the main folder are the real HTML pages.
-      Everything else is desktop residue.
+      The museum is open. Active contents appear only here.
+      Background clutter is genuine and intentionally immobilized..
     </div>
   </div>
 
@@ -606,30 +548,7 @@
       win.style.zIndex = topZ;
     }
 
-    function setupFolderIcon(iconId, folderId, closeId) {
-      const icon = document.getElementById(iconId);
-      const folder = document.getElementById(folderId);
-      const closeBtn = document.getElementById(closeId);
-      const header = folder.querySelector(".folder-header");
-
-      icon.addEventListener("dblclick", () => {
-        folder.classList.remove("hidden");
-        bringToFront(folder);
-      });
-
-      closeBtn.addEventListener("click", () => {
-        folder.classList.add("hidden");
-      });
-
-      header.addEventListener("mousedown", () => {
-        bringToFront(folder);
-      });
-    }
-
-    setupFolderIcon("icon-usb", "usb-folder", "usb-close");
-    setupFolderIcon("icon-bukowski", "bukowski-folder", "bukowski-close");
-    setupFolderIcon("icon-misc", "misc-folder", "misc-close");
-
+    // only the museum folder is interactively foregrounded right now
     const museumFolder = document.getElementById("museum-folder");
     museumFolder.addEventListener("mousedown", () => {
       bringToFront(museumFolder);
