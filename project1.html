@@ -257,34 +257,84 @@
     .file-tile {
       text-align: center;
       font-size: 11px;
+      cursor: pointer;
     }
 
-    .file-icon-box {
-      width: 68px;
-      height: 68px;
+    .file-thumb {
+      width: 72px;
+      height: 72px;
       margin: 0 auto 4px auto;
       border-radius: 10px;
       background: linear-gradient(to bottom, #fdfdfd, #d6d7db);
       border: 1px solid #a0a1a8;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.25);
+      overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.25);
+    }
+
+    .file-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .file-thumb.pdf-thumb {
+      background: linear-gradient(to bottom, #fef5f5, #e0c3c3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 13px;
+      color: #7b1212;
+    }
+
+    .file-name {
+      word-wrap: break-word;
+      padding: 0 2px;
+    }
+
+    /* FILE VIEWER POPUP */
+    .file-viewer-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 60;
+    }
+
+    .file-viewer-window {
+      width: min(600px, 90vw);
+      background: #d6d7d9;
+      border-radius: 6px;
+      border: 2px solid #808086;
+      box-shadow: 0 16px 32px rgba(0,0,0,0.7);
       overflow: hidden;
     }
 
-    .file-icon-box span {
-      font-size: 30px;
+    .file-viewer-window .title-bar {
+      height: 26px;
+      font-size: 12px;
     }
 
-    .file-tile a {
-      text-decoration: none;
-      color: #111;
-      word-wrap: break-word;
+    .file-viewer-content {
+      background: #111;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    .file-tile a:hover {
-      text-decoration: underline;
+    .file-viewer-content img,
+    .file-viewer-content iframe {
+      max-width: 100%;
+      max-height: 70vh;
+      border: none;
+      background: #000;
     }
 
   </style>
@@ -387,29 +437,29 @@
             <span>Images</span>
           </div>
           <div class="file-grid">
-            <div class="file-tile">
-              <div class="file-icon-box"><span>🖼️</span></div>
-              <a href="IMAG0038.JPG">IMAG0038.JPG</a>
+            <div class="file-tile" data-type="image" data-src="IMAG0038.JPG" data-name="IMAG0038.JPG">
+              <div class="file-thumb"><img src="IMAG0038.JPG" alt="IMAG0038.JPG"></div>
+              <div class="file-name">IMAG0038.JPG</div>
             </div>
-            <div class="file-tile">
-              <div class="file-icon-box"><span>🖼️</span></div>
-              <a href="IMAG0041.JPG">IMAG0041.JPG</a>
+            <div class="file-tile" data-type="image" data-src="IMAG0041.JPG" data-name="IMAG0041.JPG">
+              <div class="file-thumb"><img src="IMAG0041.JPG" alt="IMAG0041.JPG"></div>
+              <div class="file-name">IMAG0041.JPG</div>
             </div>
-            <div class="file-tile">
-              <div class="file-icon-box"><span>🖼️</span></div>
-              <a href="IMAG0042.JPG">IMAG0042.JPG</a>
+            <div class="file-tile" data-type="image" data-src="IMAG0042.JPG" data-name="IMAG0042.JPG">
+              <div class="file-thumb"><img src="IMAG0042.JPG" alt="IMAG0042.JPG"></div>
+              <div class="file-name">IMAG0042.JPG</div>
             </div>
-            <div class="file-tile">
-              <div class="file-icon-box"><span>🖼️</span></div>
-              <a href="IMAG0048.JPG">IMAG0048.JPG</a>
+            <div class="file-tile" data-type="image" data-src="IMAG0048.JPG" data-name="IMAG0048.JPG">
+              <div class="file-thumb"><img src="IMAG0048.JPG" alt="IMAG0048.JPG"></div>
+              <div class="file-name">IMAG0048.JPG</div>
             </div>
-            <div class="file-tile">
-              <div class="file-icon-box"><span>🖼️</span></div>
-              <a href="IMAG0061.JPG">IMAG0061.JPG</a>
+            <div class="file-tile" data-type="image" data-src="IMAG0061.JPG" data-name="IMAG0061.JPG">
+              <div class="file-thumb"><img src="IMAG0061.JPG" alt="IMAG0061.JPG"></div>
+              <div class="file-name">IMAG0061.JPG</div>
             </div>
-            <div class="file-tile">
-              <div class="file-icon-box"><span>🖼️</span></div>
-              <a href="IMAG0105.JPG">IMAG0105.JPG</a>
+            <div class="file-tile" data-type="image" data-src="IMAG0105.JPG" data-name="IMAG0105.JPG">
+              <div class="file-thumb"><img src="IMAG0105.JPG" alt="IMAG0105.JPG"></div>
+              <div class="file-name">IMAG0105.JPG</div>
             </div>
           </div>
         </div>
@@ -421,23 +471,17 @@
             <span>1987 SRO housing</span>
           </div>
           <div class="file-grid">
-            <div class="file-tile">
-              <div class="file-icon-box"><span>📄</span></div>
-              <a href="1987 SRO housing/20220705_BUILDING COMMON GROUND.pdf">
-                20220705_BUILDING COMMON GROUND.pdf
-              </a>
+            <div class="file-tile" data-type="pdf" data-src="1987 SRO housing/20220705_BUILDING COMMON GROUND.pdf" data-name="20220705_BUILDING COMMON GROUND.pdf">
+              <div class="file-thumb pdf-thumb">PDF</div>
+              <div class="file-name">20220705_BUILDING COMMON GROUND.pdf</div>
             </div>
-            <div class="file-tile">
-              <div class="file-icon-box"><span>📄</span></div>
-              <a href="1987 SRO housing/20220705_mERSQNNEiaiwi Community Builder Project Expediter Sub-t.pdf">
-                20220705_mERSQNNEiaiwi…Sub-t.pdf
-              </a>
+            <div class="file-tile" data-type="pdf" data-src="1987 SRO housing/20220705_mERSQNNEiaiwi Community Builder Project Expediter Sub-t.pdf" data-name="20220705_mERSQNNEiaiwi Community Builder Project Expediter Sub-t.pdf">
+              <div class="file-thumb pdf-thumb">PDF</div>
+              <div class="file-name">20220705_mERSQNNEiaiwi Community Builder Project Expediter Sub-t.pdf</div>
             </div>
-            <div class="file-tile">
-              <div class="file-icon-box"><span>📄</span></div>
-              <a href="1987 SRO housing/20220705_Organizational History and Accomplishments.pdf">
-                20220705_Organizational History and Accomplishments.pdf
-              </a>
+            <div class="file-tile" data-type="pdf" data-src="1987 SRO housing/20220705_Organizational History and Accomplishments.pdf" data-name="20220705_Organizational History and Accomplishments.pdf">
+              <div class="file-thumb pdf-thumb">PDF</div>
+              <div class="file-name">20220705_Organizational History and Accomplishments.pdf</div>
             </div>
           </div>
         </div>
@@ -449,11 +493,9 @@
             <span>Homeless Weiters Coalition</span>
           </div>
           <div class="file-grid">
-            <div class="file-tile">
-              <div class="file-icon-box"><span>📄</span></div>
-              <a href="Homeless Weiters Coalition/20220705_Table of Contents About Performing Communities Los Ange.pdf">
-                20220705_Table of Contents About Performing Communities Los Ange.pdf
-              </a>
+            <div class="file-tile" data-type="pdf" data-src="Homeless Weiters Coalition/20220705_Table of Contents About Performing Communities Los Ange.pdf" data-name="20220705_Table of Contents About Performing Communities Los Ange.pdf">
+              <div class="file-thumb pdf-thumb">PDF</div>
+              <div class="file-name">20220705_Table of Contents About Performing Communities Los Ange.pdf</div>
             </div>
           </div>
         </div>
@@ -465,17 +507,13 @@
             <span>LA Stock Exchange</span>
           </div>
           <div class="file-grid">
-            <div class="file-tile">
-              <div class="file-icon-box"><span>📄</span></div>
-              <a href="LA Stock Exchange/Bank forcloses on old stock exchange building.pdf">
-                Bank forcloses on old stock exchange building.pdf
-              </a>
+            <div class="file-tile" data-type="pdf" data-src="LA Stock Exchange/Bank forcloses on old stock exchange building.pdf" data-name="Bank forcloses on old stock exchange building.pdf">
+              <div class="file-thumb pdf-thumb">PDF</div>
+              <div class="file-name">Bank forcloses on old stock exchange building.pdf</div>
             </div>
-            <div class="file-tile">
-              <div class="file-icon-box"><span>📄</span></div>
-              <a href="LA Stock Exchange/Los Angeles Stock Exchange History Organization Operation.pdf">
-                Los Angeles Stock Exchange History Organization Operation.pdf
-              </a>
+            <div class="file-tile" data-type="pdf" data-src="LA Stock Exchange/Los Angeles Stock Exchange History Organization Operation.pdf" data-name="Los Angeles Stock Exchange History Organization Operation.pdf">
+              <div class="file-thumb pdf-thumb">PDF</div>
+              <div class="file-name">Los Angeles Stock Exchange History Organization Operation.pdf</div>
             </div>
           </div>
         </div>
@@ -484,51 +522,56 @@
     </div>
   </div>
 
-  <div class="sticky">
-    to do<br />
-    • label the blue one w nail polish stain 'walk the talk 2021'<br />
-    • scan the jesus brochure in la room under coin plate<br />
-    • YOU DON'T NEED MORE THUMB DRIVES JUST BC THEY R FREE DOES NOT MEAN U SHOULD TAKE IT
+  <!-- FILE VIEWER POPUP -->
+  <div id="file-viewer-overlay" class="file-viewer-overlay">
+    <div class="file-viewer-window">
+      <div class="title-bar">
+        <div style="display:flex; align-items:center; gap:6px;">
+          <div class="window-buttons">
+            <div class="btn red"></div>
+            <div class="btn yellow"></div>
+            <div class="btn green"></div>
+          </div>
+          <div class="title-text" id="file-viewer-title">Preview</div>
+        </div>
+        <div>
+          <button id="file-viewer-close" class="usb-close-btn">×</button>
+        </div>
+      </div>
+      <div id="file-viewer-content" class="file-viewer-content">
+        <!-- dynamically filled -->
+      </div>
+    </div>
   </div>
 
   <script>
     /* Generate screenshot rectangles */
     const scContainer = document.getElementById("clutter-screenshots");
-
     function createScreenshot() {
       const div = document.createElement("div");
       div.classList.add("screenshot");
-
       const w = 180 + Math.random() * 260;
       const h = 90 + Math.random() * 150;
-
       div.style.width = w + "px";
       div.style.height = h + "px";
-
       div.style.left = Math.random() * window.innerWidth + "px";
       div.style.top = Math.random() * window.innerHeight + "px";
-
       div.style.transform = `rotate(${(Math.random() * 10 - 5)}deg)`;
       scContainer.appendChild(div);
     }
-
     for (let i = 0; i < 22; i++) createScreenshot();
 
     /* Generate clutter icons */
     const icons = ["📄","💾","📁","🗂️","📎","📀","💿","🖥️"];
     const icContainer = document.getElementById("clutter-icons");
-
     function createIcon() {
       const div = document.createElement("div");
       div.classList.add("icon");
       div.textContent = icons[Math.floor(Math.random() * icons.length)];
-
       div.style.left = Math.random() * window.innerWidth + "px";
       div.style.top = Math.random() * window.innerHeight + "px";
-
       icContainer.appendChild(div);
     }
-
     for (let i = 0; i < 50; i++) createIcon();
 
     /* USB overlay interactions */
@@ -549,6 +592,43 @@
     usbOverlay.addEventListener("click", (e) => {
       if (e.target === usbOverlay) {
         usbOverlay.style.display = "none";
+      }
+    });
+
+    /* File viewer popup */
+    const fileTiles = document.querySelectorAll(".file-tile");
+    const viewerOverlay = document.getElementById("file-viewer-overlay");
+    const viewerTitle = document.getElementById("file-viewer-title");
+    const viewerContent = document.getElementById("file-viewer-content");
+    const viewerClose = document.getElementById("file-viewer-close");
+
+    fileTiles.forEach(tile => {
+      tile.addEventListener("click", () => {
+        const type = tile.dataset.type;
+        const src = tile.dataset.src;
+        const name = tile.dataset.name || src;
+
+        viewerTitle.textContent = name;
+
+        if (type === "image") {
+          viewerContent.innerHTML = `<img src="${src}" alt="${name}">`;
+        } else {
+          viewerContent.innerHTML = `<iframe src="${src}" title="${name}"></iframe>`;
+        }
+
+        viewerOverlay.style.display = "flex";
+      });
+    });
+
+    viewerClose.addEventListener("click", () => {
+      viewerOverlay.style.display = "none";
+      viewerContent.innerHTML = "";
+    });
+
+    viewerOverlay.addEventListener("click", (e) => {
+      if (e.target === viewerOverlay) {
+        viewerOverlay.style.display = "none";
+        viewerContent.innerHTML = "";
       }
     });
   </script>
