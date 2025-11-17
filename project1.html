@@ -107,6 +107,15 @@
       line-height: 1.6;
     }
 
+    h1 { font-size: 18px; margin-bottom: 6px; }
+    h2 {
+      font-size: 14px;
+      margin: 14px 0 6px 0;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .list li { margin-bottom: 6px; }
+
     .sticky {
       position: fixed;
       right: 30px; top: 30px;
@@ -173,10 +182,8 @@
 
     .file-tree ul { list-style: none; padding-left: 18px; }
     .file-tree li { margin: 4px 0; }
-
     .folder-label { cursor: pointer; display: flex; gap: 4px; }
     .file-entry { display: flex; gap: 6px; padding-left: 14px; }
-
     .file-entry a { color: #111; text-decoration: none; }
     .file-entry a:hover { text-decoration: underline; }
 
@@ -208,6 +215,7 @@
     </div>
 
     <div class="content">
+
       <div class="meta">
         Status: ongoing and unresolved  
         <br>Years active: 2018 to present
@@ -215,7 +223,21 @@
 
       <h1>The USB Archive</h1>
 
-      <p>A full catalog attempt… (your existing text stays the same)</p>
+      <h2>What it was supposed to be</h2>
+      <p>A full catalog of the USB drives I have collected over the years. They never came from one place. A lot were extras from the UC Riverside Religious Studies department, the kind of thing that sits in drawers or gets handed out at workshops. Others came from dollar stores or drug stores. All cheap. All inconsistent. I wanted to record what ended up on them. Scans of documents and photographs. Religious brochures handed to me on sidewalks. Free zines I picked up from bus stops. Drawings on napkins. Reference images. Notes from classes. PDFs from library archives. Copies of historical documents from my workplace. A mix of work and leisure stored with no hierarchy.</p>
+
+      <h2>What exists instead</h2>
+      <p>A pile of mismatched drives in different colors and sizes. Some open to folders of archival documents or scanned manuscripts. Others hold street photos or textures I wanted to use in a project. A few contain only one image I saved at some point and no longer remember. One drive has handouts from a religious studies conference. Another has a stack of zines I meant to read. I started a spreadsheet that tracked the first few drives and then stopped because nothing about the collection stays organized for long.</p>
+
+      <h2>Why it stalled</h2>
+      <ul class="list">
+        <li>The drives reflect a life lived in fragments that resist sorting.</li>
+        <li>Each one opens a different world and asks for more attention than I expected.</li>
+        <li>The project became a record of my collecting habits rather than the files themselves.</li>
+      </ul>
+
+      <h2>What this fragment reveals</h2>
+      <p>That cheap storage carries real stories. That an archive can grow without permission. That work and leisure and spiritual ephemera all settle next to each other when no one is curating the boundaries. The museum keeps this here because it shows how daily life gathers itself. It is not clean and it is not finished. It still tells the truth.</p>
 
       <!-- USB STRIP -->
       <div class="usb-strip-wrapper">
@@ -225,6 +247,7 @@
           <img src="USB3.png" class="usb-thumb">
         </div>
       </div>
+
     </div>
 
   </div>
@@ -253,7 +276,7 @@
       <button id="usb-close" class="usb-close-btn">×</button>
     </div>
 
-    <!-- FILE TREE STARTS -->
+    <!-- FILE TREE -->
     <div class="file-tree">
       <ul>
 
@@ -275,20 +298,20 @@
           <div class="folder-label">📁 1987 SRO housing</div>
           <ul>
             <li class="file-entry">📄 <a href="1987 SRO housing/20220705_BUILDING COMMON GROUND.pdf">20220705_BUILDING COMMON GROUND.pdf</a></li>
-            <li class="file-entry">📄 <a href="1987 SRO housing/20220705_mERSQNNEiaiwi Community Builder Project Expediter Sub-t.pdf">20220705_mERSQNNEiaiwi…Sub-t.pdf</a></li>
+            <li class="file-entry">📄 <a href="1987 SRO housing/20220705_mERSQNNEiaiwi Community Builder Project Expediter Sub-t.pdf">20220705_mERSQNNEiaiwi Community Builder Project Expediter Sub-t.pdf</a></li>
             <li class="file-entry">📄 <a href="1987 SRO housing/20220705_Organizational History and Accomplishments.pdf">20220705_Organizational History and Accomplishments.pdf</a></li>
           </ul>
         </li>
 
-        <!-- HOMELESS WEITERS COALITION -->
+        <!-- Homeless Weiters Coalition -->
         <li class="folder">
           <div class="folder-label">📁 Homeless Weiters Coalition</div>
           <ul>
-            <li class="file-entry">📄 <a href="Homeless Weiters Coalition/20220705_Table of Contents About Performing Communities Los Ange.pdf">20220705_Table of Contents…Los Ange.pdf</a></li>
+            <li class="file-entry">📄 <a href="Homeless Weiters Coalition/20220705_Table of Contents About Performing Communities Los Ange.pdf">20220705_Table of Contents About Performing Communities Los Ange.pdf</a></li>
           </ul>
         </li>
 
-        <!-- LA STOCK EXCHANGE -->
+        <!-- LA Stock Exchange -->
         <li class="folder">
           <div class="folder-label">📁 LA Stock Exchange</div>
           <ul>
@@ -299,6 +322,7 @@
 
       </ul>
     </div>
+
   </div>
 </div>
 
@@ -333,7 +357,7 @@
   const close=document.getElementById("usb-close");
 
   thumbs.forEach(t=>t.addEventListener("click",()=>ov.style.display="flex"));
-  close.addEventListener("click",()=>ov.style.display="none");
+  close.addEventListener("click",()=>ov.style.display="none"));
   ov.addEventListener("click",(e)=>{ if(e.target===ov) ov.style.display="none"; });
 </script>
 
