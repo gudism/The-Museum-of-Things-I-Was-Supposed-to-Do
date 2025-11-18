@@ -438,7 +438,15 @@
 
     /* SIMPLE FOLDER BODY (screenshots) */
     .simple-folder-body {
-          .screenshot-grid {
+      flex: 1;
+      border-top: 1px solid #000;
+      background: #ffffff;
+      padding: 10px;
+      font-size: 11px;
+      overflow-y: auto;
+    }
+
+    .screenshot-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
       gap: 10px;
@@ -470,70 +478,6 @@
     .screenshot-name {
       font-size: 10px;
       word-wrap: break-word;
-    }
-
-    /* screenshot popup */
-    .screenshot-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.7);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 1200;
-    }
-
-    .screenshot-overlay.show {
-      display: flex;
-    }
-
-    .screenshot-inner {
-      background: #111;
-      border-radius: 8px;
-      border: 2px solid #ffffff;
-      max-width: 90vw;
-      max-height: 90vh;
-      padding: 8px;
-      box-shadow: 0 16px 32px rgba(0,0,0,0.8);
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .screenshot-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 11px;
-      color: #f5f5f5;
-    }
-
-    .screenshot-close-btn {
-      background: #333;
-      color: #fff;
-      border: 1px solid #777;
-      border-radius: 3px;
-      font-size: 13px;
-      width: 22px;
-      height: 22px;
-      cursor: pointer;
-    }
-
-    .screenshot-inner img {
-      max-width: 82vw;
-      max-height: 80vh;
-      object-fit: contain;
-      display: block;
-      margin: 0 auto;
-      background: #000;
-    }
-
-      flex: 1;
-      border-top: 1px solid #000;
-      background: #ffffff;
-      padding: 10px;
-      font-size: 11px;
-      overflow-y: auto;
     }
 
     /* SYSTEM POPUP */
@@ -604,19 +548,41 @@
     .hidden {
       display: none;
     }
+
+    /* screenshot preview window body */
+    .preview-body {
+      flex: 1;
+      border-top: 1px solid #000;
+      background: #111;
+      display: flex;
+      flex-direction: column;
+      padding: 6px;
+      min-height: 0;
+    }
+
+    .preview-filename {
+      font-size: 11px;
+      color: #f5f5f5;
+      margin-bottom: 4px;
+    }
+
+    .preview-inner {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .preview-inner img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      background: #000;
+      border-radius: 4px;
+    }
   </style>
 </head>
-    <!-- Screenshot viewer popup -->
-  <div id="screenshot-overlay" class="screenshot-overlay">
-    <div class="screenshot-inner">
-      <div class="screenshot-top">
-        <span id="screenshot-title"></span>
-        <button id="screenshot-close" class="screenshot-close-btn">×</button>
-      </div>
-      <img id="screenshot-image" src="" alt="">
-    </div>
-  </div>
-
 <body>
   <div class="menu-bar">
     <div class="menu-left">
@@ -653,7 +619,7 @@
       </div>
     </div>
 
-    <!-- MUSEUM WINDOW (original folder) -->
+    <!-- MUSEUM WINDOW -->
     <div class="window" id="museum-window" style="top: 80px; left: 220px;">
       <div class="window-header">
         <div class="window-header-left">
@@ -743,36 +709,83 @@
     </div>
 
     <!-- SCREENSHOTS FOLDER WINDOW -->
-<div class="simple-folder-body">
-  <div class="screenshot-grid">
-    <div class="screenshot-tile" data-src="Stavros_large.jpg" data-name="Stavros_large.jpg">
-      <img src="Stavros_large.jpg" alt="Stavros_large.jpg" class="screenshot-thumb">
-      <div class="screenshot-name">Stavros_large.jpg</div>
+    <div class="window hidden" id="screenshots-window" style="top: 120px; left: 140px;">
+      <div class="window-header">
+        <div class="window-header-left">
+          <div class="window-buttons">
+            <div class="window-button close" data-target="screenshots-window"></div>
+            <div class="window-button min" data-target="screenshots-window"></div>
+            <div class="window-button max"></div>
+          </div>
+          <span>screenshots</span>
+        </div>
+        <span style="font-size:11px;">7 items</span>
+      </div>
+      <div class="window-toolbar">
+        <span>View</span>
+        <span>Sort</span>
+        <span>Share</span>
+      </div>
+      <div class="simple-folder-body">
+        <div class="screenshot-grid">
+          <div class="screenshot-tile" data-src="screenshots/Stavros_large.jpg" data-name="Stavros_large.jpg">
+            <img src="screenshots/Stavros_large.jpg" alt="Stavros_large.jpg" class="screenshot-thumb">
+            <div class="screenshot-name">Stavros_large.jpg</div>
+          </div>
+
+          <div class="screenshot-tile" data-src="screenshots/Stucco_02.png" data-name="Stucco_02.png">
+            <img src="screenshots/Stucco_02.png" alt="Stucco_02.png" class="screenshot-thumb">
+            <div class="screenshot-name">Stucco_02.png</div>
+          </div>
+
+          <div class="screenshot-tile" data-src="screenshots/Screen Shot 2018-03-04 at 8.57.25 pm.png" data-name="Screen Shot 2018-03-04 at 8.57.25 pm.png">
+            <img src="screenshots/Screen Shot 2018-03-04 at 8.57.25 pm.png" alt="Screen Shot 2018-03-04 at 8.57.25 pm.png" class="screenshot-thumb">
+            <div class="screenshot-name">Screen Shot 2018-03-04 at 8.57.25 pm.png</div>
+          </div>
+
+          <div class="screenshot-tile" data-src="screenshots/buk marker bruh.tif" data-name="buk marker bruh.tif">
+            <img src="screenshots/buk marker bruh.tif" alt="buk marker bruh.tif" class="screenshot-thumb">
+            <div class="screenshot-name">buk marker bruh.tif</div>
+          </div>
+
+          <div class="screenshot-tile" data-src="screenshots/Screen Shot 2025-10-08 at 12.11.13 AM.png" data-name="Screen Shot 2025-10-08 at 12.11.13 AM.png">
+            <img src="screenshots/Screen Shot 2025-10-08 at 12.11.13 AM.png" alt="Screen Shot 2025-10-08 at 12.11.13 AM.png" class="screenshot-thumb">
+            <div class="screenshot-name">Screen Shot 2025-10-08 at 12.11.13 AM.png</div>
+          </div>
+
+          <div class="screenshot-tile" data-src="screenshots/Screen Shot 2025-10-08 at 12.12.46 AM.png" data-name="Screen Shot 2025-10-08 at 12.12.46 AM.png">
+            <img src="screenshots/Screen Shot 2025-10-08 at 12.12.46 AM.png" alt="Screen Shot 2025-10-08 at 12.12.46 AM.png" class="screenshot-thumb">
+            <div class="screenshot-name">Screen Shot 2025-10-08 at 12.12.46 AM.png</div>
+          </div>
+
+          <div class="screenshot-tile" data-src="screenshots/Screen Shot 2025-10-08 at 12.13.39 AM.png" data-name="Screen Shot 2025-10-08 at 12.13.39 AM.png">
+            <img src="screenshots/Screen Shot 2025-10-08 at 12.13.39 AM.png" alt="Screen Shot 2025-10-08 at 12.13.39 AM.png" class="screenshot-thumb">
+            <div class="screenshot-name">Screen Shot 2025-10-08 at 12.13.39 AM.png</div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="screenshot-tile" data-src="Stucco_02.png" data-name="Stucco_02.png">
-      <img src="Stucco_02.png" alt="Stucco_02.png" class="screenshot-thumb">
-      <div class="screenshot-name">Stucco_02.png</div>
+    <!-- SCREENSHOT PREVIEW WINDOW -->
+    <div class="window hidden" id="screenshot-preview" style="top: 160px; left: 420px; width: 520px; height: 360px;">
+      <div class="window-header">
+        <div class="window-header-left">
+          <div class="window-buttons">
+            <div class="window-button close" data-target="screenshot-preview"></div>
+            <div class="window-button min" data-target="screenshot-preview"></div>
+            <div class="window-button max"></div>
+          </div>
+          <span>Preview</span>
+        </div>
+        <span style="font-size:11px;" id="screenshot-preview-title">image</span>
+      </div>
+      <div class="preview-body">
+        <div class="preview-filename" id="preview-filename-label"></div>
+        <div class="preview-inner">
+          <img id="screenshot-preview-img" src="" alt="">
+        </div>
+      </div>
     </div>
-
-    <div class="screenshot-tile" data-src="Screen Shot 2018-03-04 at 8.57.25 pm.png" data-name="Screen Shot 2018-03-04 at 8.57.25 pm.png">
-      <img src="Screen Shot 2018-03-04 at 8.57.25 pm.png" alt="Screen Shot 2018-03-04 at 8.57.25 pm.png" class="screenshot-thumb">
-      <div class="screenshot-name">Screen Shot 2018-03-04 at 8.57.25 pm.png</div>
-    </div>
-
-    <div class="screenshot-tile" data-src="buk marker bruh.tif" data-name="buk marker bruh.tif">
-      <img src="buk marker bruh.tif" alt="buk marker bruh.tif" class="screenshot-thumb">
-      <div class="screenshot-name">buk marker bruh.tif</div>
-    </div>
-
-    <div class="screenshot-tile" data-src="Screen Shot 2025-10-08 at 12.11.13 AM.png" data-name="Screen Shot 2025-10-08 at 12.11.13 AM.png">
-      <img src="Screen Shot 2025-10-08 at 12.11.13 AM.png" alt="Screen Shot 2025-10-08 at 12.11.13 AM.png" class="screenshot-thumb">
-      <div class="screenshot-name">Screen Shot 2025-10-08 at 12.11.13 AM.png</div>
-    </div>
-
-    <div class="screenshot-tile" data-src="Screen Shot 2025-10-08 at 12.12.46 AM.png" data-name="Screen Shot 2025-10-08 at 12.12.46 AM.png">
-      <img src="Screen Shot 2025-10-08 at 12.12.46 AM.
-
 
     <!-- NOTES APP WINDOW -->
     <div class="window hidden" id="notes-window" style="top: 80px; left: 120px;">
@@ -809,6 +822,7 @@
       <!-- note templates (hidden) -->
       <div id="note-strudel-links" class="hidden">
 strudel links
+
 
 https://strudel.cc/#c3RhY2soCgogIHMoInt6X3Nhd3Rvb3RoIHpfdGFuIHpfbm9pc2Ugel9zaW5lIHpfc3F1YXJlfSU0IikKICAgIC5ub3RlKCI8W2czLGIzLGU0XSEyIFthMyxjMyxlNF0gW2IzLGQzLGYjNF0%2BIikKICAgIC5uKCI8MSAyIDMgNCA1IDYgNyA4IDkgMTA%2BLzIiKQogICAgLnJvb20oMC41KS5zaXplKDAuOSkKICAgIC52ZWxvY2l0eSgwLjI1KS5vZnRlbihuID0%2BIG4ucGx5KDIpKQogICAgLnJlbGVhc2UoMC4xMjUpCiAgICAuZGVjYXkoIjwwLjEgMC4yNSAwLjMgMC40PiIpCiAgICAuc3VzdGFpbigwKQogICAgLmN1dG9mZigiPDEwMDAgMjAwMCA0MDAwPiIpLmZhc3QoNCkKICAgIC5ub2lzZSgwLjUpLmRlY2F5KDAuMykuc3VzdGFpbigwLjcpLnJlbGVhc2UoMC4yKQogICAgLnpjcnVzaCgwLjIpCiAgICAuZ2FpbigwLjgpLAoKCiAgcygiYmQqNCIpLmdhaW4oMSksCgogIHMoImJkIH4gYmQgfiBiZCB%2BIGJkIH4iKS5nYWluKDAuOCksCgogIHMoIn4gY3AgfiBjcCB%2BIGNwIH4gY3AiKS5nYWluKDAuOCksCgogIHMoImhoKjE2IikuZ2FpbigwLjM1KSwKCiAgcygicGVyYyo4IikuZmFzdCgyKS5nYWluKDAuNCksCgogIHMoIn4gfiB%2BIH4gbHQgbXQgaHQgbHQiKS5nYWluKDAuNiksCgogIHMoInpfc2luZSIpCiAgICAubm90ZSgiPGU0IGc0IGI0IGU1ICBkNCBmIzQgYTQgZDUgIGM0IGU0IGc0IGM1ICBiMyBkNCBmIzQgYjQ%2BIikKICAgIC5mYXN0KDMpCiAgICAucmVsZWFzZSgwLjEyKQogICAgLmRlY2F5KDAuMTUpCiAgICAuc3VzdGFpbigwKQogICAgLnJvb20oMC40KS5zaXplKDAuNykKICAgIC5jdXRvZmYoMjYwMCkKICAgIC5nYWluKDAuNykKKQo%3D
 
@@ -852,6 +866,12 @@ stack(
     .cutoff(2600)
     .gain(0.7)
 )
+
+
+
+
+
+
 
 laïc data broth
 
@@ -944,12 +964,12 @@ Dress up as something that you would get pregnant or something that scares you
 
 Spin off party
 Waterbirth
-where there is a live waterbirth where the birthday boy/girl is birthed in a kiddie pool
+ where there is a live waterbirth where the birthday boy/girl is birthed in a kiddie pool
 hire strippers to pretend to be pregnant and give birth ???
 Placenta substitutes???
 
 Bris birthday
-Advertise live circumcisions
+Advertise live circumcisions 
       </div>
 
       <div id="note-vertical-files" class="hidden">
@@ -1211,7 +1231,7 @@ https://www.google.com/maps/d/edit?mid=1gcMzH3mrVx6FLJlnm2t1z5HY3Iy3LnY&amp;usp=
         </div>
         <iframe
           class="browser-frame"
-          src="https://www.google.com/maps/d/edit?mid=1gcMzH3mrVx6FLJlnm2t1z5HY3Iy3LnY&amp;usp=sharing">
+          src="https://www.google.com/maps/d/edit?mid=1gcMzH3mrVx6FLJlnm2t1z5HY3Iy3LnY&usp=sharing">
         </iframe>
       </div>
     </div>
@@ -1352,38 +1372,25 @@ https://www.google.com/maps/d/edit?mid=1gcMzH3mrVx6FLJlnm2t1z5HY3Iy3LnY&amp;usp=
       });
     });
 
-    // dock icons already handled by [data-open] listener above
-        // SCREENSHOT POPUP LOGIC
+    // SCREENSHOT PREVIEW LOGIC
     const screenshotTiles = document.querySelectorAll('.screenshot-tile');
-    const screenshotOverlay = document.getElementById('screenshot-overlay');
-    const screenshotImage = document.getElementById('screenshot-image');
-    const screenshotTitle = document.getElementById('screenshot-title');
-    const screenshotClose = document.getElementById('screenshot-close');
+    const previewWindow = document.getElementById('screenshot-preview');
+    const previewImg = document.getElementById('screenshot-preview-img');
+    const previewTitle = document.getElementById('screenshot-preview-title');
+    const previewFilenameLabel = document.getElementById('preview-filename-label');
 
     screenshotTiles.forEach(tile => {
       tile.addEventListener('click', () => {
         const src = tile.getAttribute('data-src');
         const name = tile.getAttribute('data-name') || src;
         if (!src) return;
-        screenshotImage.src = src;
-        screenshotImage.alt = name;
-        screenshotTitle.textContent = name;
-        screenshotOverlay.classList.add('show');
+        previewImg.src = src;
+        previewImg.alt = name;
+        if (previewTitle) previewTitle.textContent = 'Preview';
+        if (previewFilenameLabel) previewFilenameLabel.textContent = name;
+        showWindow('screenshot-preview');
       });
     });
-
-    screenshotClose.addEventListener('click', () => {
-      screenshotOverlay.classList.remove('show');
-      screenshotImage.src = '';
-    });
-
-    screenshotOverlay.addEventListener('click', (e) => {
-      if (e.target === screenshotOverlay) {
-        screenshotOverlay.classList.remove('show');
-        screenshotImage.src = '';
-      }
-    });
-
   </script>
 </body>
 </html>
