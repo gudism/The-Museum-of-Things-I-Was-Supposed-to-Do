@@ -261,58 +261,71 @@
         </p>
 
         <!-- VIEWER GRID -->
-<div class="viewer-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; justify-items: center;">
+        <div class="viewer-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; justify-items: center;">
 
-  <!-- paul (left top) -->
-  <div class="mini-window" style="width: 100%;">
-    <div class="mini-titlebar">
-      <div class="mini-buttons">
-        <div class="mini-btn red"></div>
-        <div class="mini-btn yellow"></div>
-        <div class="mini-btn green"></div>
+          <!-- paul (left top) -->
+          <div class="mini-window" style="width: 100%;">
+            <div class="mini-titlebar">
+              <div class="mini-buttons">
+                <div class="mini-btn red"></div>
+                <div class="mini-btn yellow"></div>
+                <div class="mini-btn green"></div>
+              </div>
+              <div class="mini-title">paul.glb</div>
+            </div>
+            <div class="mini-viewer-area">
+              <model-viewer src="paul.glb" camera-controls auto-rotate shadow-intensity="0.6"></model-viewer>
+            </div>
+          </div>
+
+          <!-- lucas (right top) -->
+          <div class="mini-window" style="width: 100%;">
+            <div class="mini-titlebar">
+              <div class="mini-buttons">
+                <div class="mini-btn red"></div>
+                <div class="mini-btn yellow"></div>
+                <div class="mini-btn green"></div>
+              </div>
+              <div class="mini-title">lucas.glb</div>
+            </div>
+            <div class="mini-viewer-area">
+              <model-viewer src="lucas.glb" camera-controls auto-rotate shadow-intensity="0.6"></model-viewer>
+            </div>
+          </div>
+
+          <!-- spacer to force kai into center -->
+          <div></div>
+
+          <!-- kai (center bottom) -->
+          <div class="mini-window" style="grid-column: 1 / span 2; width: 60%; justify-self: center;">
+            <div class="mini-titlebar">
+              <div class="mini-buttons">
+                <div class="mini-btn red"></div>
+                <div class="mini-btn yellow"></div>
+                <div class="mini-btn green"></div>
+              </div>
+              <div class="mini-title">kai.glb</div>
+            </div>
+            <div class="mini-viewer-area">
+              <model-viewer src="kai.glb" camera-controls auto-rotate shadow-intensity="0.6"></model-viewer>
+            </div>
+          </div>
+
+        </div>
+
       </div>
-      <div class="mini-title">paul.glb</div>
-    </div>
-    <div class="mini-viewer-area">
-      <model-viewer src="paul.glb" camera-controls auto-rotate shadow-intensity="0.6"></model-viewer>
     </div>
   </div>
 
-  <!-- lucas (right top) -->
-  <div class="mini-window" style="width: 100%;">
-    <div class="mini-titlebar">
-      <div class="mini-buttons">
-        <div class="mini-btn red"></div>
-        <div class="mini-btn yellow"></div>
-        <div class="mini-btn green"></div>
-      </div>
-      <div class="mini-title">lucas.glb</div>
-    </div>
-    <div class="mini-viewer-area">
-      <model-viewer src="lucas.glb" camera-controls auto-rotate shadow-intensity="0.6"></model-viewer>
-    </div>
-  </div>
-
-  <!-- spacer to force kai into center -->
-  <div></div>
-
-  <!-- kai (center bottom) -->
-  <div class="mini-window" style="grid-column: 1 / span 2; width: 60%; justify-self: center;">
-    <div class="mini-titlebar">
-      <div class="mini-buttons">
-        <div class="mini-btn red"></div>
-        <div class="mini-btn yellow"></div>
-        <div class="mini-btn green"></div>
-      </div>
-      <div class="mini-title">kai.glb</div>
-    </div>
-    <div class="mini-viewer-area">
-      <model-viewer src="kai.glb" camera-controls auto-rotate shadow-intensity="0.6"></model-viewer>
-    </div>
-  </div>
-
-</div>
-
+  <script>
+    // Make main and mini red close buttons go back to index
+    document.querySelectorAll('.window .btn.red, .mini-btn.red').forEach(btn => {
+      btn.style.cursor = "pointer";
+      btn.addEventListener("click", () => {
+        window.location.href = "index.html";
+      });
+    });
+  </script>
 
 </body>
 </html>
