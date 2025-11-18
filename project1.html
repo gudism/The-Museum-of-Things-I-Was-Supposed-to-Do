@@ -366,9 +366,7 @@
           <div class="title-text">The USB Archive</div>
         </div>
 
-        <div class="back-link">
-          <a href="index.html">← Back to Museum</a>
-        </div>
+        
       </div>
 
       <div class="content">
@@ -617,6 +615,13 @@
         viewerContent.innerHTML = "";
       }
     });
+document.querySelectorAll('.window .btn.red').forEach(btn => {
+  btn.style.cursor = "pointer";
+  btn.addEventListener("click", () => {
+    window.location.href = "index.html";
+  });
+});
+
   </script>
 
 </body>
