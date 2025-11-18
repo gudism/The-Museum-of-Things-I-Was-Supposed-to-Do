@@ -290,9 +290,7 @@
             <div class="btn green"></div>
           </div>
           <div class="title-text">Bukowskis Car</div>
-        </div>
-        <div class="back-link"><a href="index.html">← Back to Museum</a></div>
-      </div>
+        
 
       <div class="content">
         <div class="meta">
@@ -427,6 +425,14 @@
     }
 
     popupImages.forEach((img,i)=>createImgPopup(img,i,popupImages.length));
+
+document.querySelectorAll('.window .btn.red').forEach(btn => {
+  btn.style.cursor = "pointer";
+  btn.addEventListener("click", () => {
+    window.location.href = "index.html";
+  });
+});
+
   </script>
 
 </body>
