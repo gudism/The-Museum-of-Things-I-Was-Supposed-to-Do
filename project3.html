@@ -105,6 +105,19 @@
       overflow: hidden;
       position: relative;
       z-index: 10;
+      transition: transform 0.25s ease, opacity 0.25s ease, max-width 0.25s ease;
+    }
+
+    /* Minimized + maximized states */
+    .window.minimized {
+      transform: scale(0.7) translateY(120px);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .window.maximized {
+      max-width: 1000px;
+      transform: scale(1.02);
     }
 
     .title-bar {
@@ -200,7 +213,7 @@
   </div>
 
   <div class="desktop">
-    <div class="window">
+    <div class="window" id="main-window">
       <div class="title-bar">
         <div class="left" style="display:flex; align-items:center; gap:6px;">
           <div class="window-buttons">
@@ -309,13 +322,46 @@
   </div>
 
   <script>
-    /* Make ALL red close buttons go to index.html */
-    document.querySelectorAll('.btn.red, .mini-btn.red').forEach(btn => {
-      btn.style.cursor = "pointer";
-      btn.addEventListener("click", () => {
-        window.location.href = "index.html";
+    // Main window + buttons
+    const mainWindow = document.getElementById('main-window');
+    const redBtn = document.querySelector('.window-buttons .btn.red');
+    const yellowBtn = document.querySelector('.window-buttons .btn.yellow');
+    const greenBtn = document.querySelector('.window-buttons .btn.green');
+
+    if (redBtn) {
+      redBtn.style.cursor = 'pointer';
+      redBtn.addEventListener('click', () => {
+        window.location.href = 'index.html';
       });
-    });
+    }
+
+    if (yellowBtn) {
+      yellowBtn.style.cursor = 'pointer';
+      yellowBtn.addEventListener('click', () => {
+        if (!mainWindow) return;
+        // Toggle minimized
+        if (mainWindow.classList.contains('minimized')) {
+          mainWindow.classList.remove('minimized');
+        } else {
+          mainWindow.classList.add('minimized');
+          mainWindow.classList.remove('maximized');
+        }
+      });
+    }
+
+    if (greenBtn) {
+      greenBtn.style.cursor = 'pointer';
+      greenBtn.addEventListener('click', () => {
+        if (!mainWindow) return;
+        // Toggle maximized
+        if (mainWindow.classList.contains('maximized')) {
+          mainWindow.classList.remove('maximized');
+        } else {
+          mainWindow.classList.add('maximized');
+          mainWindow.classList.remove('minimized');
+        }
+      });
+    }
   </script>
 
 </body>
