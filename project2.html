@@ -83,6 +83,19 @@
       border: 2px solid #808086;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.45);
       overflow: hidden;
+      transition: transform 0.25s ease, opacity 0.25s ease, max-width 0.25s ease;
+    }
+
+    /* Minimized / maximized states */
+    .window.minimized {
+      transform: scale(0.7) translateY(120px);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .window.maximized {
+      max-width: 1000px;
+      transform: scale(1.02);
     }
 
     /* MAIN PROJECT WINDOW */
@@ -120,6 +133,11 @@
     .btn.yellow { background: #ffbd2e; }
     .btn.green { background: #28c840; }
 
+    .title-text {
+      font-weight: 600;
+      margin-left: 6px;
+    }
+
     .content {
       padding: 18px;
       background: #e4e5e8;
@@ -134,6 +152,13 @@
       font-size: 12px;
       color: #444;
       margin-bottom: 10px;
+    }
+
+    .list {
+      padding-left: 20px;
+    }
+    .list li {
+      margin-bottom: 6px;
     }
 
     /* DREAM NOTE */
@@ -181,9 +206,9 @@
       border-radius: 50%;
       border: 1px solid rgba(0,0,0,0.25);
     }
-    .red { background:#ff5f57; }
-    .yellow { background:#ffbd2e; }
-    .green { background:#28c840; }
+    .img-popup-dot.red { background:#ff5f57; }
+    .img-popup-dot.yellow { background:#ffbd2e; }
+    .img-popup-dot.green { background:#28c840; }
 
     /* BROWSER toolbar */
     .img-popup-browser .img-popup-toolbar {
@@ -281,16 +306,17 @@
   <div class="desktop">
 
     <!-- MAIN WINDOW -->
-    <div class="main-window window">
+    <div class="main-window window" id="buk-main-window">
       <div class="title-bar">
-        <div class="left">
+        <div class="left" style="display:flex; align-items:center;">
           <div class="window-buttons">
             <div class="btn red"></div>
             <div class="btn yellow"></div>
             <div class="btn green"></div>
           </div>
           <div class="title-text">Bukowskis Car</div>
-        
+        </div>
+      </div>
 
       <div class="content">
         <div class="meta">
@@ -426,13 +452,44 @@
 
     popupImages.forEach((img,i)=>createImgPopup(img,i,popupImages.length));
 
-document.querySelectorAll('.window .btn.red').forEach(btn => {
-  btn.style.cursor = "pointer";
-  btn.addEventListener("click", () => {
-    window.location.href = "index.html";
-  });
-});
+    // Main window button behavior (same logic as the other pages)
+    const mainWindow = document.getElementById('buk-main-window');
+    const redBtn   = mainWindow.querySelector('.window-buttons .btn.red');
+    const yellowBtn= mainWindow.querySelector('.window-buttons .btn.yellow');
+    const greenBtn = mainWindow.querySelector('.window-buttons .btn.green');
 
+    if (redBtn) {
+      redBtn.style.cursor = 'pointer';
+      redBtn.addEventListener('click', () => {
+        window.location.href = 'index.html';
+      });
+    }
+
+    if (yellowBtn) {
+      yellowBtn.style.cursor = 'pointer';
+      yellowBtn.addEventListener('click', () => {
+        if (!mainWindow) return;
+        if (mainWindow.classList.contains('minimized')) {
+          mainWindow.classList.remove('minimized');
+        } else {
+          mainWindow.classList.add('minimized');
+          mainWindow.classList.remove('maximized');
+        }
+      });
+    }
+
+    if (greenBtn) {
+      greenBtn.style.cursor = 'pointer';
+      greenBtn.addEventListener('click', () => {
+        if (!mainWindow) return;
+        if (mainWindow.classList.contains('maximized')) {
+          mainWindow.classList.remove('maximized');
+        } else {
+          mainWindow.classList.add('maximized');
+          mainWindow.classList.remove('minimized');
+        }
+      });
+    }
   </script>
 
 </body>
