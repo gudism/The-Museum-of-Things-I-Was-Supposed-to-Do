@@ -436,7 +436,7 @@
       height: 100%;
     }
 
-    /* SIMPLE FOLDER BODY (screenshots, TD file) */
+    /* SIMPLE FOLDER BODY (screenshots) */
     .simple-folder-body {
       flex: 1;
       border-top: 1px solid #000;
@@ -527,7 +527,7 @@
       <span class="menu-item" data-open="music-window">Music</span>
       <span class="menu-item" data-open="browser-window">Browser</span>
       <span class="menu-item" data-open="screenshots-window">Screenshots</span>
-      <span class="menu-item" data-open="td-window">TD Scene</span>
+      <span class="menu-item" data-open="map-window">Map</span>
       <span>Help</span>
     </div>
     <div class="menu-right">
@@ -549,11 +549,6 @@
       <div class="desktop-icon" data-open="screenshots-window">
         <div class="desktop-icon-icon">📂</div>
         <div class="desktop-icon-label">Screenshots</div>
-      </div>
-
-      <div class="desktop-icon" data-open="td-window">
-        <div class="desktop-icon-icon">△</div>
-        <div class="desktop-icon-label">audioreactive triangles noise</div>
       </div>
     </div>
 
@@ -657,7 +652,7 @@
           </div>
           <span>screenshots</span>
         </div>
-        <span style="font-size:11px;">drop images in here</span>
+        <span style="font-size:11px;">7 items</span>
       </div>
       <div class="window-toolbar">
         <span>View</span>
@@ -665,65 +660,75 @@
         <span>Share</span>
       </div>
       <div class="simple-folder-body">
-        <p>This is the screenshots folder. You can drop your PNGs or JPGs for the desktop museum here.</p>
-        <p style="margin-top:8px;font-size:10px;opacity:0.8;">
-          (In practice: put your screenshot files in the same folder as this HTML file
-          and list them here as links or thumbnails.)
-        </p>
-        <div style="margin-top:10px;">
-          <div class="file-item">
+        <div class="file-item">
+          <a class="file-link" href="Stavros_large.jpg" target="_blank">
             <div class="file-icon">🖼️</div>
             <div class="file-text">
-              <div class="file-label-main">Screen Shot 2025-11-16 at 6.53.20 PM.png</div>
-              <div class="file-label-sub">example screenshot</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- TOUCHDESIGNER WINDOW -->
-    <div class="window hidden" id="td-window" style="top: 160px; left: 320px;">
-      <div class="window-header">
-        <div class="window-header-left">
-          <div class="window-buttons">
-            <div class="window-button close" data-target="td-window"></div>
-            <div class="window-button min" data-target="td-window"></div>
-            <div class="window-button max"></div>
-          </div>
-          <span>audioreactive_triangles_noise.toe</span>
-        </div>
-        <span style="font-size:11px;">TouchDesigner scene</span>
-      </div>
-      <div class="window-toolbar">
-        <span>File</span>
-        <span>Edit</span>
-        <span>View</span>
-      </div>
-      <div class="simple-folder-body">
-        <p>
-          This window stands in for your TouchDesigner scene
-          <strong>"audioreactive triangles noise"</strong>.
-        </p>
-        <p style="margin-top:8px;">
-          The actual <code>.toe</code> file cannot run inside a browser,
-          but you can make it openable from the desktop by putting the file in your site folder
-          and updating this download link.
-        </p>
-
-        <div class="file-item" style="margin-top:10px;">
-          <a class="file-link" href="audioreactive_triangles_noise.toe" download>
-            <div class="file-icon">△</div>
-            <div class="file-text">
-              <div class="file-label-main">audioreactive_triangles_noise.toe</div>
-              <div class="file-label-sub">download TouchDesigner file</div>
+              <div class="file-label-main">Stavros_large.jpg</div>
+              <div class="file-label-sub">image</div>
             </div>
           </a>
         </div>
 
-        <p style="margin-top:12px;font-size:10px;opacity:0.8;">
-          You could also drop a GIF or video preview of the scene here as documentation.
-        </p>
+        <div class="file-item">
+          <a class="file-link" href="Stucco_02.png" target="_blank">
+            <div class="file-icon">🖼️</div>
+            <div class="file-text">
+              <div class="file-label-main">Stucco_02.png</div>
+              <div class="file-label-sub">image</div>
+            </div>
+          </a>
+        </div>
+
+        <div class="file-item">
+          <a class="file-link" href="Screen Shot 2018-03-04 at 8.57.25 pm.png" target="_blank">
+            <div class="file-icon">🖼️</div>
+            <div class="file-text">
+              <div class="file-label-main">Screen Shot 2018-03-04 at 8.57.25 pm.png</div>
+              <div class="file-label-sub">image</div>
+            </div>
+          </a>
+        </div>
+
+        <div class="file-item">
+          <a class="file-link" href="buk marker bruh.tif" target="_blank">
+            <div class="file-icon">🖼️</div>
+            <div class="file-text">
+              <div class="file-label-main">buk marker bruh.tif</div>
+              <div class="file-label-sub">image</div>
+            </div>
+          </a>
+        </div>
+
+        <div class="file-item">
+          <a class="file-link" href="Screen Shot 2025-10-08 at 12.11.13 AM.png" target="_blank">
+            <div class="file-icon">🖼️</div>
+            <div class="file-text">
+              <div class="file-label-main">Screen Shot 2025-10-08 at 12.11.13 AM.png</div>
+              <div class="file-label-sub">image</div>
+            </div>
+          </a>
+        </div>
+
+        <div class="file-item">
+          <a class="file-link" href="Screen Shot 2025-10-08 at 12.12.46 AM.png" target="_blank">
+            <div class="file-icon">🖼️</div>
+            <div class="file-text">
+              <div class="file-label-main">Screen Shot 2025-10-08 at 12.12.46 AM.png</div>
+              <div class="file-label-sub">image</div>
+            </div>
+          </a>
+        </div>
+
+        <div class="file-item">
+          <a class="file-link" href="Screen Shot 2025-10-08 at 12.13.39 AM.png" target="_blank">
+            <div class="file-icon">🖼️</div>
+            <div class="file-text">
+              <div class="file-label-main">Screen Shot 2025-10-08 at 12.13.39 AM.png</div>
+              <div class="file-label-sub">image</div>
+            </div>
+          </a>
+        </div>
       </div>
     </div>
 
@@ -1109,7 +1114,7 @@ Modern noir
       </div>
     </div>
 
-    <!-- BROWSER WINDOW -->
+    <!-- BROWSER WINDOW (YouTube) -->
     <div class="window hidden" id="browser-window" style="top: 60px; left: 260px; width: 720px; height: 420px;">
       <div class="window-header">
         <div class="window-header-left">
@@ -1140,6 +1145,35 @@ https://www.youtube.com/watch?v=31nWLIMdJBw&amp;themeRefresh=1
       </div>
     </div>
 
+    <!-- MAP WINDOW -->
+    <div class="window hidden" id="map-window" style="top: 80px; left: 300px; width: 720px; height: 420px;">
+      <div class="window-header">
+        <div class="window-header-left">
+          <div class="window-buttons">
+            <div class="window-button close" data-target="map-window"></div>
+            <div class="window-button min" data-target="map-window"></div>
+            <div class="window-button max"></div>
+          </div>
+          <span>Maps</span>
+        </div>
+        <span style="font-size:11px;">LA field notes</span>
+      </div>
+      <div class="window-toolbar">
+        <span>File</span>
+        <span>Layers</span>
+        <span>Share</span>
+      </div>
+      <div class="browser-body">
+        <div class="browser-urlbar">
+https://www.google.com/maps/d/edit?mid=1gcMzH3mrVx6FLJlnm2t1z5HY3Iy3LnY&amp;usp=sharing
+        </div>
+        <iframe
+          class="browser-frame"
+          src="https://www.google.com/maps/d/edit?mid=1gcMzH3mrVx6FLJlnm2t1z5HY3Iy3LnY&amp;usp=sharing">
+        </iframe>
+      </div>
+    </div>
+
     <!-- SYSTEM POPUP -->
     <div class="system-popup">
       <div class="system-popup-title">System message</div>
@@ -1154,6 +1188,7 @@ https://www.youtube.com/watch?v=31nWLIMdJBw&amp;themeRefresh=1
       <div class="dock-icon" data-open="notes-window" title="Notes">📝</div>
       <div class="dock-icon" data-open="music-window" title="Music">🎵</div>
       <div class="dock-icon" data-open="browser-window" title="Chrome">🌐</div>
+      <div class="dock-icon" data-open="map-window" title="Map">🗺️</div>
     </div>
   </div>
 
@@ -1275,18 +1310,7 @@ https://www.youtube.com/watch?v=31nWLIMdJBw&amp;themeRefresh=1
       });
     });
 
-    // clicking the dock or menu keeps windows on top
-    document.querySelectorAll('.dock-icon').forEach(icon => {
-      icon.addEventListener('click', () => {
-        const id = icon.getAttribute('data-open');
-        showWindow(id);
-      });
-    });
-
-    // bring windows to front when clicked
-    document.querySelectorAll('.window').forEach(win => {
-      win.addEventListener('mousedown', () => bringToFront(win));
-    });
+    // dock icons already handled by [data-open] listener above
   </script>
 </body>
 </html>
