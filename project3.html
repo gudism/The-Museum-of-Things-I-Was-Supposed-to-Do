@@ -194,7 +194,7 @@
   <!-- GLITCH OVERLAY -->
   <div class="glitch"></div>
 
-  <!-- BACKGROUND POPUP IMAGE (NO BORDER) -->
+  <!-- BACKGROUND POPUP -->
   <div class="bg-popup">
     <img src="Screen Shot 2025-11-16 at 8.56.03 PM.png" alt="background popup">
   </div>
@@ -202,7 +202,7 @@
   <div class="desktop">
     <div class="window">
       <div class="title-bar">
-        <div class="left">
+        <div class="left" style="display:flex; align-items:center; gap:6px;">
           <div class="window-buttons">
             <div class="btn red"></div>
             <div class="btn yellow"></div>
@@ -307,6 +307,16 @@
       </div>
     </div>
   </div>
+
+  <script>
+    /* Make ALL red close buttons go to index.html */
+    document.querySelectorAll('.btn.red, .mini-btn.red').forEach(btn => {
+      btn.style.cursor = "pointer";
+      btn.addEventListener("click", () => {
+        window.location.href = "index.html";
+      });
+    });
+  </script>
 
 </body>
 </html>
