@@ -438,6 +438,96 @@
 
     /* SIMPLE FOLDER BODY (screenshots) */
     .simple-folder-body {
+          .screenshot-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 10px;
+    }
+
+    .screenshot-tile {
+      text-align: center;
+      cursor: pointer;
+      padding: 6px 4px;
+      border-radius: 6px;
+    }
+
+    .screenshot-tile:hover {
+      background: #f0f3ff;
+    }
+
+    .screenshot-thumb {
+      width: 100%;
+      max-width: 100px;
+      height: 70px;
+      object-fit: cover;
+      border-radius: 6px;
+      border: 1px solid #babac0;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.25);
+      display: block;
+      margin: 0 auto 4px;
+    }
+
+    .screenshot-name {
+      font-size: 10px;
+      word-wrap: break-word;
+    }
+
+    /* screenshot popup */
+    .screenshot-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1200;
+    }
+
+    .screenshot-overlay.show {
+      display: flex;
+    }
+
+    .screenshot-inner {
+      background: #111;
+      border-radius: 8px;
+      border: 2px solid #ffffff;
+      max-width: 90vw;
+      max-height: 90vh;
+      padding: 8px;
+      box-shadow: 0 16px 32px rgba(0,0,0,0.8);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .screenshot-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: #f5f5f5;
+    }
+
+    .screenshot-close-btn {
+      background: #333;
+      color: #fff;
+      border: 1px solid #777;
+      border-radius: 3px;
+      font-size: 13px;
+      width: 22px;
+      height: 22px;
+      cursor: pointer;
+    }
+
+    .screenshot-inner img {
+      max-width: 82vw;
+      max-height: 80vh;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto;
+      background: #000;
+    }
+
       flex: 1;
       border-top: 1px solid #000;
       background: #ffffff;
@@ -516,6 +606,17 @@
     }
   </style>
 </head>
+    <!-- Screenshot viewer popup -->
+  <div id="screenshot-overlay" class="screenshot-overlay">
+    <div class="screenshot-inner">
+      <div class="screenshot-top">
+        <span id="screenshot-title"></span>
+        <button id="screenshot-close" class="screenshot-close-btn">×</button>
+      </div>
+      <img id="screenshot-image" src="" alt="">
+    </div>
+  </div>
+
 <body>
   <div class="menu-bar">
     <div class="menu-left">
@@ -642,95 +743,36 @@
     </div>
 
     <!-- SCREENSHOTS FOLDER WINDOW -->
-    <div class="window hidden" id="screenshots-window" style="top: 120px; left: 140px;">
-      <div class="window-header">
-        <div class="window-header-left">
-          <div class="window-buttons">
-            <div class="window-button close" data-target="screenshots-window"></div>
-            <div class="window-button min" data-target="screenshots-window"></div>
-            <div class="window-button max"></div>
-          </div>
-          <span>screenshots</span>
-        </div>
-        <span style="font-size:11px;">7 items</span>
-      </div>
-      <div class="window-toolbar">
-        <span>View</span>
-        <span>Sort</span>
-        <span>Share</span>
-      </div>
-      <div class="simple-folder-body">
-        <div class="file-item">
-          <a class="file-link" href="Stavros_large.jpg" target="_blank">
-            <div class="file-icon">🖼️</div>
-            <div class="file-text">
-              <div class="file-label-main">Stavros_large.jpg</div>
-              <div class="file-label-sub">image</div>
-            </div>
-          </a>
-        </div>
-
-        <div class="file-item">
-          <a class="file-link" href="Stucco_02.png" target="_blank">
-            <div class="file-icon">🖼️</div>
-            <div class="file-text">
-              <div class="file-label-main">Stucco_02.png</div>
-              <div class="file-label-sub">image</div>
-            </div>
-          </a>
-        </div>
-
-        <div class="file-item">
-          <a class="file-link" href="Screen Shot 2018-03-04 at 8.57.25 pm.png" target="_blank">
-            <div class="file-icon">🖼️</div>
-            <div class="file-text">
-              <div class="file-label-main">Screen Shot 2018-03-04 at 8.57.25 pm.png</div>
-              <div class="file-label-sub">image</div>
-            </div>
-          </a>
-        </div>
-
-        <div class="file-item">
-          <a class="file-link" href="buk marker bruh.tif" target="_blank">
-            <div class="file-icon">🖼️</div>
-            <div class="file-text">
-              <div class="file-label-main">buk marker bruh.tif</div>
-              <div class="file-label-sub">image</div>
-            </div>
-          </a>
-        </div>
-
-        <div class="file-item">
-          <a class="file-link" href="Screen Shot 2025-10-08 at 12.11.13 AM.png" target="_blank">
-            <div class="file-icon">🖼️</div>
-            <div class="file-text">
-              <div class="file-label-main">Screen Shot 2025-10-08 at 12.11.13 AM.png</div>
-              <div class="file-label-sub">image</div>
-            </div>
-          </a>
-        </div>
-
-        <div class="file-item">
-          <a class="file-link" href="Screen Shot 2025-10-08 at 12.12.46 AM.png" target="_blank">
-            <div class="file-icon">🖼️</div>
-            <div class="file-text">
-              <div class="file-label-main">Screen Shot 2025-10-08 at 12.12.46 AM.png</div>
-              <div class="file-label-sub">image</div>
-            </div>
-          </a>
-        </div>
-
-        <div class="file-item">
-          <a class="file-link" href="Screen Shot 2025-10-08 at 12.13.39 AM.png" target="_blank">
-            <div class="file-icon">🖼️</div>
-            <div class="file-text">
-              <div class="file-label-main">Screen Shot 2025-10-08 at 12.13.39 AM.png</div>
-              <div class="file-label-sub">image</div>
-            </div>
-          </a>
-        </div>
-      </div>
+<div class="simple-folder-body">
+  <div class="screenshot-grid">
+    <div class="screenshot-tile" data-src="Stavros_large.jpg" data-name="Stavros_large.jpg">
+      <img src="Stavros_large.jpg" alt="Stavros_large.jpg" class="screenshot-thumb">
+      <div class="screenshot-name">Stavros_large.jpg</div>
     </div>
+
+    <div class="screenshot-tile" data-src="Stucco_02.png" data-name="Stucco_02.png">
+      <img src="Stucco_02.png" alt="Stucco_02.png" class="screenshot-thumb">
+      <div class="screenshot-name">Stucco_02.png</div>
+    </div>
+
+    <div class="screenshot-tile" data-src="Screen Shot 2018-03-04 at 8.57.25 pm.png" data-name="Screen Shot 2018-03-04 at 8.57.25 pm.png">
+      <img src="Screen Shot 2018-03-04 at 8.57.25 pm.png" alt="Screen Shot 2018-03-04 at 8.57.25 pm.png" class="screenshot-thumb">
+      <div class="screenshot-name">Screen Shot 2018-03-04 at 8.57.25 pm.png</div>
+    </div>
+
+    <div class="screenshot-tile" data-src="buk marker bruh.tif" data-name="buk marker bruh.tif">
+      <img src="buk marker bruh.tif" alt="buk marker bruh.tif" class="screenshot-thumb">
+      <div class="screenshot-name">buk marker bruh.tif</div>
+    </div>
+
+    <div class="screenshot-tile" data-src="Screen Shot 2025-10-08 at 12.11.13 AM.png" data-name="Screen Shot 2025-10-08 at 12.11.13 AM.png">
+      <img src="Screen Shot 2025-10-08 at 12.11.13 AM.png" alt="Screen Shot 2025-10-08 at 12.11.13 AM.png" class="screenshot-thumb">
+      <div class="screenshot-name">Screen Shot 2025-10-08 at 12.11.13 AM.png</div>
+    </div>
+
+    <div class="screenshot-tile" data-src="Screen Shot 2025-10-08 at 12.12.46 AM.png" data-name="Screen Shot 2025-10-08 at 12.12.46 AM.png">
+      <img src="Screen Shot 2025-10-08 at 12.12.46 AM.
+
 
     <!-- NOTES APP WINDOW -->
     <div class="window hidden" id="notes-window" style="top: 80px; left: 120px;">
@@ -1311,6 +1353,37 @@ https://www.google.com/maps/d/edit?mid=1gcMzH3mrVx6FLJlnm2t1z5HY3Iy3LnY&amp;usp=
     });
 
     // dock icons already handled by [data-open] listener above
+        // SCREENSHOT POPUP LOGIC
+    const screenshotTiles = document.querySelectorAll('.screenshot-tile');
+    const screenshotOverlay = document.getElementById('screenshot-overlay');
+    const screenshotImage = document.getElementById('screenshot-image');
+    const screenshotTitle = document.getElementById('screenshot-title');
+    const screenshotClose = document.getElementById('screenshot-close');
+
+    screenshotTiles.forEach(tile => {
+      tile.addEventListener('click', () => {
+        const src = tile.getAttribute('data-src');
+        const name = tile.getAttribute('data-name') || src;
+        if (!src) return;
+        screenshotImage.src = src;
+        screenshotImage.alt = name;
+        screenshotTitle.textContent = name;
+        screenshotOverlay.classList.add('show');
+      });
+    });
+
+    screenshotClose.addEventListener('click', () => {
+      screenshotOverlay.classList.remove('show');
+      screenshotImage.src = '';
+    });
+
+    screenshotOverlay.addEventListener('click', (e) => {
+      if (e.target === screenshotOverlay) {
+        screenshotOverlay.classList.remove('show');
+        screenshotImage.src = '';
+      }
+    });
+
   </script>
 </body>
 </html>
