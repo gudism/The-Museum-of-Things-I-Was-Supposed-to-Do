@@ -13,16 +13,20 @@
     html, body {
       width: 100%;
       height: 100%;
-      overflow: hidden; /* desktop does not scroll */
+      overflow: hidden;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
-      background:
-        #000
-        url("Screen Shot 2025-11-16 at 6.53.20 PM.png")
-        center center / cover
-        no-repeat fixed;
+      background: #000000;
+      color: #f5f5f5;
     }
 
-    /* TOP MENU BAR – matching project2 style */
+    .desktop {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      padding-top: 24px; /* room for menu bar */
+    }
+
+    /* TOP MENU BAR */
     .menu-bar {
       position: fixed;
       top: 0;
@@ -36,7 +40,7 @@
       align-items: center;
       justify-content: space-between;
       padding: 0 12px;
-      z-index: 40;
+      z-index: 1000;
       backdrop-filter: blur(8px);
       font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
     }
@@ -53,6 +57,11 @@
       letter-spacing: 0.03em;
     }
 
+    .menu-left .menu-item {
+      cursor: pointer;
+      user-select: none;
+    }
+
     .menu-left .app-name {
       font-weight: 600;
     }
@@ -60,16 +69,56 @@
     .menu-right span {
       font-size: 11px;
       opacity: 0.9;
+      user-select: none;
     }
 
-    /* folder windows */
-    .folder-window {
+    /* DESKTOP ICONS */
+    .desktop-icons {
       position: absolute;
-      width: 520px;
+      top: 40px;
+      left: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      z-index: 10;
+    }
+
+    .desktop-icon {
+      width: 80px;
+      text-align: center;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .desktop-icon-icon {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 4px;
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.5);
+      background: radial-gradient(circle at 30% 20%, #ffffff, #5555ff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+
+    .desktop-icon-label {
+      font-size: 11px;
+      color: #f5f5f7;
+      text-shadow: 0 0 3px #000;
+      word-wrap: break-word;
+    }
+
+    /* GENERIC WINDOW */
+    .window {
+      position: absolute;
+      width: 560px;
       height: 380px;
       background: #f0f0f5;
       border: 2px solid #000;
-      z-index: 80;
+      color: #111;
+      z-index: 50;
       display: flex;
       flex-direction: column;
       font-family: "Chicago", "Geneva", system-ui, sans-serif;
@@ -80,62 +129,56 @@
       transition: box-shadow 0.15s ease, transform 0.15s ease;
     }
 
-    .folder-window:hover {
-      animation: windowShake 0.26s infinite;
+    .window.hidden {
+      display: none;
     }
 
-    @keyframes windowShake {
-      0% { transform: translate(0,0) rotate(0deg); }
-      25% { transform: translate(-1px,0.5px) rotate(-0.3deg); }
-      50% { transform: translate(1px,-0.5px) rotate(0.4deg); }
-      75% { transform: translate(-1px,0px) rotate(-0.2deg); }
-      100% { transform: translate(0,0) rotate(0deg); }
-    }
-
-    .folder-header {
+    .window-header {
       background: linear-gradient(to bottom, #ffffff, #dcdcdc);
-      padding: 6px 10px;
+      padding: 5px 8px;
       font-weight: bold;
       border-bottom: 2px solid #000;
       display: flex;
       align-items: center;
       justify-content: space-between;
       font-size: 13px;
-      cursor: pointer;
+      cursor: move;
+      user-select: none;
     }
 
-    .folder-header-left {
+    .window-header-left {
       display: flex;
       align-items: center;
       gap: 8px;
     }
 
-    .folder-buttons {
+    .window-buttons {
       display: flex;
       gap: 4px;
     }
 
-    .folder-button {
+    .window-button {
       width: 12px;
       height: 12px;
       border-radius: 50%;
       border: 1px solid #000;
       background: #fff;
+      cursor: pointer;
     }
 
-    .folder-button.close {
+    .window-button.close {
       background: #ff5f57;
     }
 
-    .folder-button.min {
+    .window-button.min {
       background: #ffbd2e;
     }
 
-    .folder-button.max {
+    .window-button.max {
       background: #28c840;
     }
 
-    .folder-toolbar {
+    .window-toolbar {
       background: #e2e2e2;
       border-bottom: 1px solid #000;
       padding: 4px 8px;
@@ -144,6 +187,17 @@
       gap: 10px;
     }
 
+    .window-toolbar span {
+      cursor: default;
+    }
+
+    .window-body {
+      flex: 1;
+      display: flex;
+      min-height: 0;
+    }
+
+    /* museum window uses original folder style */
     .folder-content {
       flex: 1;
       background: #ffffff;
@@ -153,10 +207,6 @@
       min-height: 0;
     }
 
-    .folder-content-single {
-      grid-template-columns: 1fr;
-    }
-
     .folder-main {
       padding: 10px;
       overflow-y: auto;
@@ -164,6 +214,7 @@
       -webkit-overflow-scrolling: touch;
       border-right: 1px solid #ddd;
       font-size: 11px;
+      background: #fff;
     }
 
     .folder-side {
@@ -253,10 +304,153 @@
       margin-bottom: 6px;
     }
 
+    /* NOTES APP */
+    .notes-body {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      border-top: 1px solid #000;
+      background: #fffef8;
+      min-height: 0;
+      font-size: 11px;
+    }
+
+    .notes-list {
+      border-right: 1px solid #ccc;
+      padding: 8px;
+      overflow-y: auto;
+      background: #f7f4ea;
+    }
+
+    .notes-list-title {
+      font-weight: bold;
+      margin-bottom: 6px;
+      font-size: 12px;
+    }
+
+    .note-list-item {
+      padding: 4px 4px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-bottom: 4px;
+    }
+
+    .note-list-item:hover,
+    .note-list-item.active {
+      background: #e9ddc4;
+    }
+
+    .notes-content {
+      padding: 10px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      line-height: 1.4;
+      background: #fffdf7;
+    }
+
+    .notes-title-display {
+      font-weight: bold;
+      margin-bottom: 8px;
+      font-size: 13px;
+    }
+
+    /* MUSIC APP */
+    .music-body {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      border-top: 1px solid #000;
+      background: #f5f6ff;
+      min-height: 0;
+      font-size: 11px;
+    }
+
+    .music-list {
+      border-right: 1px solid #ccc;
+      padding: 8px;
+      overflow-y: auto;
+      background: #eef0ff;
+    }
+
+    .music-list-title {
+      font-weight: bold;
+      margin-bottom: 6px;
+      font-size: 12px;
+    }
+
+    .track-item {
+      padding: 4px 4px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-bottom: 4px;
+    }
+
+    .track-item:hover,
+    .track-item.active {
+      background: #d9ddff;
+    }
+
+    .music-player {
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: #f5f6ff;
+    }
+
+    .music-nowplaying {
+      font-size: 12px;
+      margin-bottom: 8px;
+    }
+
+    .music-audio {
+      width: 100%;
+    }
+
+    /* BROWSER APP */
+    .browser-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      border-top: 1px solid #000;
+      background: #ffffff;
+      min-height: 0;
+    }
+
+    .browser-urlbar {
+      background: #e2e2e2;
+      padding: 4px 8px;
+      font-size: 11px;
+      border-bottom: 1px solid #b0b0b0;
+      font-family: Menlo, Monaco, monospace;
+      color: #444;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .browser-frame {
+      flex: 1;
+      border: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* SIMPLE FOLDER BODY (screenshots, TD file) */
+    .simple-folder-body {
+      flex: 1;
+      border-top: 1px solid #000;
+      background: #ffffff;
+      padding: 10px;
+      font-size: 11px;
+      overflow-y: auto;
+    }
+
+    /* SYSTEM POPUP */
     .system-popup {
       position: fixed;
       right: 18px;
-      bottom: 18px;
+      bottom: 60px;
       width: 260px;
       background: rgba(14,14,28,0.96);
       border: 1px solid #ff9bde;
@@ -265,7 +459,7 @@
       font-family: "Geneva", system-ui, sans-serif;
       font-size: 11px;
       padding: 8px 10px;
-      z-index: 150;
+      z-index: 900;
       animation: popupPulse 2.6s infinite ease-in-out;
     }
 
@@ -284,21 +478,56 @@
       100% { transform: translateY(0); box-shadow:0 0 10px rgba(255,155,222,0.6); }
     }
 
-    .hidden { display: none; }
+    /* DOCK */
+    .dock {
+      position: fixed;
+      left: 50%;
+      bottom: 10px;
+      transform: translateX(-50%);
+      padding: 6px 10px;
+      background: rgba(15,15,20,0.9);
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.2);
+      display: flex;
+      gap: 10px;
+      z-index: 950;
+      backdrop-filter: blur(8px);
+    }
+
+    .dock-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: radial-gradient(circle at 30% 20%, #ffffff, #4444ff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 20px;
+      color: #000;
+    }
+
+    .dock-icon-label {
+      display: none;
+    }
+
+    .hidden {
+      display: none;
+    }
   </style>
 </head>
-
 <body>
-
-  <!-- MENU BAR -->
   <div class="menu-bar">
     <div class="menu-left">
       <span></span>
       <span class="app-name">Museum</span>
-      <span>File</span>
-      <span>Edit</span>
-      <span>View</span>
-      <span>Projects</span>
+      <span class="menu-item" data-open="museum-window">File</span>
+      <span class="menu-item" data-open="museum-window">View</span>
+      <span class="menu-item" data-open="notes-window">Notes</span>
+      <span class="menu-item" data-open="music-window">Music</span>
+      <span class="menu-item" data-open="browser-window">Browser</span>
+      <span class="menu-item" data-open="screenshots-window">Screenshots</span>
+      <span class="menu-item" data-open="td-window">TD Scene</span>
       <span>Help</span>
     </div>
     <div class="menu-right">
@@ -309,126 +538,755 @@
     </div>
   </div>
 
-  <!-- MAIN MUSEUM FOLDER -->
-  <div class="folder-window" id="museum-folder" style="top: 70px; left: 180px; z-index: 200;">
-    <div class="folder-header">
-      <div class="folder-header-left">
-        <div class="folder-buttons">
-          <div class="folder-button close" id="museum-close"></div>
-          <div class="folder-button min"></div>
-          <div class="folder-button max"></div>
-        </div>
-        <span>Museum of Things I Was Supposed To Do</span>
-      </div>
-      <span>5 items</span>
-    </div>
-
-    <div class="folder-toolbar">
-      <span>View</span>
-      <span>Sort</span>
-      <span>Info</span>
-    </div>
-
-    <div class="folder-content">
-      <div class="folder-main">
-
-        <div class="folder-section-title">Exhibits (click to open full project page)</div>
-
-        <div class="file-grid">
-
-          <!-- PROJECT 1 -->
-          <div class="file-item">
-            <a class="file-link" href="project1.html">
-              <div class="file-icon">📄</div>
-              <div class="file-text">
-                <div class="file-label-main">USB Archive</div>
-                <div class="file-label-sub">project1.html</div>
-              </div>
-            </a>
-          </div>
-
-          <!-- PROJECT 2 -->
-          <div class="file-item">
-            <a class="file-link" href="project2.html">
-              <div class="file-icon">📄</div>
-              <div class="file-text">
-                <div class="file-label-main">Bukowski’s Car... someting???</div>
-                <div class="file-label-sub">project2.html</div>
-              </div>
-            </a>
-          </div>
-
-          <!-- PROJECT 3 -->
-          <div class="file-item">
-            <a class="file-link" href="project3.html">
-              <div class="file-icon">📄</div>
-              <div class="file-text">
-                <div class="file-label-main">Audio Reactive Visuals (No Audio)</div>
-                <div class="file-label-sub">project3.html</div>
-              </div>
-            </a>
-          </div>
-
-          <!-- PROJECT 4 -->
-          <div class="file-item">
-            <a class="file-link" href="project4.html">
-              <div class="file-icon">📄</div>
-              <div class="file-text">
-                <div class="file-label-main">LA Contract Bot (prototype)</div>
-                <div class="file-label-sub">project4.html</div>
-              </div>
-            </a>
-          </div>
-
-          <!-- ⭐ PROJECT 5 -->
-          <div class="file-item">
-            <a class="file-link" href="project5.html">
-              <div class="file-icon">📄</div>
-              <div class="file-text">
-                <div class="file-label-main">figures.glb</div>
-                <div class="file-label-sub">project5.html</div>
-              </div>
-            </a>
-          </div>
-
-        </div>
+  <div class="desktop">
+    <!-- DESKTOP ICONS -->
+    <div class="desktop-icons">
+      <div class="desktop-icon" data-open="museum-window">
+        <div class="desktop-icon-icon">🖼️</div>
+        <div class="desktop-icon-label">Museum</div>
       </div>
 
-      <div class="folder-side">
-        <div class="side-title">about this folder</div>
-        <div class="side-text">
-          An informal museum of assignments, performances, and installations
-          that were fully storyboarded in my brain and partially started in real life,
-          then quietly exiled to their own little HTML universes.
+      <div class="desktop-icon" data-open="screenshots-window">
+        <div class="desktop-icon-icon">📂</div>
+        <div class="desktop-icon-label">Screenshots</div>
+      </div>
+
+      <div class="desktop-icon" data-open="td-window">
+        <div class="desktop-icon-icon">△</div>
+        <div class="desktop-icon-label">audioreactive triangles noise</div>
+      </div>
+    </div>
+
+    <!-- MUSEUM WINDOW (original folder) -->
+    <div class="window" id="museum-window" style="top: 80px; left: 220px;">
+      <div class="window-header">
+        <div class="window-header-left">
+          <div class="window-buttons">
+            <div class="window-button close" data-target="museum-window"></div>
+            <div class="window-button min" data-target="museum-window"></div>
+            <div class="window-button max"></div>
+          </div>
+          <span>Museum of Things I Was Supposed To Do</span>
         </div>
-        <div class="side-text">
-          Each file to the left opens onto a project that was theoretically going to be completed in an orderly fashion. 
-          Instead, they’ve been deposited here by chronic overextension and a brain that refuses to triage.
+        <span style="font-size:11px;">5 items</span>
+      </div>
+      <div class="window-toolbar">
+        <span>View</span>
+        <span>Sort</span>
+        <span>Info</span>
+      </div>
+      <div class="folder-content">
+        <div class="folder-main">
+          <div class="folder-section-title">Exhibits (click to open full project page)</div>
+          <div class="file-grid">
+            <div class="file-item">
+              <a class="file-link" href="project1.html">
+                <div class="file-icon">📄</div>
+                <div class="file-text">
+                  <div class="file-label-main">USB Archive</div>
+                  <div class="file-label-sub">project1.html</div>
+                </div>
+              </a>
+            </div>
+
+            <div class="file-item">
+              <a class="file-link" href="project2.html">
+                <div class="file-icon">📄</div>
+                <div class="file-text">
+                  <div class="file-label-main">Bukowski’s Car... something???</div>
+                  <div class="file-label-sub">project2.html</div>
+                </div>
+              </a>
+            </div>
+
+            <div class="file-item">
+              <a class="file-link" href="project3.html">
+                <div class="file-icon">📄</div>
+                <div class="file-text">
+                  <div class="file-label-main">Audio Reactive Visuals (No Audio)</div>
+                  <div class="file-label-sub">project3.html</div>
+                </div>
+              </a>
+            </div>
+
+            <div class="file-item">
+              <a class="file-link" href="project4.html">
+                <div class="file-icon">📄</div>
+                <div class="file-text">
+                  <div class="file-label-main">LA Contract Bot (prototype)</div>
+                  <div class="file-label-sub">project4.html</div>
+                </div>
+              </a>
+            </div>
+
+            <div class="file-item">
+              <a class="file-link" href="project5.html">
+                <div class="file-icon">📄</div>
+                <div class="file-text">
+                  <div class="file-label-main">figures.glb</div>
+                  <div class="file-label-sub">project5.html</div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="folder-side">
+          <div class="side-title">about this folder</div>
+          <div class="side-text">
+            An informal museum of assignments, performances, and installations
+            that were fully storyboarded in my brain and partially started in real life,
+            then quietly exiled to their own little HTML universes.
+          </div>
+          <div class="side-text">
+            Each file to the left opens onto a project that was theoretically going to be completed in an orderly way.
+            Instead, they live here as running jokes between me and my executive dysfunction.
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- SYSTEM WARNING POPUP -->
-  <div class="system-popup">
-    <div class="system-popup-title">System message</div>
-    <div class="system-popup-body">
-      The museum is open. Active contents appear only here.
-      Background clutter is genuine and intentionally immobilized..
+    <!-- SCREENSHOTS FOLDER WINDOW -->
+    <div class="window hidden" id="screenshots-window" style="top: 120px; left: 140px;">
+      <div class="window-header">
+        <div class="window-header-left">
+          <div class="window-buttons">
+            <div class="window-button close" data-target="screenshots-window"></div>
+            <div class="window-button min" data-target="screenshots-window"></div>
+            <div class="window-button max"></div>
+          </div>
+          <span>screenshots</span>
+        </div>
+        <span style="font-size:11px;">drop images in here</span>
+      </div>
+      <div class="window-toolbar">
+        <span>View</span>
+        <span>Sort</span>
+        <span>Share</span>
+      </div>
+      <div class="simple-folder-body">
+        <p>This is the screenshots folder. You can drop your PNGs or JPGs for the desktop museum here.</p>
+        <p style="margin-top:8px;font-size:10px;opacity:0.8;">
+          (In practice: put your screenshot files in the same folder as this HTML file
+          and list them here as links or thumbnails.)
+        </p>
+        <div style="margin-top:10px;">
+          <div class="file-item">
+            <div class="file-icon">🖼️</div>
+            <div class="file-text">
+              <div class="file-label-main">Screen Shot 2025-11-16 at 6.53.20 PM.png</div>
+              <div class="file-label-sub">example screenshot</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TOUCHDESIGNER WINDOW -->
+    <div class="window hidden" id="td-window" style="top: 160px; left: 320px;">
+      <div class="window-header">
+        <div class="window-header-left">
+          <div class="window-buttons">
+            <div class="window-button close" data-target="td-window"></div>
+            <div class="window-button min" data-target="td-window"></div>
+            <div class="window-button max"></div>
+          </div>
+          <span>audioreactive_triangles_noise.toe</span>
+        </div>
+        <span style="font-size:11px;">TouchDesigner scene</span>
+      </div>
+      <div class="window-toolbar">
+        <span>File</span>
+        <span>Edit</span>
+        <span>View</span>
+      </div>
+      <div class="simple-folder-body">
+        <p>
+          This window stands in for your TouchDesigner scene
+          <strong>"audioreactive triangles noise"</strong>.
+        </p>
+        <p style="margin-top:8px;">
+          The actual <code>.toe</code> file cannot run inside a browser,
+          but you can make it openable from the desktop by putting the file in your site folder
+          and updating this download link.
+        </p>
+
+        <div class="file-item" style="margin-top:10px;">
+          <a class="file-link" href="audioreactive_triangles_noise.toe" download>
+            <div class="file-icon">△</div>
+            <div class="file-text">
+              <div class="file-label-main">audioreactive_triangles_noise.toe</div>
+              <div class="file-label-sub">download TouchDesigner file</div>
+            </div>
+          </a>
+        </div>
+
+        <p style="margin-top:12px;font-size:10px;opacity:0.8;">
+          You could also drop a GIF or video preview of the scene here as documentation.
+        </p>
+      </div>
+    </div>
+
+    <!-- NOTES APP WINDOW -->
+    <div class="window hidden" id="notes-window" style="top: 80px; left: 120px;">
+      <div class="window-header">
+        <div class="window-header-left">
+          <div class="window-buttons">
+            <div class="window-button close" data-target="notes-window"></div>
+            <div class="window-button min" data-target="notes-window"></div>
+            <div class="window-button max"></div>
+          </div>
+          <span>Notes</span>
+        </div>
+        <span style="font-size:11px;">desktop notes</span>
+      </div>
+      <div class="window-toolbar">
+        <span>All Notes</span>
+        <span>Search</span>
+      </div>
+      <div class="notes-body">
+        <div class="notes-list">
+          <div class="notes-list-title">Notes</div>
+          <div class="note-list-item active" data-note="strudel-links">strudel links</div>
+          <div class="note-list-item" data-note="party-themes">party themes</div>
+          <div class="note-list-item" data-note="vertical-files">vertical files</div>
+          <div class="note-list-item" data-note="next-book">help me find my next book</div>
+          <div class="note-list-item" data-note="aesthetics">aethstetics, vibes, and keywords</div>
+        </div>
+        <div class="notes-content" id="notes-display">
+          <div class="notes-title-display" id="notes-title-display">strudel links</div>
+          <div id="notes-body-display"></div>
+        </div>
+      </div>
+
+      <!-- note templates (hidden) -->
+      <div id="note-strudel-links" class="hidden">
+strudel links
+
+https://strudel.cc/#c3RhY2soCgogIHMoInt6X3Nhd3Rvb3RoIHpfdGFuIHpfbm9pc2Ugel9zaW5lIHpfc3F1YXJlfSU0IikKICAgIC5ub3RlKCI8W2czLGIzLGU0XSEyIFthMyxjMyxlNF0gW2IzLGQzLGYjNF0%2BIikKICAgIC5uKCI8MSAyIDMgNCA1IDYgNyA4IDkgMTA%2BLzIiKQogICAgLnJvb20oMC41KS5zaXplKDAuOSkKICAgIC52ZWxvY2l0eSgwLjI1KS5vZnRlbihuID0%2BIG4ucGx5KDIpKQogICAgLnJlbGVhc2UoMC4xMjUpCiAgICAuZGVjYXkoIjwwLjEgMC4yNSAwLjMgMC40PiIpCiAgICAuc3VzdGFpbigwKQogICAgLmN1dG9mZigiPDEwMDAgMjAwMCA0MDAwPiIpLmZhc3QoNCkKICAgIC5ub2lzZSgwLjUpLmRlY2F5KDAuMykuc3VzdGFpbigwLjcpLnJlbGVhc2UoMC4yKQogICAgLnpjcnVzaCgwLjIpCiAgICAuZ2FpbigwLjgpLAoKCiAgcygiYmQqNCIpLmdhaW4oMSksCgogIHMoImJkIH4gYmQgfiBiZCB%2BIGJkIH4iKS5nYWluKDAuOCksCgogIHMoIn4gY3AgfiBjcCB%2BIGNwIH4gY3AiKS5nYWluKDAuOCksCgogIHMoImhoKjE2IikuZ2FpbigwLjM1KSwKCiAgcygicGVyYyo4IikuZmFzdCgyKS5nYWluKDAuNCksCgogIHMoIn4gfiB%2BIH4gbHQgbXQgaHQgbHQiKS5nYWluKDAuNiksCgogIHMoInpfc2luZSIpCiAgICAubm90ZSgiPGU0IGc0IGI0IGU1ICBkNCBmIzQgYTQgZDUgIGM0IGU0IGc0IGM1ICBiMyBkNCBmIzQgYjQ%2BIikKICAgIC5mYXN0KDMpCiAgICAucmVsZWFzZSgwLjEyKQogICAgLmRlY2F5KDAuMTUpCiAgICAuc3VzdGFpbigwKQogICAgLnJvb20oMC40KS5zaXplKDAuNykKICAgIC5jdXRvZmYoMjYwMCkKICAgIC5nYWluKDAuNykKKQo%3D
+
+
+
+stack(
+
+  s("{z_sawtooth z_tan z_noise z_sine z_square}%4")
+    .note("<[g3,b3,e4]!2 [a3,c3,e4] [b3,d3,f#4]>")
+    .n("<1 2 3 4 5 6 7 8 9 10>/2")
+    .room(0.5).size(0.9)
+    .velocity(0.25).often(n => n.ply(2))
+    .release(0.125)
+    .decay("<0.1 0.25 0.3 0.4>")
+    .sustain(0)
+    .cutoff("<1000 2000 4000>").fast(4)
+    .noise(0.5).decay(0.3).sustain(0.7).release(0.2)
+    .zcrush(0.2)
+    .gain(0.8),
+
+
+  s("bd*4").gain(1),
+
+  s("bd ~ bd ~ bd ~ bd ~").gain(0.8),
+
+  s("~ cp ~ cp ~ cp ~ cp").gain(0.8),
+
+  s("hh*16").gain(0.35),
+
+  s("perc*8").fast(2).gain(0.4),
+
+  s("~ ~ ~ ~ lt mt ht lt").gain(0.6),
+
+  s("z_sine")
+    .note("<e4 g4 b4 e5  d4 f#4 a4 d5  c4 e4 g4 c5  b3 d4 f#4 b4>")
+    .fast(3)
+    .release(0.12)
+    .decay(0.15)
+    .sustain(0)
+    .room(0.4).size(0.7)
+    .cutoff(2600)
+    .gain(0.7)
+)
+
+laïc data broth
+
+drums
+stack(
+  s("bd*8").gain(0.95),
+
+  s("~ sn ~ sn ~ sn ~ sn").gain(0.8),
+
+  s("hh*16").gain(0.35).sometimesBy(0.3, p => p.ply(2)),
+
+  s("arpy*4")
+    .chop(8)
+    .speed("<1 0.5 1.25 0.75>")
+    .gain(0.55),
+
+  s("{z_sawtooth z_square}%2")
+    .note("<[a3 e4 a4]!2 [g3 d4 g4] [f3 c4 f4] [e3 b3 e4]>")
+    .often(p => p.ply(2))
+    .release(0.12).decay(0.18).sustain(0.3)
+    .cutoff("<1200 1800 2400>")
+    .gain(0.85),
+
+  s("{z_sine z_sawtooth}%2")
+    .note("e4*8 ~ ~ ~ e4*8 ~ ~ ~")
+    .fast(2)
+    .release(0.08).decay(0.12).sustain(0.2)
+    .cutoff(1500)
+    .gain(0.7)
+)
+
+
+
+beat drop
+stack(
+  s("z_sine")
+    .n("28 28 28 28 28 28 28 28")
+    .sustain(0.1)
+    .release(0.2)
+    .gain(1),
+
+  s("z_sawtooth")
+    .n("40 41 44 41 40 38 36 38")
+    .fast(2)
+    .release(0.12)
+    .cutoff(1200)
+    .zcrush(0.35)
+    .gain(0.9),
+
+  s("bd*16")
+    .fast(1)
+    .gain(1),
+
+  s("~ cp ~ cp ~ cp ~ cp")
+    .gain(0.95),
+
+  s("hh*32")
+    .gain(0.35)
+    .sometimesBy(0.3, p => p.ply(2)),
+
+  s("lt ~ ht ~ lt ~ ht ~")
+    .gain(0.65),
+
+  s("z_square")
+    .n("<64 65 68 69 71 72 74 72>")
+    .fast(3)
+    .chop(8)
+    .release(0.08)
+    .decay(0.1)
+    .sustain(0)
+    .cutoff(4500)
+    .gain(0.72),
+
+  s("z_noise z_noise ~ ~ z_noise ~ z_noise ~")
+    .fast(4)
+    .release(0.04)
+    .cutoff(8000)
+    .zcrush(0.5)
+    .gain(0.25)
+)
+      </div>
+
+      <div id="note-party-themes" class="hidden">
+party themes
+
+Pregnancy scare party
+In invite label “____ pregnancy party”
+In description “just kidding we aren’t pregnant, but we are a year older!”
+Dress up as something that you would get pregnant or something that scares you
+
+Spin off party
+Waterbirth
+where there is a live waterbirth where the birthday boy/girl is birthed in a kiddie pool
+hire strippers to pretend to be pregnant and give birth ???
+Placenta substitutes???
+
+Bris birthday
+Advertise live circumcisions
+      </div>
+
+      <div id="note-vertical-files" class="hidden">
+Vertical Files
+
+
+
+
+Location
+Ask for California Vertical File, "LYNCHINGS--LOS ANGELES"
+Source
+Rasmussen, Cecilia
+"L.A. then and now/When justice was a mob and a rope"
+LOS ANGELES TIMES
+Oct. 4, 1998
+pp. B3
+illus.
+Name(s)
+1. Flores, Juan, c1836-1857; 2. Fontes, Andres
+Abstract
+Rasmussen recounts the tale of how notorious bandit Juan Flores met his demise at the hands of the hangman. Many nineteenth-century public executions took place in the city block between the current Los Angeles criminal and federal courthouses.
+Subjects
+1. Lynchings 2. "Hangman's Gallows" 3. Tomlinson and Griffith Corral & Lumberyard
+Community
+1. Los Angeles
+
+
+
+
+
+California vertical file: CHINESE MASSACRE
+
+
+California vertical file: “BUILDINGS—LOS ANGELES— WOMANS BUILDING”
+
+
+California Vertical File : “ASIAN AMERICANS IN CALIFORNIA”
+
+
+California vertical File: “LOS ANGELES— LITTLE TOKYO”
+
+
+California Veryical File: “CAPITOL MILLING COMPANY— LOS ANGELES”
+
+
+California vertical File: “LOS ANGELES—CHINATOWN”
+
+
+California Vertical File: “BRIDGES— LOS ANGELES”
+
+
+
+
+SCANED….Ask for California Vertical File, "HOTELS--LOS ANGELES--ROSSLYN"
+Source
+Pool, Bob
+"Speakeasy spills secrets"
+LOS ANGELES TIMES
+Oct. 31, 2014
+pp. A1, A14
+illus.
+Abstract
+"Beneath the Rosslyn Hotel annex lies a bar forgotten."
+Subjects
+1. Hotels 2. Rosslyn Hotel--annex 3. Speakeasies 4. Bars 5. Monterey Room 6. Tunnels 7. Prohibition 8. Nightclubs
+Community
+1. Los Angeles--Downtown
+Era
+1. 1920s
+
+
+Ask for California Vertical File, "STREETS--LOS ANGELES--INDIAN ALLEY"
+
+
+
+
+Location
+Ask for California Vertical File, "CORONAVIRUS (COVID-19)--LOS ANGELES--2020"
+Source
+Newberry, Laura
+"Pandemic hasn't slowed sex trade on L.A. streets"
+LOS ANGELES TIMES
+Apr. 16, 2020
+pp. B1, B2
+illus.
+Abstract
+"Two weeks into the mandated state-at-home orders designed to curb the coronavirus pandemic, not only were sex workers out in pre-quarantine numbers--but so were the johns. Many of those selling sex on the streets tell advocates they have little to no choice but to continue doing high-risk work that has only become more fraught during this health crisis."
+Subjects
+1. Pandemics 2. Coronavirus (COVID-19) 3. Sex Trade 4. Prostitution 5. Prostitutes
+Community
+1. Los Angeles
+
+
+
+
+Ask for California Vertical File, "LOS ANGELES--SKID ROW"
+
+
+Ask for California Vertical File, "LOS ANGELES--DOWNTOWN"
+      </div>
+
+      <div id="note-next-book" class="hidden">
+Help me find my next book.
+I enjoy:
+Loss of memory is only temporary by Johanna Kaplan: What really struck me about this collection, was how the vignettes wove a picture of Jewish New York around the 1970s, from the viewpoint of a girl/ young woman who by most exterior accounts would be considered a little off. I found myself resonating with the characters, while also being able to live vicariously through them and by extension my mother and grandmother.
+
+How to talk dirty and influence people by Lenny Bruce: I really enjoy his sense of humor, and found his recollection of his life absolutely fascinating. Reading it felt as though I was transported back to a world that I would have experienced if I had been born a couple decades earlier. 
+
+Any thing by tuvia tenenbaum: I really like his writing style. To me it gives me the pleasure of reading a memoir, but teaches me like an ethnographic work would. I also really like how he infuses humor into everything he writes about, and how every experience is his own despite how much he explores beyond the realm of what is his own.
+
+
+Carsick by John waters: first of all I must mention that John waters as a person and artist has been greatly influential on me. I love his humor as well as his love for all things distinctly distasteful. There is something incredibly kitschy and very specific to the American experience that is exuded in everything he produces, which I find myself very drawn to even when I don’t necessarily identify with it myself. I also love how he splits this book into three parts, his perception of the worst case scenario, best case scenario, and the scenario that actually ends of taking place. and in doing so establishes himself as an unreliable narrator in the most compelling and genuine way possible.
+
+
+Ham on rye by Charles bukowski: I initially read this book because I wanted to read something I identified with on a geographic level. So often my home, Los Angeles, is portrayed as a center for glitz and glam, or as a city of transplants in search of an artificial reality. Bukowski portrays the raw reality of a childhood and adolescence lived in Los Angeles. At times it is gritty, and gross, but it reminds me of my childhood in a way I can’t quite understand. Unlike bukowskis fictionalized version of himself, Hank, I did not grow up with a spiteful cheating father, or a pushover mother, I did not go to school in my own neighborhood, and I was never kicked out of my home. My background is fundamentally very different from Hank’s, but I can’t help but identify him. Like him, I was raised and corrupted by Los Angeles. I know the basements and garages where we all had our first drinks. I know the cheap restaurants where you never ordered anything but still sat there because you had nowhere better to be. While reading this book I felt as though I had walked the same steps as Hank, because at the end of the day I have. 
+
+
+What makes Sammy run by Budd Shulberg: in all honesty I was not completely sold on the plot when initially pitched to me as my next read. I have heard a million stories about Hollywood as a land of vultures and over confident scam artists, and all of them have the same feeling. Not this one. This story did not aim to tell us what is happening but rather why it’s happening. I thoroughly enjoyed the metaphor that suggested that old Hollywood was a 20th century version of the gold rush, because even in the 21st century that idea still resonates. Overall it checked most of my boxes, it was Jewish, set for the most part in la, and had historical elements.
+
+Permanent midnight by Jerry Stahl: as a recovering addict who spent majority of their time actively addicted in Los Angeles this book hit me very close to home. Not only do I know many of the places stahl has used at, I myself have used at those places as well. I too balanced two worlds, but rather than spending my days in a writers room, I spent mine in a classroom at a private episcopal school in studio city. I had those same feelings that I wouldn’t be able to produce the work that I had to without using. For me this was a very cathartic read. 
+
+
+Hitler in Los Angeles by Steve Ross: a compelling history of the nazi’s attempt at seizing the cultural zeitgeist of the United States through the ports of Los Angeles in the 1930s and 40s, and the Jewish man who set up an espionage network to take them down. Absolutely astounding book, uncovering the false narrative of American saviorism during the Second World War.
+
+
+
+Bad city: peril and power in the city of angels by Paul Pringle— this book follows La times journalist as he seeks to uncover the wrongdoings of usc keck school dean and ends up uncovering a web of corruption around Los Angeles all trying back to usc. In general I am absolutely smitten with nonfiction books about LA, and this book is no different. I love an honest book that seeks the truth no matter how difficult. This book not only seeks the truth but publishes it despite fighting an uphill battle against the beuroceacy  that is Los Angeles.
+      </div>
+
+      <div id="note-aesthetics" class="hidden">
+Aethstetics, vibes, and keywords
+
+Americana sleaze
+Distasteful Americana 
+California desert trash
+Decrepit Hollywood
+Religious kitsch (think pope bobbleheads, bar mitzvah boy troll dolls, bedazzled Jesus on the cross)
+Skid row bicycle (pimped out fully with garbage, the loudest speaker you’ve ever heard taped to the handlebars)
+Porn theatre in broad daylight 
+Suburban eroticism (in a very valley way)
+The xorio in the new world (imagine an old woman in a small somewhat decrepit house with no electricity except for an electric bug zapper)
+The guy watching porn on the computers at the public library 
+When Isaac balshevis singer publishes a short story in playboy
+A dirty old man drinking in a dark bar at noon on a Tuesday (in a bukowski east Hollywood way)
+Daytime hookers
+Art house cinema midgets
+Judy garland 
+Santa Ana winds
+Public access sci fi and western movies and tv
+An old Jewish woman with big teased hair, leopard print, and bedazzled jacket
+The synagogues basement
+Shooting up in a Whole Foods bathroom 
+Casual tuberculosis exposure 
+The beaded curtains that separate the porn section from the rest of the video rental store
+Laura Les meets Debbie harry
+Trashy profound glamour
+Resident artist of Auschwitz
+Borshtbelt existentialism (courtesy of Jerry stahl in nein nein nein)
+Modern noir
+      </div>
+    </div>
+
+    <!-- MUSIC APP WINDOW -->
+    <div class="window hidden" id="music-window" style="top: 120px; left: 380px;">
+      <div class="window-header">
+        <div class="window-header-left">
+          <div class="window-buttons">
+            <div class="window-button close" data-target="music-window"></div>
+            <div class="window-button min" data-target="music-window"></div>
+            <div class="window-button max"></div>
+          </div>
+          <span>Music</span>
+        </div>
+        <span style="font-size:11px;">local files</span>
+      </div>
+      <div class="window-toolbar">
+        <span>Library</span>
+        <span>Playlists</span>
+      </div>
+      <div class="music-body">
+        <div class="music-list">
+          <div class="music-list-title">Tracks</div>
+          <div class="track-item active" data-src="biannnoo.mp3">biannnoo.mp3</div>
+          <div class="track-item" data-src="yehyegyahyeh.mp3">yehyegyahyeh.mp3</div>
+          <div class="track-item" data-src="LA Mayor Garcetti's PSA on LAX street detours. Aviation_Century intersection closed July 25-28 for b.mp3">LA Mayor Garcetti's PSA...</div>
+          <div class="track-item" data-src="Niggun _Rachamana_ _ Selichos With The Lubavitcher Rebbe.mp3">Niggun Rachamana Selichos</div>
+          <div class="track-item" data-src="lobotomy sound effect.mp3">lobotomy sound effect.mp3</div>
+          <div class="track-item" data-src="Ikariotiko.mp3">Ikariotiko.mp3</div>
+        </div>
+        <div class="music-player">
+          <div>
+            <div class="music-nowplaying" id="now-playing-label">
+              Now playing: biannnoo.mp3
+            </div>
+            <audio id="audio-player" class="music-audio" controls>
+              <source src="biannnoo.mp3" type="audio/mpeg">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+          <div style="font-size:10px;opacity:0.7;margin-top:8px;">
+            Tip: put these audio files in the same folder as this HTML so they actually play.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BROWSER WINDOW -->
+    <div class="window hidden" id="browser-window" style="top: 60px; left: 260px; width: 720px; height: 420px;">
+      <div class="window-header">
+        <div class="window-header-left">
+          <div class="window-buttons">
+            <div class="window-button close" data-target="browser-window"></div>
+            <div class="window-button min" data-target="browser-window"></div>
+            <div class="window-button max"></div>
+          </div>
+          <span>Chrome</span>
+        </div>
+        <span style="font-size:11px;">you are stuck here</span>
+      </div>
+      <div class="window-toolbar">
+        <span>File</span>
+        <span>Edit</span>
+        <span>History</span>
+        <span>Bookmarks</span>
+      </div>
+      <div class="browser-body">
+        <div class="browser-urlbar">
+https://www.youtube.com/watch?v=31nWLIMdJBw&amp;themeRefresh=1
+        </div>
+        <iframe
+          class="browser-frame"
+          src="https://www.youtube.com/embed/31nWLIMdJBw?autoplay=0&rel=0&modestbranding=1"
+          allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+
+    <!-- SYSTEM POPUP -->
+    <div class="system-popup">
+      <div class="system-popup-title">System message</div>
+      <div class="system-popup-body">
+        The museum desktop is live. Files that open are real. Files that do not open yet are either future projects or things you have been meaning to learn since 2014.
+      </div>
+    </div>
+
+    <!-- DOCK -->
+    <div class="dock">
+      <div class="dock-icon" data-open="museum-window" title="Museum">🖼️</div>
+      <div class="dock-icon" data-open="notes-window" title="Notes">📝</div>
+      <div class="dock-icon" data-open="music-window" title="Music">🎵</div>
+      <div class="dock-icon" data-open="browser-window" title="Chrome">🌐</div>
     </div>
   </div>
 
   <script>
-    let topZ = 80;
+    let topZ = 100;
+
     function bringToFront(win) {
       topZ += 1;
       win.style.zIndex = topZ;
     }
 
-    const museumFolder = document.getElementById("museum-folder");
-    museumFolder.addEventListener("mousedown", () => bringToFront(museumFolder));
-    museumFolder.style.zIndex = 200;
-  </script>
+    function showWindow(id) {
+      const win = document.getElementById(id);
+      if (!win) return;
+      win.classList.remove('hidden');
+      bringToFront(win);
+    }
 
+    function hideWindow(id) {
+      const win = document.getElementById(id);
+      if (!win) return;
+      win.classList.add('hidden');
+    }
+
+    // make windows draggable
+    function makeDraggable(win) {
+      const header = win.querySelector('.window-header');
+      if (!header) return;
+      let offsetX = 0, offsetY = 0, isDown = false;
+
+      header.addEventListener('mousedown', (e) => {
+        isDown = true;
+        const rect = win.getBoundingClientRect();
+        offsetX = e.clientX - rect.left;
+        offsetY = e.clientY - rect.top;
+        bringToFront(win);
+      });
+
+      document.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        const x = e.clientX - offsetX;
+        const y = e.clientY - offsetY;
+        win.style.left = x + 'px';
+        win.style.top = y + 'px';
+      });
+
+      document.addEventListener('mouseup', () => {
+        isDown = false;
+      });
+
+      win.addEventListener('mousedown', () => bringToFront(win));
+    }
+
+    document.querySelectorAll('.window').forEach(win => makeDraggable(win));
+
+    // desktop icons and menu items
+    document.querySelectorAll('[data-open]').forEach(el => {
+      el.addEventListener('click', () => {
+        const id = el.getAttribute('data-open');
+        showWindow(id);
+      });
+    });
+
+    // close / minimize buttons
+    document.querySelectorAll('.window-button.close').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const target = btn.getAttribute('data-target');
+        if (target) hideWindow(target);
+        e.stopPropagation();
+      });
+    });
+
+    document.querySelectorAll('.window-button.min').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const target = btn.getAttribute('data-target');
+        if (target) hideWindow(target);
+        e.stopPropagation();
+      });
+    });
+
+    // NOTES APP LOGIC
+    function loadNote(key, label) {
+      const bodyDisplay = document.getElementById('notes-body-display');
+      const titleDisplay = document.getElementById('notes-title-display');
+      const template = document.getElementById('note-' + key);
+      if (template && bodyDisplay && titleDisplay) {
+        bodyDisplay.textContent = template.textContent.trim();
+        titleDisplay.textContent = label;
+      }
+    }
+
+    document.querySelectorAll('.note-list-item').forEach(item => {
+      item.addEventListener('click', () => {
+        document.querySelectorAll('.note-list-item').forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+        const key = item.getAttribute('data-note');
+        const label = item.textContent.trim();
+        loadNote(key, label);
+      });
+    });
+
+    // load first note on start
+    loadNote('strudel-links', 'strudel links');
+
+    // MUSIC PLAYER LOGIC
+    const audioPlayer = document.getElementById('audio-player');
+    const nowPlaying = document.getElementById('now-playing-label');
+
+    document.querySelectorAll('.track-item').forEach(item => {
+      item.addEventListener('click', () => {
+        document.querySelectorAll('.track-item').forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+        const src = item.getAttribute('data-src');
+        if (src && audioPlayer) {
+          audioPlayer.src = src;
+          audioPlayer.play().catch(() => {});
+          if (nowPlaying) nowPlaying.textContent = 'Now playing: ' + src;
+        }
+      });
+    });
+
+    // clicking the dock or menu keeps windows on top
+    document.querySelectorAll('.dock-icon').forEach(icon => {
+      icon.addEventListener('click', () => {
+        const id = icon.getAttribute('data-open');
+        showWindow(id);
+      });
+    });
+
+    // bring windows to front when clicked
+    document.querySelectorAll('.window').forEach(win => {
+      win.addEventListener('mousedown', () => bringToFront(win));
+    });
+  </script>
 </body>
 </html>
