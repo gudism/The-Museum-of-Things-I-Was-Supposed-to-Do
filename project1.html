@@ -77,6 +77,19 @@
       border: 2px solid #808086;
       box-shadow: 0 10px 25px rgba(0,0,0,0.45);
       overflow: hidden;
+      transition: transform 0.25s ease, opacity 0.25s ease, max-width 0.25s ease;
+    }
+
+    /* Minimized + maximized states for main window */
+    .window.minimized {
+      transform: scale(0.7) translateY(120px);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .window.maximized {
+      max-width: 1000px;
+      transform: scale(1.02);
     }
 
     .title-bar {
@@ -355,7 +368,7 @@
   </div>
 
   <div class="desktop">
-    <div class="window">
+    <div class="window" id="usb-main-window">
       <div class="title-bar">
         <div style="display:flex; align-items:center; gap:6px;">
           <div class="window-buttons">
@@ -365,8 +378,6 @@
           </div>
           <div class="title-text">The USB Archive</div>
         </div>
-
-        
       </div>
 
       <div class="content">
@@ -418,11 +429,11 @@
   </div>
    
 
-    <div class="sticky" style="left: 30px; top: 160px; right: auto; transform: rotate(-2deg);">
-      <strong>bringing mashiach</strong><br />
-      • daven mincha 1:15<br />
-      • HaShem loves, stay strong
-    </div>
+  <div class="sticky" style="left: 30px; top: 160px; right: auto; transform: rotate(-2deg);">
+    <strong>bringing mashiach</strong><br />
+    • daven mincha 1:15<br />
+    • HaShem loves, stay strong
+  </div>
 
 
   <!-- USB FILE EXPLORER OVERLAY -->
@@ -615,13 +626,45 @@
         viewerContent.innerHTML = "";
       }
     });
-document.querySelectorAll('.window .btn.red').forEach(btn => {
-  btn.style.cursor = "pointer";
-  btn.addEventListener("click", () => {
-    window.location.href = "index.html";
-  });
-});
 
+    // Main window button behavior (same as audio-reactive page)
+    const mainWindow = document.getElementById("usb-main-window");
+    const mainRed = mainWindow.querySelector(".window-buttons .btn.red");
+    const mainYellow = mainWindow.querySelector(".window-buttons .btn.yellow");
+    const mainGreen = mainWindow.querySelector(".window-buttons .btn.green");
+
+    if (mainRed) {
+      mainRed.style.cursor = "pointer";
+      mainRed.addEventListener("click", () => {
+        window.location.href = "index.html";
+      });
+    }
+
+    if (mainYellow) {
+      mainYellow.style.cursor = "pointer";
+      mainYellow.addEventListener("click", () => {
+        if (!mainWindow) return;
+        if (mainWindow.classList.contains("minimized")) {
+          mainWindow.classList.remove("minimized");
+        } else {
+          mainWindow.classList.add("minimized");
+          mainWindow.classList.remove("maximized");
+        }
+      });
+    }
+
+    if (mainGreen) {
+      mainGreen.style.cursor = "pointer";
+      mainGreen.addEventListener("click", () => {
+        if (!mainWindow) return;
+        if (mainWindow.classList.contains("maximized")) {
+          mainWindow.classList.remove("maximized");
+        } else {
+          mainWindow.classList.add("maximized");
+          mainWindow.classList.remove("minimized");
+        }
+      });
+    }
   </script>
 
 </body>
