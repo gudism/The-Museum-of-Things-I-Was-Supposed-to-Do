@@ -576,19 +576,23 @@
 
     usbThumbs.forEach(thumb => {
       thumb.addEventListener("click", () => {
-        usbOverlay.style.display = "flex";
+        if (usbOverlay) usbOverlay.style.display = "flex";
       });
     });
 
-    usbClose.addEventListener("click", () => {
-      usbOverlay.style.display = "none";
-    });
-
-    usbOverlay.addEventListener("click", (e) => {
-      if (e.target === usbOverlay) {
+    if (usbClose) {
+      usbClose.addEventListener("click", () => {
         usbOverlay.style.display = "none";
-      }
-    });
+      });
+    }
+
+    if (usbOverlay) {
+      usbOverlay.addEventListener("click", (e) => {
+        if (e.target === usbOverlay) {
+          usbOverlay.style.display = "none";
+        }
+      });
+    }
 
     /* File viewer popup */
     const fileTiles = document.querySelectorAll(".file-tile");
@@ -615,19 +619,23 @@
       });
     });
 
-    viewerClose.addEventListener("click", () => {
-      viewerOverlay.style.display = "none";
-      viewerContent.innerHTML = "";
-    });
-
-    viewerOverlay.addEventListener("click", (e) => {
-      if (e.target === viewerOverlay) {
+    if (viewerClose) {
+      viewerClose.addEventListener("click", () => {
         viewerOverlay.style.display = "none";
         viewerContent.innerHTML = "";
-      }
-    });
+      });
+    }
 
-    // Main window button behavior (same as audio-reactive page)
+    if (viewerOverlay) {
+      viewerOverlay.addEventListener("click", (e) => {
+        if (e.target === viewerOverlay) {
+          viewerOverlay.style.display = "none";
+          viewerContent.innerHTML = "";
+        }
+      });
+    }
+
+    // Main window button behavior (same pattern as other pages)
     const mainWindow = document.getElementById("usb-main-window");
     const mainRed = mainWindow.querySelector(".window-buttons .btn.red");
     const mainYellow = mainWindow.querySelector(".window-buttons .btn.yellow");
